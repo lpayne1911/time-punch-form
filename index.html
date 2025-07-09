@@ -383,24 +383,45 @@
             
             // TODO: Replace with your email service endpoint
             // For now, we'll simulate success
-            setTimeout(() => {
-                successMessage.style.display = 'block';
-                successMessage.scrollIntoView({ behavior: 'smooth' });
-                
-                // Reset form
-                document.getElementById('timePunchForm').reset();
-                document.getElementById('employeeSignaturePad').textContent = 'Click to sign';
-                document.getElementById('employeeSignaturePad').classList.remove('signed');
-                document.getElementById('supervisorSignaturePad').textContent = 'Click to sign';
-                document.getElementById('supervisorSignaturePad').classList.remove('signed');
-                
-                // Reset dates
-                document.getElementById('inDate').valueAsDate = new Date();
-                document.getElementById('outDate').valueAsDate = new Date();
-                
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Report';
-            }, 1500);
+// Send to n8n webhook
+fetch('https://washdcott.app.n8n.cloud/webhook-test/time-punch-report', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(emailData)
+})
+.then(response => response.json())
+.then(result => {
+    if (result.success) {
+        successMessage.style.display = 'block';
+        successMessage.innerHTML = '✅ ' + result.message;
+        successMessage.scrollIntoView({ behavior: 'smooth' });
+        
+        // Reset form
+        document.getElementById('timePunchForm').reset();
+        document.getElementById('employeeSignaturePad').textContent = 'Click to sign';
+        document.getElementById('employeeSignaturePad').classList.remove('signed');
+        document.getElementById('supervisorSignaturePad').textContent = 'Click to sign';
+        document.getElementById('supervisorSignaturePad').classList.remove('signed');
+        
+        // Reset dates
+        document.getElementById('inDate').valueAsDate = new Date();
+        document.getElementById('outDate').valueAsDate = new Date();
+    } else {
+        errorMessage.style.display = 'block';
+        errorMessage.scrollIntoView({ behavior: 'smooth' });
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    errorMessage.style.display = 'block';
+    errorMessage.scrollIntoView({ behavior: 'smooth' });
+})
+.finally(() => {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit Report';
+});
             
             // Log the data for testing
             console.log('Form Data:', emailData);
