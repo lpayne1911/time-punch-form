@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First $10K Swing Trading Playbook</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.header p {
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+.disclaimer {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+.content {
+    padding: 30px;
+}
+
+/* Table of contents */
+.toc {
+    background: #f7f7fb;
+    border: 1px solid #e6e6f0;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 30px;
+}
+
+.toc h2 {
+    font-size: 16px;
+    color: #764ba2;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.toc ul {
+    list-style: none;
+    columns: 2;
+    column-gap: 30px;
+}
+
+.toc li {
+    margin-bottom: 6px;
+    break-inside: avoid;
+}
+
+.toc a {
+    color: #5563c1;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.toc a:hover {
+    text-decoration: underline;
+}
+
+section {
+    margin-bottom: 36px;
+    scroll-margin-top: 20px;
+}
+
+section h2 {
+    font-size: 22px;
+    color: #764ba2;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eee;
+}
+
+section h3 {
+    font-size: 17px;
+    color: #4a4a6a;
+    margin: 18px 0 8px;
+}
+
+section p {
+    margin-bottom: 12px;
+}
+
+section ul, section ol {
+    margin: 0 0 14px 22px;
+}
+
+section li {
+    margin-bottom: 6px;
+}
+
+.lead {
+    font-style: italic;
+    color: #555;
+    border-left: 4px solid #667eea;
+    padding-left: 14px;
+    margin: 14px 0;
+}
+
+.callout {
+    background: #f0f1fb;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin: 14px 0;
+}
+
+.zone {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    border-left: 5px solid;
+}
+
+.zone.caution { background: #fff8e1; border-color: #f5b301; }
+.zone.review  { background: #fff0e6; border-color: #ff7a45; }
+.zone.exit    { background: #fdecea; border-color: #f44336; }
+.zone h3 { margin-top: 0; }
+
+.do-dont {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.do-dont > div {
+    flex: 1;
+    min-width: 240px;
+    border-radius: 8px;
+    padding: 16px 18px;
+}
+
+.do-dont .do   { background: #e8f5e9; }
+.do-dont .dont { background: #fdecea; }
+
+/* Interactive tools */
+.tool {
+    background: #f7f7fb;
+    border: 1px solid #e6e6f0;
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin: 18px 0;
+}
+
+.tool h3 {
+    margin-top: 0;
+    color: #764ba2;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.tool-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.tool-row .form-group {
+    flex: 1;
+    min-width: 140px;
+}
+
+.btn {
+    padding: 12px 22px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.result {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.result.show { display: block; }
+.result.good { background: #e8f5e9; border: 1px solid #4caf50; color: #1b5e20; }
+.result.bad  { background: #fdecea; border: 1px solid #f44336; color: #b71c1c; }
+.result.info { background: #e8eaf6; border: 1px solid #667eea; color: #283593; }
+.result strong { font-size: 18px; }
+
+.checklist-group { margin-bottom: 16px; }
+.checklist-group > strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a4a6a;
+}
+
+.check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    transition: background 0.2s;
+}
+
+.check-item.missing { background: #fdecea; }
+
+.check-item input { margin-top: 4px; width: 18px; height: 18px; cursor: pointer; }
+.check-item label { cursor: pointer; font-size: 14px; }
+
+.footer {
+    background: #f7f7fb;
+    padding: 24px 30px;
+    text-align: center;
+    font-size: 13px;
+    color: #777;
+    border-top: 1px solid #e6e6f0;
+}
+
+.footer a { color: #5563c1; }
+
+@media (max-width: 600px) {
+    .toc ul { columns: 1; }
+    .container { margin: 0; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📈 First $10K Swing Trading Playbook</h1>
+        <p>A repeatable system: find leaders → wait for pullback/base → enter on confirmation → cut losses → repeat.</p>
+        <span class="disclaimer">⚠️ Educational guide only — not financial advice</span>
+    </div>
+
+    <div class="content">
+        <div class="toc">
+            <h2>Contents</h2>
+            <ul>
+                <li><a href="#philosophy">1. Core Philosophy</a></li>
+                <li><a href="#style">2. Trading Style</a></li>
+                <li><a href="#capital">3. Starting Capital</a></li>
+                <li><a href="#equipment">4. Equipment</a></li>
+                <li><a href="#watchlist">5. Build Your Watchlist</a></li>
+                <li><a href="#selection">6. Stock Selection Criteria</a></li>
+                <li><a href="#leadercheck">↳ Leader Check Tool</a></li>
+                <li><a href="#avoid">7. What Not to Trade</a></li>
+                <li><a href="#setups">8. The Two Main Setups</a></li>
+                <li><a href="#terms">9. Key Chart Terms</a></li>
+                <li><a href="#entry">10. Entry Rules</a></li>
+                <li><a href="#volume">11. Volume Confirmation</a></li>
+                <li><a href="#risk">12. Risk Management</a></li>
+                <li><a href="#sizing">13. Position Sizing</a></li>
+                <li><a href="#sizecalc">↳ Position-Size Calculator</a></li>
+                <li><a href="#management">14. Trade Management</a></li>
+                <li><a href="#profit">15. Profit-Taking</a></li>
+                <li><a href="#routine">16. Weekly Routine</a></li>
+                <li><a href="#checklist">17. Trade Checklist</a></li>
+                <li><a href="#os">18. Operating System</a></li>
+                <li><a href="#lesson">19. The Main Lesson</a></li>
+            </ul>
+        </div>
+
+        <section id="philosophy">
+            <h2>1. Core Philosophy</h2>
+            <p>The goal is not to trade everything. The goal is to find a small group of strong stocks, wait for repeatable setups, enter only when the setup confirms, and cut losses before one bad trade destroys your account.</p>
+            <p class="lead">Trade leaders. Wait for pullbacks or bases. Enter on confirmation. Cut losses quickly. Repeat.</p>
+            <p>Most new traders struggle because they jump between styles, chase indicators, lack a repeatable system, and become emotionally attached to losing trades.</p>
+        </section>
+
+        <section id="style">
+            <h2>2. Trading Style</h2>
+            <h3>Recommended: Swing Trading</h3>
+            <p>For a beginner trying to make their first $10,000, swing trading — not day trading — is recommended. Swing trading lets you:</p>
+            <ul>
+                <li>Hold trades for more than one day.</li>
+                <li>Capture larger moves.</li>
+                <li>Avoid needing extreme intraday precision.</li>
+                <li>Reduce emotional pressure from minute-by-minute candles.</li>
+                <li>Let strong stocks make bigger directional moves.</li>
+            </ul>
+            <p>Day trading is more skill-intensive: it requires fast decisions, emotional toughness, and precision many beginners have not yet developed.</p>
+        </section>
+
+        <section id="capital">
+            <h2>3. Starting Capital</h2>
+            <p>Suggested starting range: <strong>$1,000 to $2,500</strong>. Don't use lack of capital as an excuse — stack enough to trade with a meaningful account size.</p>
+            <h3>Practical rule</h3>
+            <p>Do not trade with money you cannot afford to lose. Before trading live you should have:</p>
+            <ul>
+                <li>Emergency savings separate from trading money.</li>
+                <li>A defined max loss per trade.</li>
+                <li>A written trading plan.</li>
+                <li>No need to withdraw trading profits immediately.</li>
+            </ul>
+        </section>
+
+        <section id="equipment">
+            <h2>4. Equipment Needed</h2>
+            <p>You do not need a multi-monitor trading desk. One computer is enough; two screens at most. Focus on becoming a trader, not looking like one.</p>
+            <p><strong>Minimum setup:</strong> laptop or desktop, phone, a charting platform (e.g. TradingView), a broker account, a watchlist, and a trading journal.</p>
+        </section>
+
+        <section id="watchlist">
+            <h2>5. Build Your Watchlist</h2>
+            <p>Create a focused list of <strong>20 stocks maximum</strong>. It should contain only market leaders — not random stocks, cheap stocks, or popular names that are underperforming.</p>
+        </section>
+
+        <section id="selection">
+            <h2>6. Stock Selection Criteria</h2>
+            <h3>Criteria 1 — Must be a market leader</h3>
+            <p>The stock should be outperforming the S&P 500 by at least 2x. If the S&P 500 is up 5% YTD, the stock should be up at least 10%. If the S&P is up 8%, the stock should be up at least 16%.</p>
+            <h3>Criteria 2 — Leading industry</h3>
+            <p>The stock should belong to a sector showing strength — find strength stacked on strength. Examples mentioned: semiconductors, memory, energy, oil &amp; gas, equipment-related names.</p>
+            <h3>Criteria 3 — Above key moving averages</h3>
+            <p>Preferably above the 20-day SMA and 50-day SMA, ideally also above the 200-day. This confirms the stock is still in an uptrend.</p>
+        </section>
+
+        <div class="tool" id="leadercheck">
+            <h3>🔎 Leader Check (2x S&P)</h3>
+            <p>Enter the S&P 500's year-to-date return and your stock's year-to-date return to see if it qualifies as a leader.</p>
+            <div class="tool-row">
+                <div class="form-group">
+                    <label for="spYtd">S&P 500 YTD (%)</label>
+                    <input type="number" id="spYtd" step="0.01" placeholder="e.g. 4.74">
+                </div>
+                <div class="form-group">
+                    <label for="stockYtd">Stock YTD (%)</label>
+                    <input type="number" id="stockYtd" step="0.01" placeholder="e.g. 26.45">
+                </div>
+            </div>
+            <button class="btn" onclick="checkLeader()">Check Leader Status</button>
+            <div class="result" id="leaderResult"></div>
+        </div>
+
+        <section id="avoid">
+            <h2>7. What Not to Trade</h2>
+            <p>Avoid stocks that are:</p>
+            <ul>
+                <li>Underperforming the S&P 500.</li>
+                <li>Below major moving averages.</li>
+                <li>Falling year-to-date while the market is rising.</li>
+                <li>Popular but not currently leading.</li>
+                <li>Cheap only because they are weak.</li>
+                <li>Too volatile without clean structure.</li>
+            </ul>
+            <p>Even a famous stock should be rejected if it is underperforming the S&P 500. The method prioritizes current strength, not popularity.</p>
+        </section>
+
+        <section id="setups">
+            <h2>8. The Two Main Setups</h2>
+            <div class="callout">
+                <h3>Setup A — Pullback Buy</h3>
+                <p>After a stock makes a strong move up, then pulls back into support:</p>
+                <ol>
+                    <li>Stock is a market leader.</li>
+                    <li>Stock makes a strong move up.</li>
+                    <li>Stock pulls back.</li>
+                    <li>Pullback finds support.</li>
+                    <li>Price reclaims a key level.</li>
+                    <li>Volume confirms the move.</li>
+                    <li>Entry occurs after confirmation.</li>
+                </ol>
+                <p><strong>Triggers:</strong> price reclaims the previous all-time high, reclaims the 20-day moving average, or breaks back above a clearly marked resistance level.</p>
+            </div>
+            <div class="callout">
+                <h3>Setup B — Base Breakout</h3>
+                <p>After a strong upward move, the stock trades sideways in a tight range:</p>
+                <ol>
+                    <li>Strong move up.</li>
+                    <li>Price consolidates sideways.</li>
+                    <li>Candles become tight.</li>
+                    <li>Stock holds support.</li>
+                    <li>Price stays above the 20-day moving average.</li>
+                    <li>A clear pivot level forms.</li>
+                    <li>Price breaks above the pivot.</li>
+                    <li>Volume confirms breakout.</li>
+                </ol>
+                <p>Basing is a period where price tightens rather than moving wildly — this can signal accumulation before the next move.</p>
+            </div>
+        </section>
+
+        <section id="terms">
+            <h2>9. Key Chart Terms</h2>
+            <p><strong>Parabolic move:</strong> a sharp, powerful move upward. Don't chase after it has already happened — wait for a pullback or base.</p>
+            <p><strong>Pullback:</strong> a controlled drop after a strong move — profit-taking, not necessarily weakness.</p>
+            <p><strong>Base:</strong> a tight sideways consolidation after a strong move. A good base has tight candles, clear support, a clear pivot, reduced chaos, and price holding above important moving averages.</p>
+            <p><strong>Pivot:</strong> the breakout level — usually the top of the base or the candle high price needs to break.</p>
+            <p><strong>Reclaim:</strong> when price falls below a key level, then moves back above it. Reclaims of the 20-day MA or previous all-time high can be entries.</p>
+        </section>
+
+        <section id="entry">
+            <h2>10. Entry Rules</h2>
+            <p>Do not enter just because a stock is strong. Enter only when the chart gives confirmation:</p>
+            <ul>
+                <li><strong>Entry 1 — Previous high reclaim:</strong> price pulls back, then reclaims a previous all-time high or major resistance.</li>
+                <li><strong>Entry 2 — 20-day MA reclaim:</strong> price pulls back near/below the 20-day MA, then closes back above it.</li>
+                <li><strong>Entry 3 — Base breakout:</strong> price forms a tight base and breaks above the pivot.</li>
+                <li><strong>Entry 4 — Pullback breakout:</strong> price breaks out, retests the breakout area, then continues upward.</li>
+            </ul>
+        </section>
+
+        <section id="volume">
+            <h2>11. Volume Confirmation</h2>
+            <p>Watch volume on breakout or reclaim moves. A better setup has:</p>
+            <ul>
+                <li>Above-average volume.</li>
+                <li>Volume expansion on the breakout.</li>
+                <li>A strong daily candle closing near the high.</li>
+                <li>Buyers stepping in at support.</li>
+            </ul>
+            <p>If price breaks out on weak volume, the move may be less reliable.</p>
+        </section>
+
+        <section id="risk">
+            <h2>12. Risk Management Rules</h2>
+            <p>Losses are unavoidable, but large losses are often caused by ego and emotional attachment.</p>
+            <div class="zone caution">
+                <h3>Caution Zone — Down 10%</h3>
+                <p>Warning territory. Ask: Is the setup still valid? Did price lose support? Did volume confirm selling? Did the stock fall below the 20- or 50-day MA? Did the broader market turn?</p>
+            </div>
+            <div class="zone review">
+                <h3>Review Zone — Down 15%</h3>
+                <p>Reassess seriously. Ask: What went wrong? Was the entry too late? Did I chase? Did I ignore the stop? Has the chart broken structure?</p>
+            </div>
+            <div class="zone exit">
+                <h3>Exit Zone — Down 20–25%</h3>
+                <p>The trade is gone. Preserving 70–80% of your capital gives you the ability to take another trade instead of sitting in a collapsing position.</p>
+            </div>
+            <div class="callout">
+                <h3>Tighter beginner rule</h3>
+                <p>For a newer trader, make it stricter: <strong>Warning −5% · Serious review −8% · Exit −10% to −15%.</strong> Cutting losses at 10–15% is the cleaner beginner rule.</p>
+            </div>
+        </section>
+
+        <section id="sizing">
+            <h2>13. Position Sizing</h2>
+            <p>Risk only <strong>1% to 2% of account value per trade</strong>.</p>
+            <p>Example with a $2,500 account: 1% risk = $25 max loss; 2% risk = $50 max loss. If your stop is 10% below entry, then with $25 risk your max position is $250, and with $50 risk it's $500. This protects you from one bad trade destroying the account.</p>
+        </section>
+
+        <div class="tool" id="sizecalc">
+            <h3>🧮 Position-Size Calculator</h3>
+            <p>Enter your account value, risk per trade, and stop distance to get your max loss and max position size.</p>
+            <div class="tool-row">
+                <div class="form-group">
+                    <label for="account">Account value ($)</label>
+                    <input type="number" id="account" step="0.01" placeholder="e.g. 2500">
+                </div>
+                <div class="form-group">
+                    <label for="riskPct">Risk per trade (%)</label>
+                    <input type="number" id="riskPct" step="0.01" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="stopPct">Stop distance (%)</label>
+                    <input type="number" id="stopPct" step="0.01" value="10">
+                </div>
+            </div>
+            <button class="btn" onclick="calcSize()">Calculate</button>
+            <div class="result" id="sizeResult"></div>
+        </div>
+
+        <section id="management">
+            <h2>14. Trade Management</h2>
+            <h3>Before entering — write down</h3>
+            <p>Ticker · Industry · S&P 500 performance · Stock YTD performance · Setup type · Entry price · Stop price · Target area · Reason for trade · Invalidation level.</p>
+            <h3>While in the trade — monitor</h3>
+            <ul>
+                <li>Does price hold the breakout level?</li>
+                <li>Is volume supporting the move?</li>
+                <li>Is price staying above the 20-day MA?</li>
+                <li>Is the stock still outperforming?</li>
+                <li>Has the broader market changed?</li>
+            </ul>
+            <h3>Exit conditions</h3>
+            <p>Exit if the stop is hit, price breaks support, price loses the 20-day MA and fails to reclaim, the breakout fails, the thesis is invalidated, or the loss reaches your max allowed percentage.</p>
+        </section>
+
+        <section id="profit">
+            <h2>15. Profit-Taking Rules</h2>
+            <h3>Sell in pieces</h3>
+            <ul>
+                <li>25% to 50% after a strong move.</li>
+                <li>More if price becomes extremely extended.</li>
+                <li>Remaining shares if the stock loses the 20-day MA or breaks trend.</li>
+            </ul>
+            <p>Don't get greedy. The goal is not to catch the entire move — it's to repeatedly capture clean portions of strong moves.</p>
+        </section>
+
+        <section id="routine">
+            <h2>16. Weekly Routine</h2>
+            <h3>Weekend — build/update watchlist</h3>
+            <ul>
+                <li>S&P 500 year-to-date performance.</li>
+                <li>Which stocks are up 2x or more vs. the S&P.</li>
+                <li>Which sectors are leading.</li>
+                <li>Which stocks are above the 20- and 50-day SMA.</li>
+                <li>Which charts are forming pullbacks or bases.</li>
+            </ul>
+            <h3>Daily — review your 20-stock list</h3>
+            <p>Look for pullbacks into support, reclaims of key levels, breakouts above pivots, volume expansion, and failed setups to avoid.</p>
+            <h3>After every trade — journal</h3>
+            <p>Entry · Exit · Setup · Mistake (if any) · Whether rules were followed · What the loss or win taught you. Losses contain data — study them to improve.</p>
+        </section>
+
+        <div class="tool" id="checklist">
+            <h3>✅ Pre-Trade Checklist</h3>
+            <p>Tick every box. If any answer is unclear, skip the trade.</p>
+
+            <div class="checklist-group">
+                <strong>Market Leader</strong>
+                <div class="check-item"><input type="checkbox" id="c1"><label for="c1">Outperforming the S&P 500 by 2x or more?</label></div>
+                <div class="check-item"><input type="checkbox" id="c2"><label for="c2">In a strong industry?</label></div>
+                <div class="check-item"><input type="checkbox" id="c3"><label for="c3">Above the 20-day SMA?</label></div>
+                <div class="check-item"><input type="checkbox" id="c4"><label for="c4">Above the 50-day SMA?</label></div>
+                <div class="check-item"><input type="checkbox" id="c5"><label for="c5">Enough liquidity?</label></div>
+            </div>
+
+            <div class="checklist-group">
+                <strong>Setup</strong>
+                <div class="check-item"><input type="checkbox" id="c6"><label for="c6">Did the stock make a strong move up?</label></div>
+                <div class="check-item"><input type="checkbox" id="c7"><label for="c7">Did it pull back or form a base?</label></div>
+                <div class="check-item"><input type="checkbox" id="c8"><label for="c8">Is the pullback controlled / base tight?</label></div>
+                <div class="check-item"><input type="checkbox" id="c9"><label for="c9">Is there a clear pivot?</label></div>
+                <div class="check-item"><input type="checkbox" id="c10"><label for="c10">Has price reclaimed a key level?</label></div>
+                <div class="check-item"><input type="checkbox" id="c11"><label for="c11">Is volume confirming the move?</label></div>
+            </div>
+
+            <div class="checklist-group">
+                <strong>Risk</strong>
+                <div class="check-item"><input type="checkbox" id="c12"><label for="c12">Do I know my entry?</label></div>
+                <div class="check-item"><input type="checkbox" id="c13"><label for="c13">Do I know my stop?</label></div>
+                <div class="check-item"><input type="checkbox" id="c14"><label for="c14">Do I know my max loss?</label></div>
+                <div class="check-item"><input type="checkbox" id="c15"><label for="c15">Am I risking only 1–2% of my account?</label></div>
+                <div class="check-item"><input type="checkbox" id="c16"><label for="c16">Am I willing to exit if wrong?</label></div>
+                <div class="check-item"><input type="checkbox" id="c17"><label for="c17">Am I NOT chasing?</label></div>
+            </div>
+
+            <button class="btn" onclick="evaluateChecklist()">Evaluate</button>
+            <div class="result" id="checkResult"></div>
+        </div>
+
+        <section id="os">
+            <h2>18. Simple Operating System</h2>
+            <ol>
+                <li><strong>Find leaders</strong> — 20 stocks up at least 2x the S&P 500.</li>
+                <li><strong>Filter by industry</strong> — prioritize leading industries.</li>
+                <li><strong>Confirm trend</strong> — price above the 20- and 50-day MAs.</li>
+                <li><strong>Wait</strong> — don't chase parabolic moves; wait for pullback, base, reclaim, or breakout.</li>
+                <li><strong>Enter on confirmation</strong> — only when price breaks or reclaims a key level.</li>
+                <li><strong>Cut losses</strong> — around 10–15% as a beginner; don't let a small loss become a disaster.</li>
+                <li><strong>Repeat</strong> — same watchlist, same setup, same rules, same journal, same discipline.</li>
+            </ol>
+        </section>
+
+        <section id="lesson">
+            <h2>19. The Main Lesson</h2>
+            <p class="lead">You do not need to be the smartest trader. You need a repeatable behavior-recognition system: find leaders → wait for pullback/base → enter confirmation → cut losses → repeat.</p>
+            <p>The danger is not losing — losses are normal. The danger is refusing to cut losses, chasing moves, jumping between strategies, and trading without a repeatable process.</p>
+        </section>
+    </div>
+
+    <div class="footer">
+        <p><strong>Educational use only — not financial advice.</strong> Trading involves substantial risk of loss. This page summarizes one trader's framework; do your own research and never trade money you cannot afford to lose.</p>
+    </div>
+</div>
+
+<script>
+    function fmtMoney(n) {
+        return '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function showResult(el, cls, html) {
+        el.className = 'result show ' + cls;
+        el.innerHTML = html;
+    }
+
+    function checkLeader() {
+        const el = document.getElementById('leaderResult');
+        const sp = parseFloat(document.getElementById('spYtd').value);
+        const stock = parseFloat(document.getElementById('stockYtd').value);
+
+        if (isNaN(sp) || isNaN(stock)) {
+            showResult(el, 'info', 'Enter both the S&P 500 YTD and the stock YTD to check.');
+            return;
+        }
+
+        const threshold = sp * 2;
+        const thresholdTxt = threshold.toFixed(2) + '%';
+
+        if (sp <= 0) {
+            // When the S&P is flat or down, "2x" is not meaningful; just require outperformance.
+            if (stock > sp) {
+                showResult(el, 'good', '<strong>Outperforming ✓</strong><br>The S&P is flat/down (' + sp.toFixed(2) + '%), so the 2x rule does not apply cleanly. This stock is still outperforming the market — look for relative strength and clean structure.');
+            } else {
+                showResult(el, 'bad', '<strong>Not a leader ✗</strong><br>This stock is not outperforming the S&P (' + sp.toFixed(2) + '%). Skip it — trade leaders, not laggards.');
+            }
+            return;
+        }
+
+        if (stock >= threshold) {
+            showResult(el, 'good', '<strong>Leader ✓</strong><br>Needs ≥ ' + thresholdTxt + ' (2× the S&P\'s ' + sp.toFixed(2) + '%). At ' + stock.toFixed(2) + '%, it qualifies. Now check the industry and moving averages.');
+        } else {
+            showResult(el, 'bad', '<strong>Not a leader ✗</strong><br>Needs ≥ ' + thresholdTxt + ' (2× the S&P\'s ' + sp.toFixed(2) + '%). At ' + stock.toFixed(2) + '%, it falls short. Keep it off the watchlist.');
+        }
+    }
+
+    function calcSize() {
+        const el = document.getElementById('sizeResult');
+        const account = parseFloat(document.getElementById('account').value);
+        const riskPct = parseFloat(document.getElementById('riskPct').value);
+        const stopPct = parseFloat(document.getElementById('stopPct').value);
+
+        if (isNaN(account) || isNaN(riskPct) || isNaN(stopPct) || account <= 0 || riskPct <= 0 || stopPct <= 0) {
+            showResult(el, 'info', 'Enter a positive account value, risk %, and stop %.');
+            return;
+        }
+
+        const maxLoss = account * (riskPct / 100);
+        const positionSize = maxLoss / (stopPct / 100);
+        const cappedNote = positionSize > account
+            ? '<br><em>Note: with this stop, the math allows a position larger than your account. Cap it at your buying power (' + fmtMoney(account) + ').</em>'
+            : '';
+
+        showResult(el, 'good',
+            'Max loss per trade: <strong>' + fmtMoney(maxLoss) + '</strong> (' + riskPct + '% of ' + fmtMoney(account) + ')<br>' +
+            'Max position size: <strong>' + fmtMoney(positionSize) + '</strong> (so a ' + stopPct + '% stop loses ' + fmtMoney(maxLoss) + ')' +
+            cappedNote);
+    }
+
+    function evaluateChecklist() {
+        const el = document.getElementById('checkResult');
+        const boxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+        let missing = 0;
+
+        boxes.forEach(function (box) {
+            const item = box.closest('.check-item');
+            if (box.checked) {
+                item.classList.remove('missing');
+            } else {
+                item.classList.add('missing');
+                missing++;
+            }
+        });
+
+        if (missing === 0) {
+            showResult(el, 'good', '<strong>GO ✓</strong><br>All ' + boxes.length + ' checks confirmed. The setup meets the rules — size the position with 1–2% risk and define your stop before entering.');
+        } else {
+            showResult(el, 'bad', '<strong>Skip the trade ✗</strong><br>' + missing + ' item(s) unconfirmed (highlighted above). If any answer is unclear, skip the trade.');
+        }
+    }
+</script>
+</body>
+</html>
