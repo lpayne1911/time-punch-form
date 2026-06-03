@@ -14,5 +14,20 @@ no dependencies — just open the HTML in a browser).
   tools: a position-size calculator, a "2x S&P" leader check, and a pre-trade
   checklist that tells you to skip the trade when any box is unconfirmed.
 
-  > ⚠️ The playbook is educational only — **not financial advice**. Trading
-  > involves substantial risk of loss.
+- **[`plays.html`](plays.html)** — Daily Play Watchlist. Renders the output of
+  the scanner: a ranked list of S&P 500 names that currently pass the playbook's
+  screen (leader vs. 2× S&P, leading sector, above the 20/50/200-day MAs, with a
+  valid pullback or breakout setup).
+
+  > ⚠️ The playbook and scanner are educational only — **not financial advice**.
+  > Trading involves substantial risk of loss.
+
+## Scanner
+
+[`scanner/scan.py`](scanner/scan.py) turns the playbook criteria into an
+automated screen. It pulls end-of-day data via [yfinance](https://pypi.org/project/yfinance/)
+(free, no API key — the data layer is isolated so a paid feed can be swapped in
+later), applies the playbook's rules to the S&P 500, and writes a ranked
+`plays.json` / `plays.md`. The [`Daily Play Scan`](.github/workflows/scan.yml)
+workflow runs it every weekday after the U.S. close and publishes the result to
+GitHub Pages.
