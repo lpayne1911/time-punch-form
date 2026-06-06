@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-06T18:41:38+00:00",
+  "generated_at": "2026-06-06T18:44:56+00:00",
   "benchmark": "SPY",
   "spy_ytd": 8.25,
   "leader_threshold": 16.5,
@@ -10,9 +10,45 @@
     "Materials",
     "Real Estate"
   ],
-  "universe_size": 10,
-  "count": 1,
+  "universe_size": 503,
+  "count": 22,
   "plays": [
+    {
+      "ticker": "SNDK",
+      "name": "Sandisk",
+      "sector": "Information Technology",
+      "ytd": 466.53,
+      "rs_vs_spy": 56.55,
+      "setup": "pullback",
+      "price": 1559.32,
+      "pct_to_20ma": 0.36,
+      "vol_ratio": 0.88,
+      "base_range_pct": 37.4,
+      "reasons": [
+        "leader: YTD 466.53% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "STX",
+      "name": "Seagate Technology",
+      "sector": "Information Technology",
+      "ytd": 195.25,
+      "rs_vs_spy": 23.67,
+      "setup": "pullback",
+      "price": 847.47,
+      "pct_to_20ma": 1.31,
+      "vol_ratio": 0.9,
+      "base_range_pct": 28.3,
+      "reasons": [
+        "leader: YTD 195.25% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
     {
       "ticker": "MU",
       "name": "Micron Technology",
@@ -27,6 +63,348 @@
       "reasons": [
         "leader: YTD 174.04% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "WDC",
+      "name": "Western Digital",
+      "sector": "Information Technology",
+      "ytd": 172.83,
+      "rs_vs_spy": 20.95,
+      "setup": "pullback",
+      "price": 511.72,
+      "pct_to_20ma": 0.33,
+      "vol_ratio": 1.2,
+      "base_range_pct": 30.3,
+      "reasons": [
+        "leader: YTD 172.83% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "ON",
+      "name": "ON Semiconductor",
+      "sector": "Information Technology",
+      "ytd": 106.81,
+      "rs_vs_spy": 12.95,
+      "setup": "pullback",
+      "price": 117.26,
+      "pct_to_20ma": 0.13,
+      "vol_ratio": 1.66,
+      "base_range_pct": 29.8,
+      "reasons": [
+        "leader: YTD 106.81% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "sector": "Information Technology",
+      "ytd": 68.91,
+      "rs_vs_spy": 8.35,
+      "setup": "pullback",
+      "price": 453.01,
+      "pct_to_20ma": 1.43,
+      "vol_ratio": 1.72,
+      "base_range_pct": 23.4,
+      "reasons": [
+        "leader: YTD 68.91% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "MPC",
+      "name": "Marathon Petroleum",
+      "sector": "Energy",
+      "ytd": 60.06,
+      "rs_vs_spy": 7.28,
+      "setup": "pullback",
+      "price": 262.01,
+      "pct_to_20ma": 2.92,
+      "vol_ratio": 0.94,
+      "base_range_pct": 9.5,
+      "reasons": [
+        "leader: YTD 60.06% \u2265 16.5%",
+        "leading group: Energy (27.16%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "VLO",
+      "name": "Valero Energy",
+      "sector": "Energy",
+      "ytd": 56.44,
+      "rs_vs_spy": 6.84,
+      "setup": "pullback",
+      "price": 255.82,
+      "pct_to_20ma": 2.6,
+      "vol_ratio": 0.77,
+      "base_range_pct": 9.0,
+      "reasons": [
+        "leader: YTD 56.44% \u2265 16.5%",
+        "leading group: Energy (27.16%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "FFIV",
+      "name": "F5, Inc.",
+      "sector": "Information Technology",
+      "ytd": 53.28,
+      "rs_vs_spy": 6.46,
+      "setup": "pullback",
+      "price": 393.35,
+      "pct_to_20ma": 2.98,
+      "vol_ratio": 0.59,
+      "base_range_pct": 15.6,
+      "reasons": [
+        "leader: YTD 53.28% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "CAT",
+      "name": "Caterpillar Inc.",
+      "sector": "Industrials",
+      "ytd": 51.76,
+      "rs_vs_spy": 6.27,
+      "setup": "pullback",
+      "price": 904.28,
+      "pct_to_20ma": 0.94,
+      "vol_ratio": 1.12,
+      "base_range_pct": 9.3,
+      "reasons": [
+        "leader: YTD 51.76% \u2265 16.5%",
+        "leading group: Industrials (10.56%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "KLAC",
+      "name": "KLA Corporation",
+      "sector": "Information Technology",
+      "ytd": 51.76,
+      "rs_vs_spy": 6.27,
+      "setup": "pullback",
+      "price": 1929.2,
+      "pct_to_20ma": 1.26,
+      "vol_ratio": 1.9,
+      "base_range_pct": 22.4,
+      "reasons": [
+        "leader: YTD 51.76% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "CRWD",
+      "name": "CrowdStrike",
+      "sector": "Information Technology",
+      "ytd": 47.94,
+      "rs_vs_spy": 5.81,
+      "setup": "pullback",
+      "price": 671.02,
+      "pct_to_20ma": 3.57,
+      "vol_ratio": 1.48,
+      "base_range_pct": 48.2,
+      "reasons": [
+        "leader: YTD 47.94% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "PSX",
+      "name": "Phillips 66",
+      "sector": "Energy",
+      "ytd": 42.4,
+      "rs_vs_spy": 5.14,
+      "setup": "pullback",
+      "price": 183.08,
+      "pct_to_20ma": 3.33,
+      "vol_ratio": 0.83,
+      "base_range_pct": 8.5,
+      "reasons": [
+        "leader: YTD 42.4% \u2265 16.5%",
+        "leading group: Energy (27.16%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "EOG",
+      "name": "EOG Resources",
+      "sector": "Energy",
+      "ytd": 30.67,
+      "rs_vs_spy": 3.72,
+      "setup": "pullback",
+      "price": 137.78,
+      "pct_to_20ma": 0.11,
+      "vol_ratio": 0.72,
+      "base_range_pct": 11.0,
+      "reasons": [
+        "leader: YTD 30.67% \u2265 16.5%",
+        "leading group: Energy (27.16%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "CSX",
+      "name": "CSX Corporation",
+      "sector": "Industrials",
+      "ytd": 30.38,
+      "rs_vs_spy": 3.68,
+      "setup": "pullback",
+      "price": 46.99,
+      "pct_to_20ma": 2.8,
+      "vol_ratio": 1.06,
+      "base_range_pct": 6.2,
+      "reasons": [
+        "leader: YTD 30.38% \u2265 16.5%",
+        "leading group: Industrials (10.56%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "GWW",
+      "name": "W. W. Grainger",
+      "sector": "Industrials",
+      "ytd": 30.01,
+      "rs_vs_spy": 3.64,
+      "setup": "pullback",
+      "price": 1300.01,
+      "pct_to_20ma": 3.56,
+      "vol_ratio": 0.99,
+      "base_range_pct": 6.0,
+      "reasons": [
+        "leader: YTD 30.01% \u2265 16.5%",
+        "leading group: Industrials (10.56%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "CARR",
+      "name": "Carrier Global",
+      "sector": "Industrials",
+      "ytd": 26.47,
+      "rs_vs_spy": 3.21,
+      "setup": "pullback",
+      "price": 67.16,
+      "pct_to_20ma": 3.17,
+      "vol_ratio": 0.93,
+      "base_range_pct": 11.6,
+      "reasons": [
+        "leader: YTD 26.47% \u2265 16.5%",
+        "leading group: Industrials (10.56%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "DOC",
+      "name": "Healthpeak Properties",
+      "sector": "Real Estate",
+      "ytd": 25.79,
+      "rs_vs_spy": 3.13,
+      "setup": "pullback",
+      "price": 19.79,
+      "pct_to_20ma": 1.4,
+      "vol_ratio": 0.58,
+      "base_range_pct": 5.4,
+      "reasons": [
+        "leader: YTD 25.79% \u2265 16.5%",
+        "leading group: Real Estate (11.44%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "KIM",
+      "name": "Kimco Realty",
+      "sector": "Real Estate",
+      "ytd": 23.48,
+      "rs_vs_spy": 2.85,
+      "setup": "pullback",
+      "price": 24.23,
+      "pct_to_20ma": 3.05,
+      "vol_ratio": 0.97,
+      "base_range_pct": 6.7,
+      "reasons": [
+        "leader: YTD 23.48% \u2265 16.5%",
+        "leading group: Real Estate (11.44%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "CDNS",
+      "name": "Cadence Design Systems",
+      "sector": "Information Technology",
+      "ytd": 21.2,
+      "rs_vs_spy": 2.57,
+      "setup": "pullback",
+      "price": 376.19,
+      "pct_to_20ma": 1.16,
+      "vol_ratio": 1.46,
+      "base_range_pct": 23.1,
+      "reasons": [
+        "leader: YTD 21.2% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "LIN",
+      "name": "Linde plc",
+      "sector": "Materials",
+      "ytd": 19.13,
+      "rs_vs_spy": 2.32,
+      "setup": "pullback",
+      "price": 507.9,
+      "pct_to_20ma": 0.59,
+      "vol_ratio": 1.35,
+      "base_range_pct": 5.0,
+      "reasons": [
+        "leader: YTD 19.13% \u2265 16.5%",
+        "leading group: Materials (10.27%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "UNP",
+      "name": "Union Pacific Corporation",
+      "sector": "Industrials",
+      "ytd": 18.65,
+      "rs_vs_spy": 2.26,
+      "setup": "pullback",
+      "price": 272.32,
+      "pct_to_20ma": 2.2,
+      "vol_ratio": 0.92,
+      "base_range_pct": 6.1,
+      "reasons": [
+        "leader: YTD 18.65% \u2265 16.5%",
+        "leading group: Industrials (10.56%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
