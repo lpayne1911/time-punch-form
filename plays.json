@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-06T23:21:23+00:00",
+  "generated_at": "2026-06-06T23:37:04+00:00",
   "benchmark": "SPY",
   "spy_ytd": 8.25,
   "leader_threshold": 16.5,
@@ -33,6 +33,53 @@
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
+      "week_change_pct": -5.01,
+      "sma50": 1179.88,
+      "sma200": 530.24,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 1641.64,
+          "chg_pct": null,
+          "volume": 10004100
+        },
+        {
+          "date": "2026-05-29",
+          "close": 1694.98,
+          "chg_pct": 3.25,
+          "volume": 8751100
+        },
+        {
+          "date": "2026-06-01",
+          "close": 1761.43,
+          "chg_pct": 3.92,
+          "volume": 9681700
+        },
+        {
+          "date": "2026-06-02",
+          "close": 1716.36,
+          "chg_pct": -2.56,
+          "volume": 7093300
+        },
+        {
+          "date": "2026-06-03",
+          "close": 1831.5,
+          "chg_pct": 6.71,
+          "volume": 11884700
+        },
+        {
+          "date": "2026-06-04",
+          "close": 1759.68,
+          "chg_pct": -3.92,
+          "volume": 10518500
+        },
+        {
+          "date": "2026-06-05",
+          "close": 1559.32,
+          "chg_pct": -11.39,
+          "volume": 13160900
+        }
+      ],
       "reasons": [
         "leader: YTD 466.53% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -57,6 +104,53 @@
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
+      "week_change_pct": -3.78,
+      "sma50": 665.97,
+      "sma200": 385.88,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 880.72,
+          "chg_pct": null,
+          "volume": 2838100
+        },
+        {
+          "date": "2026-05-29",
+          "close": 879.8,
+          "chg_pct": -0.1,
+          "volume": 4674500
+        },
+        {
+          "date": "2026-06-01",
+          "close": 921.26,
+          "chg_pct": 4.71,
+          "volume": 3358000
+        },
+        {
+          "date": "2026-06-02",
+          "close": 926.61,
+          "chg_pct": 0.58,
+          "volume": 2561900
+        },
+        {
+          "date": "2026-06-03",
+          "close": 940.69,
+          "chg_pct": 1.52,
+          "volume": 2902300
+        },
+        {
+          "date": "2026-06-04",
+          "close": 925.99,
+          "chg_pct": -1.56,
+          "volume": 2534400
+        },
+        {
+          "date": "2026-06-05",
+          "close": 847.47,
+          "chg_pct": -8.48,
+          "volume": 3602700
+        }
+      ],
       "reasons": [
         "leader: YTD 195.25% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -81,6 +175,53 @@
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
+      "week_change_pct": -6.44,
+      "sma50": 617.35,
+      "sma200": 360.72,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 923.52,
+          "chg_pct": null,
+          "volume": 49694300
+        },
+        {
+          "date": "2026-05-29",
+          "close": 971.0,
+          "chg_pct": 5.14,
+          "volume": 60498600
+        },
+        {
+          "date": "2026-06-01",
+          "close": 1035.5,
+          "chg_pct": 6.64,
+          "volume": 46552100
+        },
+        {
+          "date": "2026-06-02",
+          "close": 1064.1,
+          "chg_pct": 2.76,
+          "volume": 47555400
+        },
+        {
+          "date": "2026-06-03",
+          "close": 1079.57,
+          "chg_pct": 1.45,
+          "volume": 40324200
+        },
+        {
+          "date": "2026-06-04",
+          "close": 996.0,
+          "chg_pct": -7.74,
+          "volume": 54917200
+        },
+        {
+          "date": "2026-06-05",
+          "close": 864.01,
+          "chg_pct": -13.25,
+          "volume": 76501000
+        }
+      ],
       "reasons": [
         "leader: YTD 174.04% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -105,6 +246,53 @@
       "position_usd": 1023.44,
       "risk_usd": 23.8,
       "size_note": "",
+      "week_change_pct": -3.64,
+      "sma50": 423.84,
+      "sma200": 242.41,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 531.04,
+          "chg_pct": null,
+          "volume": 6002800
+        },
+        {
+          "date": "2026-05-29",
+          "close": 531.07,
+          "chg_pct": 0.01,
+          "volume": 8383500
+        },
+        {
+          "date": "2026-06-01",
+          "close": 546.06,
+          "chg_pct": 2.82,
+          "volume": 6240900
+        },
+        {
+          "date": "2026-06-02",
+          "close": 562.95,
+          "chg_pct": 3.09,
+          "volume": 5029100
+        },
+        {
+          "date": "2026-06-03",
+          "close": 593.96,
+          "chg_pct": 5.51,
+          "volume": 7846100
+        },
+        {
+          "date": "2026-06-04",
+          "close": 575.35,
+          "chg_pct": -3.13,
+          "volume": 6488200
+        },
+        {
+          "date": "2026-06-05",
+          "close": 511.72,
+          "chg_pct": -11.06,
+          "volume": 8990300
+        }
+      ],
       "reasons": [
         "leader: YTD 172.83% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -129,6 +317,53 @@
       "position_usd": 1055.34,
       "risk_usd": 22.52,
       "size_note": "",
+      "week_change_pct": -5.26,
+      "sma50": 95.55,
+      "sma200": 65.47,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 123.77,
+          "chg_pct": null,
+          "volume": 8370000
+        },
+        {
+          "date": "2026-05-29",
+          "close": 120.62,
+          "chg_pct": -2.55,
+          "volume": 11272000
+        },
+        {
+          "date": "2026-06-01",
+          "close": 120.92,
+          "chg_pct": 0.25,
+          "volume": 9129300
+        },
+        {
+          "date": "2026-06-02",
+          "close": 128.64,
+          "chg_pct": 6.38,
+          "volume": 10796100
+        },
+        {
+          "date": "2026-06-03",
+          "close": 133.93,
+          "chg_pct": 4.11,
+          "volume": 10113600
+        },
+        {
+          "date": "2026-06-04",
+          "close": 131.82,
+          "chg_pct": -1.58,
+          "volume": 10090000
+        },
+        {
+          "date": "2026-06-05",
+          "close": 117.26,
+          "chg_pct": -11.05,
+          "volume": 19048200
+        }
+      ],
       "reasons": [
         "leader: YTD 106.81% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -153,6 +388,53 @@
       "position_usd": 453.01,
       "risk_usd": 15.31,
       "size_note": "",
+      "week_change_pct": 0.74,
+      "sma50": 408.55,
+      "sma200": 299.58,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 449.68,
+          "chg_pct": null,
+          "volume": 5675600
+        },
+        {
+          "date": "2026-05-29",
+          "close": 450.06,
+          "chg_pct": 0.08,
+          "volume": 8546800
+        },
+        {
+          "date": "2026-06-01",
+          "close": 458.17,
+          "chg_pct": 1.8,
+          "volume": 6613700
+        },
+        {
+          "date": "2026-06-02",
+          "close": 490.05,
+          "chg_pct": 6.96,
+          "volume": 10440700
+        },
+        {
+          "date": "2026-06-03",
+          "close": 500.77,
+          "chg_pct": 2.19,
+          "volume": 8964900
+        },
+        {
+          "date": "2026-06-04",
+          "close": 501.7,
+          "chg_pct": 0.19,
+          "volume": 6729000
+        },
+        {
+          "date": "2026-06-05",
+          "close": 453.01,
+          "chg_pct": -9.71,
+          "volume": 11896900
+        }
+      ],
       "reasons": [
         "leader: YTD 68.91% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -177,6 +459,53 @@
       "position_usd": 262.01,
       "risk_usd": 12.51,
       "size_note": "",
+      "week_change_pct": 4.25,
+      "sma50": 242.21,
+      "sma200": 202.02,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 251.33,
+          "chg_pct": null,
+          "volume": 2826000
+        },
+        {
+          "date": "2026-05-29",
+          "close": 248.77,
+          "chg_pct": -1.02,
+          "volume": 2861900
+        },
+        {
+          "date": "2026-06-01",
+          "close": 258.66,
+          "chg_pct": 3.98,
+          "volume": 2426900
+        },
+        {
+          "date": "2026-06-02",
+          "close": 263.06,
+          "chg_pct": 1.7,
+          "volume": 2350400
+        },
+        {
+          "date": "2026-06-03",
+          "close": 267.21,
+          "chg_pct": 1.58,
+          "volume": 2333800
+        },
+        {
+          "date": "2026-06-04",
+          "close": 267.05,
+          "chg_pct": -0.06,
+          "volume": 2123300
+        },
+        {
+          "date": "2026-06-05",
+          "close": 262.01,
+          "chg_pct": -1.89,
+          "volume": 2159900
+        }
+      ],
       "reasons": [
         "leader: YTD 60.06% \u2265 16.5%",
         "leading group: Energy (27.16%)",
@@ -201,6 +530,53 @@
       "position_usd": 511.64,
       "risk_usd": 22.95,
       "size_note": "",
+      "week_change_pct": 4.48,
+      "sma50": 243.95,
+      "sma200": 194.51,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 244.85,
+          "chg_pct": null,
+          "volume": 2565100
+        },
+        {
+          "date": "2026-05-29",
+          "close": 244.82,
+          "chg_pct": -0.01,
+          "volume": 3995800
+        },
+        {
+          "date": "2026-06-01",
+          "close": 252.52,
+          "chg_pct": 3.15,
+          "volume": 2383600
+        },
+        {
+          "date": "2026-06-02",
+          "close": 258.26,
+          "chg_pct": 2.27,
+          "volume": 2357800
+        },
+        {
+          "date": "2026-06-03",
+          "close": 261.45,
+          "chg_pct": 1.24,
+          "volume": 2691500
+        },
+        {
+          "date": "2026-06-04",
+          "close": 258.85,
+          "chg_pct": -0.99,
+          "volume": 2288300
+        },
+        {
+          "date": "2026-06-05",
+          "close": 255.82,
+          "chg_pct": -1.17,
+          "volume": 2424100
+        }
+      ],
       "reasons": [
         "leader: YTD 56.44% \u2265 16.5%",
         "leading group: Energy (27.16%)",
@@ -225,6 +601,53 @@
       "position_usd": 393.35,
       "risk_usd": 19.02,
       "size_note": "",
+      "week_change_pct": 2.59,
+      "sma50": 337.52,
+      "sma200": 295.88,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 383.43,
+          "chg_pct": null,
+          "volume": 1293000
+        },
+        {
+          "date": "2026-05-29",
+          "close": 383.45,
+          "chg_pct": 0.01,
+          "volume": 1667300
+        },
+        {
+          "date": "2026-06-01",
+          "close": 395.62,
+          "chg_pct": 3.17,
+          "volume": 654100
+        },
+        {
+          "date": "2026-06-02",
+          "close": 409.13,
+          "chg_pct": 3.41,
+          "volume": 734200
+        },
+        {
+          "date": "2026-06-03",
+          "close": 405.66,
+          "chg_pct": -0.85,
+          "volume": 660500
+        },
+        {
+          "date": "2026-06-04",
+          "close": 408.66,
+          "chg_pct": 0.74,
+          "volume": 519300
+        },
+        {
+          "date": "2026-06-05",
+          "close": 393.35,
+          "chg_pct": -3.75,
+          "volume": 433100
+        }
+      ],
       "reasons": [
         "leader: YTD 53.28% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -249,6 +672,53 @@
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 1.87,
+      "sma50": 834.96,
+      "sma200": 646.1,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 887.67,
+          "chg_pct": null,
+          "volume": 2750600
+        },
+        {
+          "date": "2026-05-29",
+          "close": 875.87,
+          "chg_pct": -1.33,
+          "volume": 5195400
+        },
+        {
+          "date": "2026-06-01",
+          "close": 865.36,
+          "chg_pct": -1.2,
+          "volume": 2675000
+        },
+        {
+          "date": "2026-06-02",
+          "close": 909.81,
+          "chg_pct": 5.14,
+          "volume": 2822600
+        },
+        {
+          "date": "2026-06-03",
+          "close": 926.18,
+          "chg_pct": 1.8,
+          "volume": 2511200
+        },
+        {
+          "date": "2026-06-04",
+          "close": 940.48,
+          "chg_pct": 1.54,
+          "volume": 3077000
+        },
+        {
+          "date": "2026-06-05",
+          "close": 904.28,
+          "chg_pct": -3.85,
+          "volume": 2779300
+        }
+      ],
       "reasons": [
         "leader: YTD 51.76% \u2265 16.5%",
         "leading group: Industrials (10.56%)",
@@ -273,6 +743,53 @@
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 0.08,
+      "sma50": 1781.42,
+      "sma200": 1374.14,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 1927.63,
+          "chg_pct": null,
+          "volume": 885500
+        },
+        {
+          "date": "2026-05-29",
+          "close": 1921.71,
+          "chg_pct": -0.31,
+          "volume": 1145700
+        },
+        {
+          "date": "2026-06-01",
+          "close": 1940.04,
+          "chg_pct": 0.95,
+          "volume": 735900
+        },
+        {
+          "date": "2026-06-02",
+          "close": 2045.2,
+          "chg_pct": 5.42,
+          "volume": 1061100
+        },
+        {
+          "date": "2026-06-03",
+          "close": 2125.11,
+          "chg_pct": 3.91,
+          "volume": 1020000
+        },
+        {
+          "date": "2026-06-04",
+          "close": 2131.1,
+          "chg_pct": 0.28,
+          "volume": 825300
+        },
+        {
+          "date": "2026-06-05",
+          "close": 1929.2,
+          "chg_pct": -9.47,
+          "volume": 1857800
+        }
+      ],
       "reasons": [
         "leader: YTD 51.76% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -297,6 +814,53 @@
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 0.0,
+      "sma50": 515.7,
+      "sma200": 478.04,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 671.0,
+          "chg_pct": null,
+          "volume": 2372100
+        },
+        {
+          "date": "2026-05-29",
+          "close": 731.0,
+          "chg_pct": 8.94,
+          "volume": 4814200
+        },
+        {
+          "date": "2026-06-01",
+          "close": 782.17,
+          "chg_pct": 7.0,
+          "volume": 4590300
+        },
+        {
+          "date": "2026-06-02",
+          "close": 768.95,
+          "chg_pct": -1.69,
+          "volume": 4185300
+        },
+        {
+          "date": "2026-06-03",
+          "close": 747.61,
+          "chg_pct": -2.78,
+          "volume": 5246600
+        },
+        {
+          "date": "2026-06-04",
+          "close": 719.09,
+          "chg_pct": -3.81,
+          "volume": 7449800
+        },
+        {
+          "date": "2026-06-05",
+          "close": 671.02,
+          "chg_pct": -6.68,
+          "volume": 5230200
+        }
+      ],
       "reasons": [
         "leader: YTD 47.94% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -321,6 +885,53 @@
       "position_usd": 366.16,
       "risk_usd": 18.91,
       "size_note": "",
+      "week_change_pct": 3.6,
+      "sma50": 171.87,
+      "sma200": 147.47,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 176.71,
+          "chg_pct": null,
+          "volume": 2234100
+        },
+        {
+          "date": "2026-05-29",
+          "close": 175.88,
+          "chg_pct": -0.47,
+          "volume": 3299000
+        },
+        {
+          "date": "2026-06-01",
+          "close": 180.24,
+          "chg_pct": 2.48,
+          "volume": 1881200
+        },
+        {
+          "date": "2026-06-02",
+          "close": 182.56,
+          "chg_pct": 1.29,
+          "volume": 1309300
+        },
+        {
+          "date": "2026-06-03",
+          "close": 184.68,
+          "chg_pct": 1.16,
+          "volume": 1846200
+        },
+        {
+          "date": "2026-06-04",
+          "close": 184.14,
+          "chg_pct": -0.29,
+          "volume": 1309800
+        },
+        {
+          "date": "2026-06-05",
+          "close": 183.08,
+          "chg_pct": -0.58,
+          "volume": 2229200
+        }
+      ],
       "reasons": [
         "leader: YTD 42.4% \u2265 16.5%",
         "leading group: Energy (27.16%)",
@@ -345,6 +956,53 @@
       "position_usd": 1102.24,
       "risk_usd": 23.22,
       "size_note": "",
+      "week_change_pct": 2.38,
+      "sma50": 137.47,
+      "sma200": 118.65,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 134.58,
+          "chg_pct": null,
+          "volume": 3212800
+        },
+        {
+          "date": "2026-05-29",
+          "close": 133.38,
+          "chg_pct": -0.89,
+          "volume": 7668400
+        },
+        {
+          "date": "2026-06-01",
+          "close": 136.62,
+          "chg_pct": 2.43,
+          "volume": 3025100
+        },
+        {
+          "date": "2026-06-02",
+          "close": 138.58,
+          "chg_pct": 1.43,
+          "volume": 2963600
+        },
+        {
+          "date": "2026-06-03",
+          "close": 141.5,
+          "chg_pct": 2.11,
+          "volume": 3046500
+        },
+        {
+          "date": "2026-06-04",
+          "close": 140.88,
+          "chg_pct": -0.44,
+          "volume": 2107100
+        },
+        {
+          "date": "2026-06-05",
+          "close": 137.78,
+          "chg_pct": -2.2,
+          "volume": 2750300
+        }
+      ],
       "reasons": [
         "leader: YTD 30.67% \u2265 16.5%",
         "leading group: Energy (27.16%)",
@@ -369,6 +1027,53 @@
       "position_usd": 516.89,
       "risk_usd": 24.14,
       "size_note": "",
+      "week_change_pct": 2.89,
+      "sma50": 44.07,
+      "sma200": 38.24,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 45.67,
+          "chg_pct": null,
+          "volume": 15804700
+        },
+        {
+          "date": "2026-05-29",
+          "close": 45.26,
+          "chg_pct": -0.9,
+          "volume": 26469300
+        },
+        {
+          "date": "2026-06-01",
+          "close": 45.86,
+          "chg_pct": 1.33,
+          "volume": 15184700
+        },
+        {
+          "date": "2026-06-02",
+          "close": 46.14,
+          "chg_pct": 0.61,
+          "volume": 10663600
+        },
+        {
+          "date": "2026-06-03",
+          "close": 46.44,
+          "chg_pct": 0.65,
+          "volume": 12529500
+        },
+        {
+          "date": "2026-06-04",
+          "close": 46.23,
+          "chg_pct": -0.45,
+          "volume": 11095300
+        },
+        {
+          "date": "2026-06-05",
+          "close": 46.99,
+          "chg_pct": 1.64,
+          "volume": 13615300
+        }
+      ],
       "reasons": [
         "leader: YTD 30.38% \u2265 16.5%",
         "leading group: Industrials (10.56%)",
@@ -393,6 +1098,53 @@
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 4.22,
+      "sma50": 1185.25,
+      "sma200": 1059.56,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 1247.41,
+          "chg_pct": null,
+          "volume": 254700
+        },
+        {
+          "date": "2026-05-29",
+          "close": 1234.24,
+          "chg_pct": -1.06,
+          "volume": 461100
+        },
+        {
+          "date": "2026-06-01",
+          "close": 1243.03,
+          "chg_pct": 0.71,
+          "volume": 227600
+        },
+        {
+          "date": "2026-06-02",
+          "close": 1268.36,
+          "chg_pct": 2.04,
+          "volume": 195600
+        },
+        {
+          "date": "2026-06-03",
+          "close": 1284.22,
+          "chg_pct": 1.25,
+          "volume": 291100
+        },
+        {
+          "date": "2026-06-04",
+          "close": 1289.37,
+          "chg_pct": 0.4,
+          "volume": 217100
+        },
+        {
+          "date": "2026-06-05",
+          "close": 1300.01,
+          "chg_pct": 0.83,
+          "volume": 255800
+        }
+      ],
       "reasons": [
         "leader: YTD 30.01% \u2265 16.5%",
         "leading group: Industrials (10.56%)",
@@ -417,6 +1169,53 @@
       "position_usd": 470.12,
       "risk_usd": 23.53,
       "size_note": "",
+      "week_change_pct": 5.25,
+      "sma50": 62.47,
+      "sma200": 59.13,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 63.81,
+          "chg_pct": null,
+          "volume": 11959700
+        },
+        {
+          "date": "2026-05-29",
+          "close": 63.87,
+          "chg_pct": 0.09,
+          "volume": 10392700
+        },
+        {
+          "date": "2026-06-01",
+          "close": 65.11,
+          "chg_pct": 1.94,
+          "volume": 8101400
+        },
+        {
+          "date": "2026-06-02",
+          "close": 66.42,
+          "chg_pct": 2.01,
+          "volume": 8157300
+        },
+        {
+          "date": "2026-06-03",
+          "close": 67.58,
+          "chg_pct": 1.75,
+          "volume": 6225800
+        },
+        {
+          "date": "2026-06-04",
+          "close": 68.54,
+          "chg_pct": 1.42,
+          "volume": 5505700
+        },
+        {
+          "date": "2026-06-05",
+          "close": 67.16,
+          "chg_pct": -2.01,
+          "volume": 6387800
+        }
+      ],
       "reasons": [
         "leader: YTD 26.47% \u2265 16.5%",
         "leading group: Industrials (10.56%)",
@@ -441,6 +1240,53 @@
       "position_usd": 732.23,
       "risk_usd": 24.43,
       "size_note": "",
+      "week_change_pct": 1.44,
+      "sma50": 17.8,
+      "sma200": 17.18,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 19.51,
+          "chg_pct": null,
+          "volume": 9227600
+        },
+        {
+          "date": "2026-05-29",
+          "close": 19.15,
+          "chg_pct": -1.85,
+          "volume": 61925800
+        },
+        {
+          "date": "2026-06-01",
+          "close": 19.0,
+          "chg_pct": -0.78,
+          "volume": 6470700
+        },
+        {
+          "date": "2026-06-02",
+          "close": 19.45,
+          "chg_pct": 2.37,
+          "volume": 8968500
+        },
+        {
+          "date": "2026-06-03",
+          "close": 19.07,
+          "chg_pct": -1.95,
+          "volume": 6120500
+        },
+        {
+          "date": "2026-06-04",
+          "close": 19.6,
+          "chg_pct": 2.78,
+          "volume": 7032100
+        },
+        {
+          "date": "2026-06-05",
+          "close": 19.79,
+          "chg_pct": 0.97,
+          "volume": 5488500
+        }
+      ],
       "reasons": [
         "leader: YTD 25.79% \u2265 16.5%",
         "leading group: Real Estate (11.44%)",
@@ -465,6 +1311,53 @@
       "position_usd": 508.83,
       "risk_usd": 24.99,
       "size_note": "",
+      "week_change_pct": 1.35,
+      "sma50": 23.21,
+      "sma200": 21.48,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 23.91,
+          "chg_pct": null,
+          "volume": 3511400
+        },
+        {
+          "date": "2026-05-29",
+          "close": 23.82,
+          "chg_pct": -0.37,
+          "volume": 7282500
+        },
+        {
+          "date": "2026-06-01",
+          "close": 23.38,
+          "chg_pct": -1.83,
+          "volume": 3531000
+        },
+        {
+          "date": "2026-06-02",
+          "close": 23.45,
+          "chg_pct": 0.3,
+          "volume": 3006000
+        },
+        {
+          "date": "2026-06-03",
+          "close": 23.51,
+          "chg_pct": 0.25,
+          "volume": 3420800
+        },
+        {
+          "date": "2026-06-04",
+          "close": 23.75,
+          "chg_pct": 1.01,
+          "volume": 3556000
+        },
+        {
+          "date": "2026-06-05",
+          "close": 24.23,
+          "chg_pct": 2.02,
+          "volume": 4259700
+        }
+      ],
       "reasons": [
         "leader: YTD 23.48% \u2265 16.5%",
         "leading group: Real Estate (11.44%)",
@@ -489,6 +1382,53 @@
       "position_usd": 752.38,
       "risk_usd": 23.5,
       "size_note": "",
+      "week_change_pct": 0.63,
+      "sma50": 333.92,
+      "sma200": 324.46,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 373.85,
+          "chg_pct": null,
+          "volume": 1924600
+        },
+        {
+          "date": "2026-05-29",
+          "close": 374.93,
+          "chg_pct": 0.29,
+          "volume": 3184200
+        },
+        {
+          "date": "2026-06-01",
+          "close": 414.16,
+          "chg_pct": 10.46,
+          "volume": 4522700
+        },
+        {
+          "date": "2026-06-02",
+          "close": 416.39,
+          "chg_pct": 0.54,
+          "volume": 3168100
+        },
+        {
+          "date": "2026-06-03",
+          "close": 408.0,
+          "chg_pct": -2.01,
+          "volume": 2877400
+        },
+        {
+          "date": "2026-06-04",
+          "close": 411.68,
+          "chg_pct": 0.9,
+          "volume": 2998700
+        },
+        {
+          "date": "2026-06-05",
+          "close": 376.19,
+          "chg_pct": -8.62,
+          "volume": 3519000
+        }
+      ],
       "reasons": [
         "leader: YTD 21.2% \u2265 16.5%",
         "leading group: Information Technology (25.1%)",
@@ -513,6 +1453,53 @@
       "position_usd": 507.9,
       "risk_usd": 13.09,
       "size_note": "",
+      "week_change_pct": 1.5,
+      "sma50": 501.16,
+      "sma200": 462.75,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 500.4,
+          "chg_pct": null,
+          "volume": 2266400
+        },
+        {
+          "date": "2026-05-29",
+          "close": 496.12,
+          "chg_pct": -0.85,
+          "volume": 4481400
+        },
+        {
+          "date": "2026-06-01",
+          "close": 495.84,
+          "chg_pct": -0.06,
+          "volume": 2507300
+        },
+        {
+          "date": "2026-06-02",
+          "close": 494.35,
+          "chg_pct": -0.3,
+          "volume": 3010900
+        },
+        {
+          "date": "2026-06-03",
+          "close": 505.97,
+          "chg_pct": 2.35,
+          "volume": 2283600
+        },
+        {
+          "date": "2026-06-04",
+          "close": 507.45,
+          "chg_pct": 0.29,
+          "volume": 2995800
+        },
+        {
+          "date": "2026-06-05",
+          "close": 507.9,
+          "chg_pct": 0.09,
+          "volume": 2885100
+        }
+      ],
       "reasons": [
         "leader: YTD 19.13% \u2265 16.5%",
         "leading group: Materials (10.27%)",
@@ -537,6 +1524,53 @@
       "position_usd": 544.64,
       "risk_usd": 22.38,
       "size_note": "",
+      "week_change_pct": 2.52,
+      "sma50": 258.48,
+      "sma200": 237.69,
+      "history": [
+        {
+          "date": "2026-05-28",
+          "close": 265.62,
+          "chg_pct": null,
+          "volume": 6081800
+        },
+        {
+          "date": "2026-05-29",
+          "close": 262.64,
+          "chg_pct": -1.12,
+          "volume": 6342500
+        },
+        {
+          "date": "2026-06-01",
+          "close": 263.5,
+          "chg_pct": 0.33,
+          "volume": 2578700
+        },
+        {
+          "date": "2026-06-02",
+          "close": 264.68,
+          "chg_pct": 0.45,
+          "volume": 2523500
+        },
+        {
+          "date": "2026-06-03",
+          "close": 262.13,
+          "chg_pct": -0.96,
+          "volume": 2876300
+        },
+        {
+          "date": "2026-06-04",
+          "close": 263.9,
+          "chg_pct": 0.68,
+          "volume": 2325200
+        },
+        {
+          "date": "2026-06-05",
+          "close": 272.32,
+          "chg_pct": 3.19,
+          "volume": 2784100
+        }
+      ],
       "reasons": [
         "leader: YTD 18.65% \u2265 16.5%",
         "leading group: Industrials (10.56%)",
