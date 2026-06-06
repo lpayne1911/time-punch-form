@@ -216,6 +216,72 @@ def analyze(close: pd.Series, volume: pd.Series) -> dict | None:
     }
 
 
+def compute_indicators(close: pd.Series, high: pd.Series, low: pd.Series,
+                       volume: pd.Series) -> dict:
+    """Momentum / volatility / supply context for studying a pullback's health."""
+    close = close.dropna()
+    price = float(close.iloc[-1])
+
+    # RSI(14)
+    delta = close.diff()
+    gain = delta.clip(lower=0).rolling(14).mean()
+    loss = (-delta.clip(upper=0)).rolling(14).mean()
+    rs = gain / loss.replace(0, float("nan"))
+    rsi = float((100 - 100 / (1 + rs)).iloc[-1])
+
+    # ATR(14) as a percent of price (typical daily range = how much "noise")
+    atr_pct = None
+    if high is not None and low is not None:
+        prev = close.shift(1)
+        tr = pd.concat([(high - low).abs(), (high - prev).abs(),
+                        (low - prev).abs()], axis=1).max(axis=1)
+        atr = tr.rolling(14).mean().iloc[-1]
+        atr_pct = round(float(atr) / price * 100, 2)
+
+    # Distance below the 52-week high (extension / how deep the pullback is)
+    yr = close.tail(252)
+    from_high = round((price / float(yr.max()) - 1) * 100, 2)
+
+    # Distribution days in the last 20 sessions: a down day (> 0.2%) on heavier
+    # volume than the prior day = institutional selling pressure.
+    dist_days = 0
+    c20, v20 = close.tail(21), (volume.tail(21) if volume is not None else None)
+    if v20 is not None:
+        for i in range(1, len(c20)):
+            if (c20.iloc[i] < c20.iloc[i - 1] * 0.998
+                    and v20.iloc[i] > v20.iloc[i - 1]):
+                dist_days += 1
+
+    # Last session's move and whether it came on above-average volume.
+    last_chg = round((price / float(close.iloc[-2]) - 1) * 100, 2) if len(close) > 1 else None
+    vol50 = float(volume.rolling(50).mean().iloc[-1]) if volume is not None else 0.0
+    last_vol_ratio = round(float(volume.iloc[-1]) / vol50, 2) if vol50 else None
+
+    return {
+        "rsi14": round(rsi, 1),
+        "atr_pct": atr_pct,
+        "from_52w_high_pct": from_high,
+        "distribution_days_20": dist_days,
+        "last_day_chg_pct": last_chg,
+        "last_day_vol_ratio": last_vol_ratio,
+    }
+
+
+def assess_pullback(ind: dict) -> str:
+    """Turn the indicators into a plain-English read on the pullback's quality."""
+    last_chg = ind.get("last_day_chg_pct") or 0
+    last_vol = ind.get("last_day_vol_ratio") or 0
+    if last_chg <= -4 and last_vol >= 1.2:
+        return "caution: heavy-volume down day — wait for reclaim"
+    if ind.get("distribution_days_20", 0) >= 4:
+        return "caution: under distribution (4+ heavy down days/20)"
+    if (ind.get("rsi14") or 0) >= 75:
+        return "extended: RSI overbought"
+    if (ind.get("from_52w_high_pct") or 0) <= -15:
+        return "deep pullback: >15% off highs"
+    return "constructive"
+
+
 def recent_history(close: pd.Series, volume: pd.Series, days: int = 7) -> tuple:
     """Return the last `days` trading sessions and the change across them.
 
@@ -317,6 +383,8 @@ def main() -> int:
     for tkr in tickers:
         close = series_for(data, tkr, "Close")
         volume = series_for(data, tkr, "Volume")
+        high = series_for(data, tkr, "High")
+        low = series_for(data, tkr, "Low")
         if close is None:
             continue
         m = analyze(close, volume)
@@ -345,6 +413,8 @@ def main() -> int:
         rs = round(ytd / spy_ytd, 2) if spy_ytd else None
         sizing = size_position(m["price"], m["setup"], m["sma20"], m["base_low"])
         history, week_change = recent_history(close, volume, days=7)
+        indicators = compute_indicators(close, high, low, volume)
+        assessment = assess_pullback(indicators)
         plays.append({
             "ticker": tkr,
             "name": name_by_ticker.get(tkr, tkr),
@@ -365,6 +435,8 @@ def main() -> int:
             "week_change_pct": week_change,
             "sma50": m["sma50"],
             "sma200": m["sma200"],
+            "indicators": indicators,
+            "assessment": assessment,
             "history": history,
             "reasons": reasons,
         })
