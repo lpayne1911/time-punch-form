@@ -77,18 +77,45 @@ FALLBACK_UNIVERSE = [
 # Data layer (the only part that touches the network).
 # ---------------------------------------------------------------------------
 def sp500_constituents() -> pd.DataFrame:
-    """Return a DataFrame of [ticker, name, sector] for the S&P 500."""
+    """Return a DataFrame of [ticker, name, sector] for the S&P 500.
+
+    Tries a stable, machine-readable constituents CSV first (no scraping),
+    then falls back to the Wikipedia table, then to a tiny inline list.
+    """
+    # 1) Maintained constituents dataset (Symbol, Security, GICS Sector).
+    try:
+        df = pd.read_csv(
+            "https://raw.githubusercontent.com/datasets/"
+            "s-and-p-500-companies/main/data/constituents.csv"
+        )
+        df = df.rename(
+            columns={"Symbol": "ticker", "Security": "name", "GICS Sector": "sector"}
+        )
+        df["ticker"] = df["ticker"].str.replace(".", "-", regex=False)
+        out = df[["ticker", "name", "sector"]].dropna()
+        if len(out) >= 100:
+            print(f"[info] loaded {len(out)} constituents from datasets CSV",
+                  file=sys.stderr)
+            return out.reset_index(drop=True)
+        raise ValueError(f"unexpected constituent count: {len(out)}")
+    except Exception as exc:  # noqa: BLE001
+        print(f"[warn] constituents CSV failed ({exc}); trying Wikipedia",
+              file=sys.stderr)
+
+    # 2) Wikipedia table (needs a browser-ish UA to avoid 403s).
     try:
         tables = pd.read_html(
-            "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
+            "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
+            storage_options={"User-Agent": "Mozilla/5.0 (compatible; play-scanner)"},
         )
         df = tables[0].rename(
             columns={"Symbol": "ticker", "Security": "name", "GICS Sector": "sector"}
         )
-        # Yahoo uses dashes, not dots (BRK.B -> BRK-B).
         df["ticker"] = df["ticker"].str.replace(".", "-", regex=False)
         out = df[["ticker", "name", "sector"]].dropna()
         if len(out) >= 100:
+            print(f"[info] loaded {len(out)} constituents from Wikipedia",
+                  file=sys.stderr)
             return out.reset_index(drop=True)
         raise ValueError(f"unexpected constituent count: {len(out)}")
     except Exception as exc:  # noqa: BLE001 - any failure -> safe fallback
