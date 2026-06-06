@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-06-06T18:41:38+00:00",
+  "benchmark": "SPY",
+  "spy_ytd": 8.25,
+  "leader_threshold": 16.5,
+  "leading_sectors": [
+    "Energy",
+    "Industrials",
+    "Information Technology",
+    "Materials",
+    "Real Estate"
+  ],
+  "universe_size": 10,
+  "count": 1,
+  "plays": [
+    {
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "sector": "Information Technology",
+      "ytd": 174.04,
+      "rs_vs_spy": 21.1,
+      "setup": "pullback",
+      "price": 864.01,
+      "pct_to_20ma": 1.67,
+      "vol_ratio": 1.53,
+      "base_range_pct": 58.4,
+      "reasons": [
+        "leader: YTD 174.04% \u2265 16.5%",
+        "leading group: Information Technology (25.1%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    }
+  ]
+}
