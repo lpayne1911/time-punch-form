@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Play Watchlist</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh; padding: 20px; color: #333; line-height: 1.6;
+}
+.container {
+    max-width: 1000px; margin: 0 auto; background: #fff;
+    border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden;
+}
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff; padding: 34px 30px; text-align: center;
+}
+.header h1 { font-size: 28px; margin-bottom: 8px; }
+.header p { opacity: 0.92; font-size: 14px; }
+.header a { color: #fff; text-decoration: underline; }
+.disclaimer {
+    display: inline-block; margin-top: 12px; padding: 6px 14px;
+    background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 20px; font-size: 12px;
+}
+.content { padding: 24px 30px 30px; }
+.meta {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;
+}
+.chip {
+    background: #f0f1fb; border: 1px solid #e6e6f0; border-radius: 8px;
+    padding: 8px 12px; font-size: 13px; color: #4a4a6a;
+}
+.chip strong { color: #764ba2; }
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
+th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid #e6e6f0; white-space: nowrap; }
+th { background: #f0f1fb; color: #4a4a6a; position: sticky; top: 0; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr:hover { background: #fafaff; }
+.setup { font-weight: 600; text-transform: capitalize; }
+.setup.pullback { color: #1565c0; }
+.setup.breakout { color: #1b5e20; }
+.ticker { font-weight: 700; color: #5563c1; }
+.empty { padding: 30px; text-align: center; color: #777; }
+.reasons { color: #777; font-size: 12px; white-space: normal; }
+.footer {
+    background: #f7f7fb; padding: 20px 30px; text-align: center;
+    font-size: 13px; color: #777; border-top: 1px solid #e6e6f0;
+}
+.footer a { color: #5563c1; }
+@media (max-width: 600px) { .header h1 { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📈 Daily Play Watchlist</h1>
+        <p>Plays surfaced by the <a href="playbook.html">First $10K Swing Trading Playbook</a> screen</p>
+        <span class="disclaimer">⚠️ Educational only — not financial advice</span>
+    </div>
+    <div class="content">
+        <div class="meta" id="meta"></div>
+        <div class="tablewrap">
+            <table id="table" hidden>
+                <thead>
+                    <tr>
+                        <th>#</th><th>Ticker</th><th>Name</th><th>Sector</th>
+                        <th>YTD %</th><th>RS vs SPY</th><th>Setup</th>
+                        <th>Price</th><th>% to 20MA</th><th>Vol ×</th><th>Why</th>
+                    </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+            </table>
+        </div>
+        <div class="empty" id="status">Loading latest scan…</div>
+    </div>
+    <div class="footer">
+        Updated automatically each weekday after the U.S. close ·
+        <a href="plays.json">plays.json</a> · <a href="playbook.html">Playbook</a>
+    </div>
+</div>
+<script>
+const num = (v) => (v === null || v === undefined) ? '—' : v;
+fetch('plays.json?_=' + Date.now())
+    .then(r => { if (!r.ok) throw new Error('no scan yet'); return r.json(); })
+    .then(data => {
+        const meta = document.getElementById('meta');
+        const d = new Date(data.generated_at);
+        meta.innerHTML = `
+            <span class="chip">Generated <strong>${d.toLocaleString()}</strong></span>
+            <span class="chip">${data.benchmark} YTD <strong>${data.spy_ytd}%</strong></span>
+            <span class="chip">Leader threshold <strong>${data.leader_threshold}%</strong></span>
+            <span class="chip">Scanned <strong>${data.universe_size}</strong> → <strong>${data.count}</strong> plays</span>
+            <span class="chip">Leading sectors: <strong>${(data.leading_sectors||[]).join(', ') || '—'}</strong></span>`;
+        const status = document.getElementById('status');
+        if (!data.plays || !data.plays.length) {
+            status.textContent = 'No setups matched all criteria in the latest scan.';
+            return;
+        }
+        const rows = document.getElementById('rows');
+        rows.innerHTML = data.plays.map((p, i) => `
+            <tr>
+                <td class="num">${i + 1}</td>
+                <td class="ticker">${p.ticker}</td>
+                <td>${p.name}</td>
+                <td>${p.sector}</td>
+                <td class="num">${num(p.ytd)}</td>
+                <td class="num">${num(p.rs_vs_spy)}</td>
+                <td class="setup ${p.setup}">${p.setup}</td>
+                <td class="num">${num(p.price)}</td>
+                <td class="num">${num(p.pct_to_20ma)}</td>
+                <td class="num">${num(p.vol_ratio)}</td>
+                <td class="reasons">${(p.reasons || []).join(' · ')}</td>
+            </tr>`).join('');
+        document.getElementById('table').hidden = false;
+        status.hidden = true;
+    })
+    .catch(() => {
+        document.getElementById('status').textContent =
+            'No watchlist published yet — the first scan runs after the next U.S. market close.';
+    });
+</script>
+</body>
+</html>
