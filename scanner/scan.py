@@ -216,6 +216,33 @@ def analyze(close: pd.Series, volume: pd.Series) -> dict | None:
     }
 
 
+def recent_history(close: pd.Series, volume: pd.Series, days: int = 7) -> tuple:
+    """Return the last `days` trading sessions and the change across them.
+
+    Each row is {date, close, chg_pct (vs prior session), volume}. This is the
+    raw per-stock data for a 7-day review.
+    """
+    hist = close.dropna().tail(days)
+    rows, prev = [], None
+    for ts, c in hist.items():
+        c = float(c)
+        vol = None
+        if volume is not None and ts in volume.index:
+            v = volume.loc[ts]
+            vol = int(v) if pd.notna(v) else None
+        rows.append({
+            "date": ts.strftime("%Y-%m-%d"),
+            "close": round(c, 2),
+            "chg_pct": round((c / prev - 1) * 100, 2) if prev else None,
+            "volume": vol,
+        })
+        prev = c
+    week = None
+    if len(hist) >= 2:
+        week = round((float(hist.iloc[-1]) / float(hist.iloc[0]) - 1) * 100, 2)
+    return rows, week
+
+
 def size_position(price: float, setup: str, sma20: float, base_low: float) -> dict:
     """Apply the playbook's risk math to a single play, given BUDGET/RISK_PCT.
 
@@ -317,6 +344,7 @@ def main() -> int:
         # Relative strength vs SPY drives the ranking.
         rs = round(ytd / spy_ytd, 2) if spy_ytd else None
         sizing = size_position(m["price"], m["setup"], m["sma20"], m["base_low"])
+        history, week_change = recent_history(close, volume, days=7)
         plays.append({
             "ticker": tkr,
             "name": name_by_ticker.get(tkr, tkr),
@@ -334,6 +362,10 @@ def main() -> int:
             "position_usd": sizing["position_usd"],
             "risk_usd": sizing["risk_usd"],
             "size_note": sizing["note"],
+            "week_change_pct": week_change,
+            "sma50": m["sma50"],
+            "sma200": m["sma200"],
+            "history": history,
             "reasons": reasons,
         })
 
