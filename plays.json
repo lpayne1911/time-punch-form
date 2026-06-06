@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-06T23:37:04+00:00",
+  "generated_at": "2026-06-06T23:45:20+00:00",
   "benchmark": "SPY",
   "spy_ytd": 8.25,
   "leader_threshold": 16.5,
@@ -36,6 +36,15 @@
       "week_change_pct": -5.01,
       "sma50": 1179.88,
       "sma200": 530.24,
+      "indicators": {
+        "rsi14": 57.1,
+        "atr_pct": 8.14,
+        "from_52w_high_pct": -14.86,
+        "distribution_days_20": 2,
+        "last_day_chg_pct": -11.39,
+        "last_day_vol_ratio": 0.88
+      },
+      "assessment": "constructive",
       "history": [
         {
           "date": "2026-05-28",
@@ -107,6 +116,15 @@
       "week_change_pct": -3.78,
       "sma50": 665.97,
       "sma200": 385.88,
+      "indicators": {
+        "rsi14": 57.1,
+        "atr_pct": 6.02,
+        "from_52w_high_pct": -9.91,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -8.48,
+        "last_day_vol_ratio": 0.9
+      },
+      "assessment": "constructive",
       "history": [
         {
           "date": "2026-05-28",
@@ -178,6 +196,15 @@
       "week_change_pct": -6.44,
       "sma50": 617.35,
       "sma200": 360.72,
+      "indicators": {
+        "rsi14": 60.1,
+        "atr_pct": 8.53,
+        "from_52w_high_pct": -19.97,
+        "distribution_days_20": 5,
+        "last_day_chg_pct": -13.25,
+        "last_day_vol_ratio": 1.53
+      },
+      "assessment": "caution: heavy-volume down day \u2014 wait for reclaim",
       "history": [
         {
           "date": "2026-05-28",
@@ -249,6 +276,15 @@
       "week_change_pct": -3.64,
       "sma50": 423.84,
       "sma200": 242.41,
+      "indicators": {
+        "rsi14": 55.9,
+        "atr_pct": 6.33,
+        "from_52w_high_pct": -13.85,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -11.06,
+        "last_day_vol_ratio": 1.2
+      },
+      "assessment": "caution: heavy-volume down day \u2014 wait for reclaim",
       "history": [
         {
           "date": "2026-05-28",
@@ -320,6 +356,15 @@
       "week_change_pct": -5.26,
       "sma50": 95.55,
       "sma200": 65.47,
+      "indicators": {
+        "rsi14": 53.2,
+        "atr_pct": 6.87,
+        "from_52w_high_pct": -12.45,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -11.05,
+        "last_day_vol_ratio": 1.66
+      },
+      "assessment": "caution: heavy-volume down day \u2014 wait for reclaim",
       "history": [
         {
           "date": "2026-05-28",
@@ -391,6 +436,15 @@
       "week_change_pct": 0.74,
       "sma50": 408.55,
       "sma200": 299.58,
+      "indicators": {
+        "rsi14": 54.5,
+        "atr_pct": 5.23,
+        "from_52w_high_pct": -9.71,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -9.71,
+        "last_day_vol_ratio": 1.72
+      },
+      "assessment": "caution: heavy-volume down day \u2014 wait for reclaim",
       "history": [
         {
           "date": "2026-05-28",
@@ -462,6 +516,15 @@
       "week_change_pct": 4.25,
       "sma50": 242.21,
       "sma200": 202.02,
+      "indicators": {
+        "rsi14": 56.0,
+        "atr_pct": 3.44,
+        "from_52w_high_pct": -1.95,
+        "distribution_days_20": 6,
+        "last_day_chg_pct": -1.89,
+        "last_day_vol_ratio": 0.94
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -533,6 +596,15 @@
       "week_change_pct": 4.48,
       "sma50": 243.95,
       "sma200": 194.51,
+      "indicators": {
+        "rsi14": 54.4,
+        "atr_pct": 3.64,
+        "from_52w_high_pct": -2.15,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -1.17,
+        "last_day_vol_ratio": 0.77
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -604,6 +676,15 @@
       "week_change_pct": 2.59,
       "sma50": 337.52,
       "sma200": 295.88,
+      "indicators": {
+        "rsi14": 65.8,
+        "atr_pct": 3.61,
+        "from_52w_high_pct": -3.86,
+        "distribution_days_20": 2,
+        "last_day_chg_pct": -3.75,
+        "last_day_vol_ratio": 0.59
+      },
+      "assessment": "constructive",
       "history": [
         {
           "date": "2026-05-28",
@@ -675,6 +756,15 @@
       "week_change_pct": 1.87,
       "sma50": 834.96,
       "sma200": 646.1,
+      "indicators": {
+        "rsi14": 53.2,
+        "atr_pct": 3.32,
+        "from_52w_high_pct": -3.85,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -3.85,
+        "last_day_vol_ratio": 1.12
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -746,6 +836,15 @@
       "week_change_pct": 0.08,
       "sma50": 1781.42,
       "sma200": 1374.14,
+      "indicators": {
+        "rsi14": 57.6,
+        "atr_pct": 5.15,
+        "from_52w_high_pct": -9.47,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -9.47,
+        "last_day_vol_ratio": 1.9
+      },
+      "assessment": "caution: heavy-volume down day \u2014 wait for reclaim",
       "history": [
         {
           "date": "2026-05-28",
@@ -817,6 +916,15 @@
       "week_change_pct": 0.0,
       "sma50": 515.7,
       "sma200": 478.04,
+      "indicators": {
+        "rsi14": 60.7,
+        "atr_pct": 5.79,
+        "from_52w_high_pct": -14.21,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -6.68,
+        "last_day_vol_ratio": 1.48
+      },
+      "assessment": "caution: heavy-volume down day \u2014 wait for reclaim",
       "history": [
         {
           "date": "2026-05-28",
@@ -888,6 +996,15 @@
       "week_change_pct": 3.6,
       "sma50": 171.87,
       "sma200": 147.47,
+      "indicators": {
+        "rsi14": 60.9,
+        "atr_pct": 3.16,
+        "from_52w_high_pct": -2.06,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -0.58,
+        "last_day_vol_ratio": 0.83
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -959,6 +1076,15 @@
       "week_change_pct": 2.38,
       "sma50": 137.47,
       "sma200": 118.65,
+      "indicators": {
+        "rsi14": 45.8,
+        "atr_pct": 2.73,
+        "from_52w_high_pct": -7.37,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -2.2,
+        "last_day_vol_ratio": 0.72
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -1030,6 +1156,15 @@
       "week_change_pct": 2.89,
       "sma50": 44.07,
       "sma200": 38.24,
+      "indicators": {
+        "rsi14": 60.9,
+        "atr_pct": 2.08,
+        "from_52w_high_pct": -0.01,
+        "distribution_days_20": 6,
+        "last_day_chg_pct": 1.64,
+        "last_day_vol_ratio": 1.06
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -1101,6 +1236,15 @@
       "week_change_pct": 4.22,
       "sma50": 1185.25,
       "sma200": 1059.56,
+      "indicators": {
+        "rsi14": 60.9,
+        "atr_pct": 1.86,
+        "from_52w_high_pct": 0.0,
+        "distribution_days_20": 2,
+        "last_day_chg_pct": 0.83,
+        "last_day_vol_ratio": 0.99
+      },
+      "assessment": "constructive",
       "history": [
         {
           "date": "2026-05-28",
@@ -1172,6 +1316,15 @@
       "week_change_pct": 5.25,
       "sma50": 62.47,
       "sma200": 59.13,
+      "indicators": {
+        "rsi14": 57.5,
+        "atr_pct": 3.59,
+        "from_52w_high_pct": -15.83,
+        "distribution_days_20": 8,
+        "last_day_chg_pct": -2.01,
+        "last_day_vol_ratio": 0.93
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -1243,6 +1396,15 @@
       "week_change_pct": 1.44,
       "sma50": 17.8,
       "sma200": 17.18,
+      "indicators": {
+        "rsi14": 57.1,
+        "atr_pct": 2.25,
+        "from_52w_high_pct": -1.2,
+        "distribution_days_20": 5,
+        "last_day_chg_pct": 0.97,
+        "last_day_vol_ratio": 0.58
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -1314,6 +1476,15 @@
       "week_change_pct": 1.35,
       "sma50": 23.21,
       "sma200": 21.48,
+      "indicators": {
+        "rsi14": 71.1,
+        "atr_pct": 1.73,
+        "from_52w_high_pct": -0.18,
+        "distribution_days_20": 2,
+        "last_day_chg_pct": 2.02,
+        "last_day_vol_ratio": 0.97
+      },
+      "assessment": "constructive",
       "history": [
         {
           "date": "2026-05-28",
@@ -1385,6 +1556,15 @@
       "week_change_pct": 0.63,
       "sma50": 333.92,
       "sma200": 324.46,
+      "indicators": {
+        "rsi14": 59.6,
+        "atr_pct": 4.64,
+        "from_52w_high_pct": -9.65,
+        "distribution_days_20": 5,
+        "last_day_chg_pct": -8.62,
+        "last_day_vol_ratio": 1.46
+      },
+      "assessment": "caution: heavy-volume down day \u2014 wait for reclaim",
       "history": [
         {
           "date": "2026-05-28",
@@ -1456,6 +1636,15 @@
       "week_change_pct": 1.5,
       "sma50": 501.16,
       "sma200": 462.75,
+      "indicators": {
+        "rsi14": 53.0,
+        "atr_pct": 1.83,
+        "from_52w_high_pct": -1.56,
+        "distribution_days_20": 6,
+        "last_day_chg_pct": 0.09,
+        "last_day_vol_ratio": 1.35
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
@@ -1527,6 +1716,15 @@
       "week_change_pct": 2.52,
       "sma50": 258.48,
       "sma200": 237.69,
+      "indicators": {
+        "rsi14": 52.7,
+        "atr_pct": 2.66,
+        "from_52w_high_pct": -2.02,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": 3.19,
+        "last_day_vol_ratio": 0.92
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
       "history": [
         {
           "date": "2026-05-28",
