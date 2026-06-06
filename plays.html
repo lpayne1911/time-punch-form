@@ -46,6 +46,7 @@ tr:hover { background: #fafaff; }
 .setup.pullback { color: #1565c0; }
 .setup.breakout { color: #1b5e20; }
 .ticker { font-weight: 700; color: #5563c1; }
+.warn { color: #b71c1c; font-size: 12px; }
 .empty { padding: 30px; text-align: center; color: #777; }
 .reasons { color: #777; font-size: 12px; white-space: normal; }
 .footer {
@@ -69,9 +70,10 @@ tr:hover { background: #fafaff; }
             <table id="table" hidden>
                 <thead>
                     <tr>
-                        <th>#</th><th>Ticker</th><th>Name</th><th>Sector</th>
-                        <th>YTD %</th><th>RS vs SPY</th><th>Setup</th>
-                        <th>Price</th><th>% to 20MA</th><th>Vol ×</th><th>Why</th>
+                        <th>#</th><th>Ticker</th><th>Sector</th>
+                        <th>YTD %</th><th>RS</th><th>Setup</th><th>Price</th>
+                        <th>Stop</th><th>Stop %</th><th>Shares</th>
+                        <th>Position $</th><th>Risk $</th>
                     </tr>
                 </thead>
                 <tbody id="rows"></tbody>
@@ -80,6 +82,9 @@ tr:hover { background: #fafaff; }
         <div class="empty" id="status">Loading latest scan…</div>
     </div>
     <div class="footer">
+        Sizing: stop placed just below support (20-day MA for pullbacks, base low for
+        breakouts); shares = the smaller of <em>max loss ÷ stop distance</em> and your
+        buying power. Hover a row for why it qualified.<br>
         Updated automatically each weekday after the U.S. close ·
         <a href="plays.json">plays.json</a> · <a href="playbook.html">Playbook</a>
     </div>
@@ -96,6 +101,7 @@ fetch('plays.json?_=' + Date.now())
             <span class="chip">${data.benchmark} YTD <strong>${data.spy_ytd}%</strong></span>
             <span class="chip">Leader threshold <strong>${data.leader_threshold}%</strong></span>
             <span class="chip">Scanned <strong>${data.universe_size}</strong> → <strong>${data.count}</strong> plays</span>
+            <span class="chip">Budget <strong>$${(data.budget||0).toLocaleString()}</strong> · risk <strong>${data.risk_pct}%</strong> (<strong>$${data.max_loss_per_trade}</strong>/trade)</span>
             <span class="chip">Leading sectors: <strong>${(data.leading_sectors||[]).join(', ') || '—'}</strong></span>`;
         const status = document.getElementById('status');
         if (!data.plays || !data.plays.length) {
@@ -103,19 +109,23 @@ fetch('plays.json?_=' + Date.now())
             return;
         }
         const rows = document.getElementById('rows');
+        const sharesCell = (p) => p.shares
+            ? `<strong>${p.shares}</strong>`
+            : `<span class="warn" title="${p.size_note || ''}">${p.size_note || '0'}</span>`;
         rows.innerHTML = data.plays.map((p, i) => `
-            <tr>
+            <tr title="${(p.reasons || []).join(' · ')}">
                 <td class="num">${i + 1}</td>
                 <td class="ticker">${p.ticker}</td>
-                <td>${p.name}</td>
                 <td>${p.sector}</td>
                 <td class="num">${num(p.ytd)}</td>
                 <td class="num">${num(p.rs_vs_spy)}</td>
                 <td class="setup ${p.setup}">${p.setup}</td>
                 <td class="num">${num(p.price)}</td>
-                <td class="num">${num(p.pct_to_20ma)}</td>
-                <td class="num">${num(p.vol_ratio)}</td>
-                <td class="reasons">${(p.reasons || []).join(' · ')}</td>
+                <td class="num">${num(p.stop)}</td>
+                <td class="num">${num(p.stop_pct)}</td>
+                <td class="num">${sharesCell(p)}</td>
+                <td class="num">${num(p.position_usd)}</td>
+                <td class="num">${num(p.risk_usd)}</td>
             </tr>`).join('');
         document.getElementById('table').hidden = false;
         status.hidden = true;

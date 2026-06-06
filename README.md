@@ -28,6 +28,9 @@ no dependencies — just open the HTML in a browser).
 automated screen. It pulls end-of-day data via [yfinance](https://pypi.org/project/yfinance/)
 (free, no API key — the data layer is isolated so a paid feed can be swapped in
 later), applies the playbook's rules to the S&P 500, and writes a ranked
-`plays.json` / `plays.md`. The [`Daily Play Scan`](.github/workflows/scan.yml)
-workflow runs it every weekday after the U.S. close and publishes the result to
-GitHub Pages.
+`plays.json` / `plays.md`. Each play is also sized to a configurable account
+**budget** (`BUDGET` / `RISK_PCT` in `scan.py`) using the playbook's risk math —
+a suggested stop below support, share count (smaller of *max loss ÷ stop
+distance* and buying power), position size, and dollars at risk. The
+[`Daily Play Scan`](.github/workflows/scan.yml) workflow runs it every weekday
+after the U.S. close and publishes the result to GitHub Pages.
