@@ -1,6 +1,6 @@
 # Daily Play Watchlist
 
-_Generated 2026-06-07T01:50:41+00:00 — not financial advice._
+_Generated 2026-06-07T12:17:55+00:00 — not financial advice._
 
 - Benchmark **SPY** YTD: **8.25%** (leader threshold **16.5%**)
 - Leading sectors: Energy, Industrials, Information Technology, Materials, Real Estate
