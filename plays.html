@@ -47,6 +47,15 @@ tr:hover { background: #fafaff; }
 .setup.breakout { color: #1b5e20; }
 .ticker { font-weight: 700; color: #5563c1; }
 .warn { color: #b71c1c; font-size: 12px; }
+.badge {
+    display: inline-block; padding: 3px 9px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.badge.good { background: #e3f6e9; color: #1b7a3d; border: 1px solid #bce6cb; }
+.badge.bad  { background: #fdeaea; color: #b71c1c; border: 1px solid #f3c5c5; }
+.badge.info { background: #e8eefb; color: #1b50b5; border: 1px solid #c6d6f5; }
+.badge.amber{ background: #fdf3e0; color: #9a6400; border: 1px solid #f0dcb5; }
+td.hot { color: #b71c1c; font-weight: 600; }
 .empty { padding: 30px; text-align: center; color: #777; }
 .reasons { color: #777; font-size: 12px; white-space: normal; }
 .footer {
@@ -71,9 +80,12 @@ tr:hover { background: #fafaff; }
                 <thead>
                     <tr>
                         <th>#</th><th>Ticker</th><th>Sector</th>
-                        <th>YTD %</th><th>RS</th><th>Setup</th><th>Price</th>
-                        <th>Stop</th><th>Stop %</th><th>Shares</th>
-                        <th>Position $</th><th>Risk $</th>
+                        <th>YTD %</th><th>Price</th>
+                        <th title="Average True Range, % of price — daily volatility">ATR %</th>
+                        <th title="Percent below the 52-week high">Off Hi</th>
+                        <th title="Distribution days in last 20 (down on above-avg volume)">Dist</th>
+                        <th>Stop</th><th>Shares</th><th>Risk $</th>
+                        <th>Quality</th>
                     </tr>
                 </thead>
                 <tbody id="rows"></tbody>
@@ -82,9 +94,13 @@ tr:hover { background: #fafaff; }
         <div class="empty" id="status">Loading latest scan…</div>
     </div>
     <div class="footer">
-        Sizing: stop placed just below support (20-day MA for pullbacks, base low for
-        breakouts); shares = the smaller of <em>max loss ÷ stop distance</em> and your
-        buying power. Hover a row for why it qualified.<br>
+        <strong>Quality</strong>: <span class="badge good">Constructive</span> = healthy pullback ·
+        <span class="badge bad">Caution</span> = heavy-volume down day or under distribution ·
+        <span class="badge info">Deep pullback</span> &gt;15% off highs.
+        <strong>Stop</strong> sits below support and ≥1.5× ATR from price; <strong>Shares</strong> =
+        smaller of <em>max loss ÷ stop distance</em> and buying power.
+        <strong>Dist</strong> = down days on above-average volume (last 20); 4+ is a warning.
+        Hover a row for why it qualified.<br>
         Updated automatically each weekday after the U.S. close ·
         <a href="plays.json">plays.json</a> · <a href="playbook.html">Playbook</a>
     </div>
@@ -103,6 +119,15 @@ fetch('plays.json?_=' + Date.now())
             <span class="chip">Scanned <strong>${data.universe_size}</strong> → <strong>${data.count}</strong> plays</span>
             <span class="chip">Budget <strong>$${(data.budget||0).toLocaleString()}</strong> · risk <strong>${data.risk_pct}%</strong> (<strong>$${data.max_loss_per_trade}</strong>/trade)</span>
             <span class="chip">Leading sectors: <strong>${(data.leading_sectors||[]).join(', ') || '—'}</strong></span>`;
+        const g = (data.plays||[]).filter(p => (p.assessment||'').startsWith('constructive'));
+        const aff = g.filter(p => p.shares).map(p => p.ticker);
+        const tally = (data.plays||[]).reduce((m,p) => {
+            const k = (p.assessment||'').startsWith('constructive') ? 'Constructive'
+                    : (p.assessment||'').startsWith('caution') ? 'Caution' : 'Other';
+            m[k] = (m[k]||0)+1; return m; }, {});
+        meta.innerHTML += `
+            <span class="chip">Quality: <strong>${tally.Constructive||0}</strong> constructive · <strong>${tally.Caution||0}</strong> caution</span>
+            <span class="chip">Constructive &amp; affordable: <strong>${aff.join(', ') || '—'}</strong></span>`;
         const status = document.getElementById('status');
         if (!data.plays || !data.plays.length) {
             status.textContent = 'No setups matched all criteria in the latest scan.';
@@ -112,21 +137,35 @@ fetch('plays.json?_=' + Date.now())
         const sharesCell = (p) => p.shares
             ? `<strong>${p.shares}</strong>`
             : `<span class="warn" title="${p.size_note || ''}">${p.size_note || '0'}</span>`;
-        rows.innerHTML = data.plays.map((p, i) => `
+        const tier = (a) => {
+            a = a || '';
+            if (a.startsWith('constructive')) return ['good', 'Constructive'];
+            if (a.startsWith('caution'))      return ['bad', 'Caution'];
+            if (a.startsWith('deep'))         return ['info', 'Deep pullback'];
+            if (a.startsWith('extended'))     return ['amber', 'Extended'];
+            return ['info', a];
+        };
+        const ind = (p) => p.indicators || {};
+        rows.innerHTML = data.plays.map((p, i) => {
+            const [cls, label] = tier(p.assessment);
+            const a = ind(p);
+            const dd = a.distribution_days_20 || 0;
+            return `
             <tr title="${(p.reasons || []).join(' · ')}">
                 <td class="num">${i + 1}</td>
                 <td class="ticker">${p.ticker}</td>
                 <td>${p.sector}</td>
                 <td class="num">${num(p.ytd)}</td>
-                <td class="num">${num(p.rs_vs_spy)}</td>
-                <td class="setup ${p.setup}">${p.setup}</td>
                 <td class="num">${num(p.price)}</td>
+                <td class="num">${num(a.atr_pct)}</td>
+                <td class="num">${num(a.from_52w_high_pct)}</td>
+                <td class="num ${dd >= 4 ? 'hot' : ''}">${dd}</td>
                 <td class="num">${num(p.stop)}</td>
-                <td class="num">${num(p.stop_pct)}</td>
                 <td class="num">${sharesCell(p)}</td>
-                <td class="num">${num(p.position_usd)}</td>
                 <td class="num">${num(p.risk_usd)}</td>
-            </tr>`).join('');
+                <td><span class="badge ${cls}" title="${p.assessment || ''}">${label}</span></td>
+            </tr>`;
+        }).join('');
         document.getElementById('table').hidden = false;
         status.hidden = true;
     })
