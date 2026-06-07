@@ -45,7 +45,8 @@ MIN_BARS = 200           # need at least this much history for the 200-day MA
 # --- account / position sizing (the playbook's risk math) ---
 BUDGET = 2500.0          # account size the watchlist sizes positions against
 RISK_PCT = 1.0           # percent of the account risked per trade
-STOP_BUFFER = 0.02       # place the stop this far below the support level
+STOP_BUFFER = 0.02       # minimum buffer below the support level
+ATR_MULT = 1.5           # also keep the stop at least this many ATRs from price
 
 BENCHMARK = "SPY"
 SECTOR_ETFS = {
@@ -242,14 +243,17 @@ def compute_indicators(close: pd.Series, high: pd.Series, low: pd.Series,
     yr = close.tail(252)
     from_high = round((price / float(yr.max()) - 1) * 100, 2)
 
-    # Distribution days in the last 20 sessions: a down day (> 0.2%) on heavier
-    # volume than the prior day = institutional selling pressure.
+    # Distribution days in the last 20 sessions: a down close (> 0.2%) on
+    # ABOVE-50-day-average volume = genuine institutional selling (O'Neil-style).
     dist_days = 0
-    c20, v20 = close.tail(21), (volume.tail(21) if volume is not None else None)
-    if v20 is not None:
-        for i in range(1, len(c20)):
-            if (c20.iloc[i] < c20.iloc[i - 1] * 0.998
-                    and v20.iloc[i] > v20.iloc[i - 1]):
+    if volume is not None:
+        v50 = volume.rolling(50).mean()
+        c20 = close.tail(20)
+        for ts in c20.index[1:]:
+            i = close.index.get_loc(ts)
+            avg = v50.iloc[i]
+            if (close.iloc[i] < close.iloc[i - 1] * 0.998
+                    and pd.notna(avg) and volume.iloc[i] > avg):
                 dist_days += 1
 
     # Last session's move and whether it came on above-average volume.
@@ -309,15 +313,21 @@ def recent_history(close: pd.Series, volume: pd.Series, days: int = 7) -> tuple:
     return rows, week
 
 
-def size_position(price: float, setup: str, sma20: float, base_low: float) -> dict:
+def size_position(price: float, setup: str, sma20: float, base_low: float,
+                  atr_pct: float | None = None) -> dict:
     """Apply the playbook's risk math to a single play, given BUDGET/RISK_PCT.
 
-    The stop sits just below the relevant support (the 20-day MA for pullbacks,
-    the base low for breakouts). Position size is the smaller of what the risk
-    budget allows (max loss / stop distance) and the account's buying power.
+    The stop sits below the relevant support (the 20-day MA for pullbacks, the
+    base low for breakouts) AND at least ATR_MULT average-true-ranges below
+    price, so a volatile name isn't stopped out on normal daily noise. Position
+    size is the smaller of what the risk budget allows (max loss / stop
+    distance) and the account's buying power.
     """
     support = base_low if setup == "breakout" else sma20
-    stop = min(support * (1 - STOP_BUFFER), price * (1 - 0.005))
+    support_stop = support * (1 - STOP_BUFFER)
+    atr_stop = price - ATR_MULT * price * atr_pct / 100.0 if atr_pct else support_stop
+    # Take the lower (wider) stop so we clear both support and the noise band.
+    stop = min(support_stop, atr_stop, price * (1 - 0.005))
     stop_dist = (price - stop) / price
     if stop_dist <= 0:
         return {"stop": None, "stop_pct": None, "shares": 0,
@@ -411,10 +421,11 @@ def main() -> int:
 
         # Relative strength vs SPY drives the ranking.
         rs = round(ytd / spy_ytd, 2) if spy_ytd else None
-        sizing = size_position(m["price"], m["setup"], m["sma20"], m["base_low"])
-        history, week_change = recent_history(close, volume, days=7)
         indicators = compute_indicators(close, high, low, volume)
         assessment = assess_pullback(indicators)
+        sizing = size_position(m["price"], m["setup"], m["sma20"], m["base_low"],
+                               indicators["atr_pct"])
+        history, week_change = recent_history(close, volume, days=7)
         plays.append({
             "ticker": tkr,
             "name": name_by_ticker.get(tkr, tkr),
