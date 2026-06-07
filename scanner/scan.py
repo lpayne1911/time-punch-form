@@ -143,6 +143,37 @@ def fetch_history(tickers: list[str], period: str = "1y") -> pd.DataFrame:
     )
 
 
+def next_earnings(ticker: str) -> str | None:
+    """Best-effort next earnings date (ISO) for one ticker; None if unknown.
+
+    Network call per ticker, so only run on the handful of qualifying plays.
+    """
+    try:
+        cal = yf.Ticker(ticker).calendar
+    except Exception:
+        return None
+    dates = []
+    try:
+        if isinstance(cal, dict):
+            ed = cal.get("Earnings Date")
+            if ed:
+                dates = list(ed) if isinstance(ed, (list, tuple)) else [ed]
+        elif cal is not None and hasattr(cal, "index") and "Earnings Date" in cal.index:
+            dates = list(cal.loc["Earnings Date"].values)
+    except Exception:
+        return None
+    today = dt.date.today()
+    out = []
+    for d in dates:
+        try:
+            dd = d.date() if hasattr(d, "date") else d
+            if isinstance(dd, dt.date) and dd >= today:
+                out.append(dd)
+        except Exception:
+            continue
+    return min(out).isoformat() if out else None
+
+
 # ---------------------------------------------------------------------------
 # Indicator helpers.
 # ---------------------------------------------------------------------------
@@ -268,6 +299,26 @@ def compute_indicators(close: pd.Series, high: pd.Series, low: pd.Series,
         "distribution_days_20": dist_days,
         "last_day_chg_pct": last_chg,
         "last_day_vol_ratio": last_vol_ratio,
+    }
+
+
+def rs_line_metrics(close: pd.Series, spy_close: pd.Series) -> dict:
+    """Relative-strength line (stock / SPY) trend — is leadership still improving?
+
+    A rising RS line and an RS line at new highs are O'Neil's confirmation that a
+    leader is still being accumulated relative to the market, not just elevated.
+    """
+    blank = {"rs_20d": None, "rs_50d": None, "rs_new_high": None}
+    if spy_close is None:
+        return blank
+    rs = (close / spy_close.reindex(close.index)).dropna()
+    if len(rs) < 55:
+        return blank
+    last = float(rs.iloc[-1])
+    return {
+        "rs_20d": round((last / float(rs.iloc[-21]) - 1) * 100, 2),
+        "rs_50d": round((last / float(rs.iloc[-51]) - 1) * 100, 2),
+        "rs_new_high": bool(last >= float(rs.tail(60).max()) * 0.999),
     }
 
 
@@ -422,10 +473,16 @@ def main() -> int:
         # Relative strength vs SPY drives the ranking.
         rs = round(ytd / spy_ytd, 2) if spy_ytd else None
         indicators = compute_indicators(close, high, low, volume)
+        indicators.update(rs_line_metrics(close, spy_close))
         assessment = assess_pullback(indicators)
         sizing = size_position(m["price"], m["setup"], m["sma20"], m["base_low"],
                                indicators["atr_pct"])
         history, week_change = recent_history(close, volume, days=7)
+        earnings = next_earnings(tkr)
+        days_to_earnings = None
+        if earnings:
+            days_to_earnings = (dt.date.fromisoformat(earnings) - dt.date.today()).days
+        earnings_soon = days_to_earnings is not None and 0 <= days_to_earnings <= 10
         plays.append({
             "ticker": tkr,
             "name": name_by_ticker.get(tkr, tkr),
@@ -448,6 +505,9 @@ def main() -> int:
             "sma200": m["sma200"],
             "indicators": indicators,
             "assessment": assessment,
+            "next_earnings": earnings,
+            "days_to_earnings": days_to_earnings,
+            "earnings_soon": earnings_soon,
             "history": history,
             "reasons": reasons,
         })

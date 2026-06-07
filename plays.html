@@ -37,7 +37,7 @@ body {
 }
 .chip strong { color: #764ba2; }
 .tablewrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 720px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 940px; }
 th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid #e6e6f0; white-space: nowrap; }
 th { background: #f0f1fb; color: #4a4a6a; position: sticky; top: 0; }
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -85,6 +85,8 @@ td.hot { color: #b71c1c; font-weight: 600; }
                         <th title="Percent below the 52-week high">Off Hi</th>
                         <th title="Distribution days in last 20 (down on above-avg volume)">Dist</th>
                         <th>Stop</th><th>Shares</th><th>Risk $</th>
+                        <th title="Relative-strength line vs SPY, 50-day change; ↑ = at new RS high">RS 50d</th>
+                        <th title="Trading days to next earnings report">Earn</th>
                         <th>Quality</th>
                     </tr>
                 </thead>
@@ -100,6 +102,8 @@ td.hot { color: #b71c1c; font-weight: 600; }
         <strong>Stop</strong> sits below support and ≥1.5× ATR from price; <strong>Shares</strong> =
         smaller of <em>max loss ÷ stop distance</em> and buying power.
         <strong>Dist</strong> = down days on above-average volume (last 20); 4+ is a warning.
+        <strong>RS 50d</strong> = relative-strength line vs SPY over 50 days (↑ = at a new RS high).
+        <strong>Earn</strong> = trading days to next earnings (⚠ ≤10d = gap risk, avoid holding through).
         Hover a row for why it qualified.<br>
         Updated automatically each weekday after the U.S. close ·
         <a href="plays.json">plays.json</a> · <a href="playbook.html">Playbook</a>
@@ -125,9 +129,13 @@ fetch('plays.json?_=' + Date.now())
             const k = (p.assessment||'').startsWith('constructive') ? 'Constructive'
                     : (p.assessment||'').startsWith('caution') ? 'Caution' : 'Other';
             m[k] = (m[k]||0)+1; return m; }, {});
+        const earningsSoon = (data.plays||[]).filter(p => p.earnings_soon).map(p => p.ticker);
+        const rsNewHigh = (data.plays||[]).filter(p => (p.indicators||{}).rs_new_high).map(p => p.ticker);
         meta.innerHTML += `
             <span class="chip">Quality: <strong>${tally.Constructive||0}</strong> constructive · <strong>${tally.Caution||0}</strong> caution</span>
-            <span class="chip">Constructive &amp; affordable: <strong>${aff.join(', ') || '—'}</strong></span>`;
+            <span class="chip">Constructive &amp; affordable: <strong>${aff.join(', ') || '—'}</strong></span>
+            <span class="chip">RS line at new high: <strong>${rsNewHigh.join(', ') || '—'}</strong></span>
+            <span class="chip">⚠ Earnings ≤10d: <strong>${earningsSoon.join(', ') || 'none'}</strong></span>`;
         const status = document.getElementById('status');
         if (!data.plays || !data.plays.length) {
             status.textContent = 'No setups matched all criteria in the latest scan.';
@@ -146,6 +154,13 @@ fetch('plays.json?_=' + Date.now())
             return ['info', a];
         };
         const ind = (p) => p.indicators || {};
+        const earnCell = (p) => {
+            if (p.days_to_earnings === null || p.days_to_earnings === undefined) return '—';
+            const d = p.days_to_earnings;
+            return p.earnings_soon
+                ? `<span class="badge bad" title="Reports ${p.next_earnings}">${d}d ⚠</span>`
+                : `${d}d`;
+        };
         rows.innerHTML = data.plays.map((p, i) => {
             const [cls, label] = tier(p.assessment);
             const a = ind(p);
@@ -163,6 +178,8 @@ fetch('plays.json?_=' + Date.now())
                 <td class="num">${num(p.stop)}</td>
                 <td class="num">${sharesCell(p)}</td>
                 <td class="num">${num(p.risk_usd)}</td>
+                <td class="num">${num(a.rs_50d)}${a.rs_new_high ? ' <span title="RS line at new high">↑</span>' : ''}</td>
+                <td class="num">${earnCell(p)}</td>
                 <td><span class="badge ${cls}" title="${p.assessment || ''}">${label}</span></td>
             </tr>`;
         }).join('');
