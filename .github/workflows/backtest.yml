@@ -34,5 +34,9 @@ jobs:
             echo "No backtest changes to commit."
           else
             git commit -m "Backtest run $(date -u +%Y-%m-%dT%H:%M)"
-            git push
+            # Rebase on any concurrent commit (e.g. the daily scan) before pushing.
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              echo "push attempt $i failed; retrying"; sleep 3
+            done
           fi
