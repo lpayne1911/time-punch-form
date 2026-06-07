@@ -1,0 +1,38 @@
+name: Backtest Screen
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # commit the backtest report back to the repo
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r scanner/requirements.txt
+
+      - name: Run backtest
+        run: python scanner/backtest.py
+
+      - name: Commit backtest report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backtest.json backtest.md
+          if git diff --cached --quiet; then
+            echo "No backtest changes to commit."
+          else
+            git commit -m "Backtest run $(date -u +%Y-%m-%dT%H:%M)"
+            git push
+          fi
