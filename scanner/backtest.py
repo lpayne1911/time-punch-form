@@ -29,10 +29,18 @@ import pandas as pd
 
 import scan
 
-HOLD = 20         # trading days held before a forced mark-to-market exit
+HOLD = 20         # trading days held before a forced mark-to-market exit (canonical)
 STEP = 5          # generate candidate signals weekly
 TEST_DAYS = 252   # look for signals across roughly the last year
-RR = 2.0          # reward target = RR x the risk (stop distance)
+RR = 2.0          # reward target = RR x the risk (stop distance) (canonical)
+MAX_HOLD = 40     # longest forward window kept so the sweep can vary hold length
+
+# Exit-parameter sweep. Risk % is deliberately NOT swept: it only scales dollar
+# exposure, not the per-trade R outcome, so win rate / expectancy are identical
+# across risk levels. These three knobs actually move the edge.
+GRID_RR = [1.5, 2.0, 3.0]                 # reward:risk target
+GRID_ATR = [1.0, scan.ATR_MULT, 2.0]      # ATR stop multiple
+GRID_HOLD = [10, 20, 40]                  # trading days held
 
 
 def atr_series(high: pd.Series, low: pd.Series, close: pd.Series, n: int = 14) -> pd.Series:
@@ -42,7 +50,13 @@ def atr_series(high: pd.Series, low: pd.Series, close: pd.Series, n: int = 14) -
     return tr.rolling(n).mean()
 
 
-def run() -> dict:
+def collect_signals() -> list[dict]:
+    """Find every qualifying entry once, keeping each one's forward price path.
+
+    The screen gates (trend / pullback / leadership) decide ENTRIES; the exit
+    knobs (target, stop multiple, hold) are applied later in evaluate(), so the
+    expensive screen runs a single time and the whole sweep is cheap.
+    """
     universe = scan.sp500_constituents()
     tickers = universe["ticker"].tolist()
     sector_by = dict(zip(universe["ticker"], universe["sector"]))
@@ -53,7 +67,7 @@ def run() -> dict:
     spy = scan.series_for(ref, scan.BENCHMARK, "Close")
     if spy is None:
         print("[fatal] no SPY data", file=sys.stderr)
-        return {}
+        return []
     spy_ret = spy.pct_change(252)
     etf_ret = {}
     for sector, etf in scan.SECTOR_ETFS.items():
@@ -62,14 +76,14 @@ def run() -> dict:
 
     data = scan.fetch_history(tickers, period="2y")
 
-    signals = []
+    raw = []
     for tkr in tickers:
         close = scan.series_for(data, tkr, "Close")
         high = scan.series_for(data, tkr, "High")
         low = scan.series_for(data, tkr, "Low")
         if close is None or high is None or low is None:
             continue
-        if len(close) < 252 + HOLD + STEP:
+        if len(close) < 252 + MAX_HOLD + STEP:
             continue
         sector = sector_by.get(tkr, "")
         er = etf_ret.get(sector)
@@ -84,10 +98,11 @@ def run() -> dict:
         atr = atr_series(high, low, close)
         spy_r = spy_ret.reindex(idx)
         etf_r = er.reindex(idx)
+        highs, lows, closes = high.to_numpy(), low.to_numpy(), close.to_numpy()
 
         n = len(close)
-        start = max(252, n - TEST_DAYS - HOLD)
-        for k in range(start, n - HOLD, STEP):
+        start = max(252, n - TEST_DAYS - MAX_HOLD)
+        for k in range(start, n - MAX_HOLD, STEP):
             price = float(close.iloc[k])
             s20, s50, s200 = sma20.iloc[k], sma50.iloc[k], sma200.iloc[k]
             if any(pd.isna(x) for x in (s20, s50, s200)):
@@ -105,41 +120,55 @@ def run() -> dict:
                 continue
             if not (sr > 0 and sr >= scan.LEADER_MULTIPLE * spr and erv > spr):
                 continue
-            # ATR-based stop, same rule as the live sizer.
             a = atr.iloc[k]
             if pd.isna(a):
                 continue
-            stop = min(float(s20) * (1 - scan.STOP_BUFFER), price - scan.ATR_MULT * float(a),
-                       price * 0.995)
-            stop_dist = (price - stop) / price
-            if stop_dist <= 0:
-                continue
-            target = price * (1 + RR * stop_dist)
-
-            # Forward walk: first touch of stop or target wins; else mark to market.
-            outcome, exit_px, days = "open", float(close.iloc[k + HOLD]), HOLD
-            for j in range(k + 1, k + HOLD + 1):
-                if low.iloc[j] <= stop:           # stop checked first (worst case)
-                    outcome, exit_px, days = "stop", stop, j - k
-                    break
-                if high.iloc[j] >= target:
-                    outcome, exit_px, days = "target", target, j - k
-                    break
-            ret = (exit_px / price - 1) * 100
-            rmult = (exit_px / price - 1) / stop_dist
-            signals.append({
+            raw.append({
                 "ticker": tkr, "date": idx[k].strftime("%Y-%m-%d"), "sector": sector,
-                "entry": round(price, 2), "stop_pct": round(stop_dist * 100, 2),
-                "outcome": outcome, "days_held": days,
-                "return_pct": round(ret, 2), "r_multiple": round(rmult, 2),
+                "entry": price, "atr": float(a), "s20": float(s20),
+                "fwd_high": highs[k + 1:k + MAX_HOLD + 1].tolist(),
+                "fwd_low": lows[k + 1:k + MAX_HOLD + 1].tolist(),
+                "fwd_close": closes[k + 1:k + MAX_HOLD + 1].tolist(),
             })
+    return raw
 
-    return summarize(signals)
+
+def evaluate(raw: list[dict], rr: float, atr_mult: float, hold: int) -> dict:
+    """Apply one exit configuration (target, stop multiple, hold) to the signals."""
+    trades = []
+    for s in raw:
+        price = s["entry"]
+        # Same stop rule as the live sizer, with the swept ATR multiple.
+        stop = min(s["s20"] * (1 - scan.STOP_BUFFER), price - atr_mult * s["atr"],
+                   price * 0.995)
+        stop_dist = (price - stop) / price
+        if stop_dist <= 0:
+            continue
+        target = price * (1 + rr * stop_dist)
+        # Forward walk: first touch of stop or target wins; else mark to market.
+        outcome, exit_px, days = "open", s["fwd_close"][hold - 1], hold
+        for j in range(hold):
+            if s["fwd_low"][j] <= stop:            # stop checked first (worst case)
+                outcome, exit_px, days = "stop", stop, j + 1
+                break
+            if s["fwd_high"][j] >= target:
+                outcome, exit_px, days = "target", target, j + 1
+                break
+        trades.append({
+            "ticker": s["ticker"], "date": s["date"], "sector": s["sector"],
+            "entry": round(price, 2), "stop_pct": round(stop_dist * 100, 2),
+            "outcome": outcome, "days_held": days,
+            "return_pct": round((exit_px / price - 1) * 100, 2),
+            "r_multiple": round((exit_px / price - 1) / stop_dist, 2),
+        })
+    return summarize(trades, {"hold_days": hold, "step": STEP, "test_days": TEST_DAYS,
+                              "reward_risk": rr, "leader_multiple": scan.LEADER_MULTIPLE,
+                              "atr_mult": atr_mult})
 
 
-def summarize(signals: list[dict]) -> dict:
+def summarize(signals: list[dict], params: dict) -> dict:
     if not signals:
-        return {"signals": 0}
+        return {"signals": 0, "params": params}
     rets = [s["return_pct"] for s in signals]
     rmults = [s["r_multiple"] for s in signals]
     wins = [s for s in signals if s["return_pct"] > 0]
@@ -154,9 +183,7 @@ def summarize(signals: list[dict]) -> dict:
 
     return {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
-        "params": {"hold_days": HOLD, "step": STEP, "test_days": TEST_DAYS,
-                   "reward_risk": RR, "leader_multiple": scan.LEADER_MULTIPLE,
-                   "atr_mult": scan.ATR_MULT},
+        "params": params,
         "signals": len(signals),
         "win_rate_pct": round(100 * len(wins) / len(signals), 1),
         "by_outcome": by_outcome,
@@ -204,14 +231,83 @@ def render_md(r: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def sweep(raw: list[dict]) -> dict:
+    """Evaluate every (target, ATR stop, hold) combination on the same signals."""
+    rows = []
+    for hold in GRID_HOLD:
+        for atr_mult in GRID_ATR:
+            for rr in GRID_RR:
+                r = evaluate(raw, rr, atr_mult, hold)
+                rows.append({
+                    "reward_risk": rr, "atr_mult": atr_mult, "hold_days": hold,
+                    "signals": r["signals"],
+                    "win_rate_pct": r["win_rate_pct"],
+                    "expectancy_r": r["expectancy_r"],
+                    "avg_return_pct": r["avg_return_pct"],
+                    "target_hit_pct": r["target_hit_pct"],
+                    "stopped_out_pct": r["stopped_out_pct"],
+                })
+    rows.sort(key=lambda x: (x["expectancy_r"] is None, -(x["expectancy_r"] or 0)))
+    canonical = (RR, scan.ATR_MULT, HOLD)
+    return {
+        "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
+        "grid": {"reward_risk": GRID_RR, "atr_mult": GRID_ATR, "hold_days": GRID_HOLD},
+        "canonical": {"reward_risk": RR, "atr_mult": scan.ATR_MULT, "hold_days": HOLD},
+        "best": rows[0] if rows else None,
+        "results": rows,
+    }
+
+
+def render_sweep_md(s: dict) -> str:
+    if not s or not s.get("results"):
+        return "# Backtest sweep\n\nNo results.\n"
+    best, canon = s["best"], s["canonical"]
+    lines = [
+        "# Exit-parameter sweep",
+        "",
+        f"_Generated {s['generated_at']}_",
+        "",
+        "> Same signals, different exits. **Risk % is not swept** — it scales dollar "
+        "exposure, not the per-trade R outcome. Same caveats as the backtest "
+        "(survivorship bias, no costs); read these as relative comparisons, not "
+        "absolute promises.",
+        "",
+        f"**Best expectancy:** {best['reward_risk']}R target / {best['atr_mult']}× ATR "
+        f"stop / {best['hold_days']}d hold → **{best['expectancy_r']}R** "
+        f"({best['win_rate_pct']}% win, {best['signals']} signals).",
+        f"**Canonical (live):** {canon['reward_risk']}R / {canon['atr_mult']}× / "
+        f"{canon['hold_days']}d.",
+        "",
+        "| Target | ATR× | Hold | Signals | Win % | Expectancy R | Avg % | Tgt % | Stop % |",
+        "|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for r in s["results"]:
+        mark = " ⭐" if (r["reward_risk"], r["atr_mult"], r["hold_days"]) == \
+            (canon["reward_risk"], canon["atr_mult"], canon["hold_days"]) else ""
+        lines.append(
+            f"| {r['reward_risk']}R{mark} | {r['atr_mult']} | {r['hold_days']} | "
+            f"{r['signals']} | {r['win_rate_pct']} | **{r['expectancy_r']}** | "
+            f"{r['avg_return_pct']} | {r['target_hit_pct']} | {r['stopped_out_pct']} |")
+    lines += ["", "_⭐ = the configuration the live screen/sizer currently uses._", ""]
+    return "\n".join(lines) + "\n"
+
+
 def main() -> int:
-    result = run()
+    raw = collect_signals()
+    # Canonical single-config report (unchanged outputs).
+    result = evaluate(raw, RR, scan.ATR_MULT, HOLD) if raw else {"signals": 0}
     (scan.ROOT / "backtest.json").write_text(json.dumps(result, indent=2))
     (scan.ROOT / "backtest.md").write_text(render_md(result))
+    # Exit-parameter sweep.
+    sw = sweep(raw)
+    (scan.ROOT / "sweep.json").write_text(json.dumps(sw, indent=2))
+    (scan.ROOT / "sweep.md").write_text(render_sweep_md(sw))
     if result.get("signals"):
-        print(f"backtest: {result['signals']} signals, "
-              f"win rate {result['win_rate_pct']}%, "
-              f"expectancy {result['expectancy_r']}R", file=sys.stderr)
+        b = sw["best"]
+        print(f"backtest: {result['signals']} signals, win rate "
+              f"{result['win_rate_pct']}%, expectancy {result['expectancy_r']}R | "
+              f"best sweep {b['reward_risk']}R/{b['atr_mult']}x/{b['hold_days']}d "
+              f"= {b['expectancy_r']}R", file=sys.stderr)
     else:
         print("backtest: no signals", file=sys.stderr)
     return 0
