@@ -37,7 +37,7 @@ body {
 }
 .chip strong { color: #764ba2; }
 .tablewrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 940px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 1000px; }
 th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid #e6e6f0; white-space: nowrap; }
 th { background: #f0f1fb; color: #4a4a6a; position: sticky; top: 0; }
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
@@ -84,7 +84,9 @@ td.hot { color: #b71c1c; font-weight: 600; }
                         <th title="Average True Range, % of price — daily volatility">ATR %</th>
                         <th title="Percent below the 52-week high">Off Hi</th>
                         <th title="Distribution days in last 20 (down on above-avg volume)">Dist</th>
-                        <th>Stop</th><th>Shares</th><th>Risk $</th>
+                        <th>Stop</th>
+                        <th title="Profit target = 3R (three risk units above entry)">Target</th>
+                        <th>Shares</th><th>Risk $</th>
                         <th title="Relative-strength line vs SPY, 50-day change; ↑ = at new RS high">RS 50d</th>
                         <th title="Trading days to next earnings report">Earn</th>
                         <th>Quality</th>
@@ -102,8 +104,9 @@ td.hot { color: #b71c1c; font-weight: 600; }
         <strong>Stop</strong> sits below support and ≥1.5× ATR from price; <strong>Shares</strong> =
         smaller of <em>max loss ÷ stop distance</em> and buying power.
         <strong>Dist</strong> = down days on above-average volume (last 20); 4+ is a warning.
+        <strong>Target</strong> = 3R profit target (let-winners-run); hover for % and potential $.
         <strong>RS 50d</strong> = relative-strength line vs SPY over 50 days (↑ = at a new RS high).
-        <strong>Earn</strong> = trading days to next earnings (⚠ ≤10d = gap risk, avoid holding through).
+        <strong>Earn</strong> = trading days to next earnings (⚠ ≤10d acute gap risk; ⚑ likely held through on a ~40-day hold).
         Hover a row for why it qualified.<br>
         Updated automatically each weekday after the U.S. close ·
         <a href="plays.json">plays.json</a> · <a href="playbook.html">Playbook</a> ·
@@ -131,12 +134,15 @@ fetch('plays.json?_=' + Date.now())
                     : (p.assessment||'').startsWith('caution') ? 'Caution' : 'Other';
             m[k] = (m[k]||0)+1; return m; }, {});
         const earningsSoon = (data.plays||[]).filter(p => p.earnings_soon).map(p => p.ticker);
+        const earningsHold = (data.plays||[]).filter(p => p.earnings_in_hold && !p.earnings_soon).map(p => p.ticker);
         const rsNewHigh = (data.plays||[]).filter(p => (p.indicators||{}).rs_new_high).map(p => p.ticker);
         meta.innerHTML += `
+            <span class="chip">Plan: <strong>${data.target_r}R</strong> target · <strong>${data.atr_mult}× ATR</strong> stop · ~<strong>${data.hold_guide_days}d</strong> hold</span>
             <span class="chip">Quality: <strong>${tally.Constructive||0}</strong> constructive · <strong>${tally.Caution||0}</strong> caution</span>
             <span class="chip">Constructive &amp; affordable: <strong>${aff.join(', ') || '—'}</strong></span>
             <span class="chip">RS line at new high: <strong>${rsNewHigh.join(', ') || '—'}</strong></span>
-            <span class="chip">⚠ Earnings ≤10d: <strong>${earningsSoon.join(', ') || 'none'}</strong></span>`;
+            <span class="chip">⚠ Earnings ≤10d: <strong>${earningsSoon.join(', ') || 'none'}</strong></span>
+            <span class="chip">⚑ Held through earnings: <strong>${earningsHold.join(', ') || 'none'}</strong></span>`;
         const status = document.getElementById('status');
         if (!data.plays || !data.plays.length) {
             status.textContent = 'No setups matched all criteria in the latest scan.';
@@ -158,9 +164,11 @@ fetch('plays.json?_=' + Date.now())
         const earnCell = (p) => {
             if (p.days_to_earnings === null || p.days_to_earnings === undefined) return '—';
             const d = p.days_to_earnings;
-            return p.earnings_soon
-                ? `<span class="badge bad" title="Reports ${p.next_earnings}">${d}d ⚠</span>`
-                : `${d}d`;
+            if (p.earnings_soon)
+                return `<span class="badge bad" title="Reports ${p.next_earnings} — acute gap risk">${d}d ⚠</span>`;
+            if (p.earnings_in_hold)
+                return `<span class="badge amber" title="Reports ${p.next_earnings} — likely held through on a ~40-day hold">${d}d ⚑</span>`;
+            return `${d}d`;
         };
         rows.innerHTML = data.plays.map((p, i) => {
             const [cls, label] = tier(p.assessment);
@@ -177,6 +185,7 @@ fetch('plays.json?_=' + Date.now())
                 <td class="num">${num(a.from_52w_high_pct)}</td>
                 <td class="num ${dd >= 4 ? 'hot' : ''}">${dd}</td>
                 <td class="num">${num(p.stop)}</td>
+                <td class="num" title="${p.target_pct ? '+'+p.target_pct+'% · potential $'+num(p.reward_usd) : ''}">${num(p.target)}</td>
                 <td class="num">${sharesCell(p)}</td>
                 <td class="num">${num(p.risk_usd)}</td>
                 <td class="num">${num(a.rs_50d)}${a.rs_new_high ? ' <span title="RS line at new high">↑</span>' : ''}</td>
