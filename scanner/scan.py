@@ -46,7 +46,9 @@ MIN_BARS = 200           # need at least this much history for the 200-day MA
 BUDGET = 2500.0          # account size the watchlist sizes positions against
 RISK_PCT = 1.0           # percent of the account risked per trade
 STOP_BUFFER = 0.02       # minimum buffer below the support level
-ATR_MULT = 1.5           # also keep the stop at least this many ATRs from price
+ATR_MULT = 2.0           # also keep the stop at least this many ATRs from price
+TARGET_R = 3.0           # profit target = this many R (risk units) above entry
+HOLD_GUIDE = 40          # let-winners-run holding-period guideline, in trading days
 
 BENCHMARK = "SPY"
 SECTOR_ETFS = {
@@ -389,6 +391,10 @@ def size_position(price: float, setup: str, sma20: float, base_low: float,
     pos = min(pos_by_risk, BUDGET)                # never exceed buying power
     shares = int(pos // price)
 
+    # Let-winners-run target: TARGET_R risk units above entry (the backtest sweep's
+    # best-expectancy exit). Reward:risk is TARGET_R to 1 by construction.
+    target = price + TARGET_R * (price - stop)
+
     note = ""
     if shares < 1:
         # One share already risks more than the per-trade limit allows.
@@ -396,9 +402,12 @@ def size_position(price: float, setup: str, sma20: float, base_low: float,
     return {
         "stop": round(stop, 2),
         "stop_pct": round(stop_dist * 100, 2),
+        "target": round(target, 2),
+        "target_pct": round((target / price - 1) * 100, 2),
         "shares": shares,
         "position_usd": round(shares * price, 2),
         "risk_usd": round(shares * (price - stop), 2),
+        "reward_usd": round(shares * (target - price), 2),
         "note": note,
     }
 
@@ -483,6 +492,9 @@ def main() -> int:
         if earnings:
             days_to_earnings = (dt.date.fromisoformat(earnings) - dt.date.today()).days
         earnings_soon = days_to_earnings is not None and 0 <= days_to_earnings <= 10
+        # ~40 trading days ≈ 56 calendar days: under the let-winners-run hold
+        # guideline, a report inside this window will likely be held through.
+        earnings_in_hold = days_to_earnings is not None and 0 <= days_to_earnings <= 56
         plays.append({
             "ticker": tkr,
             "name": name_by_ticker.get(tkr, tkr),
@@ -496,9 +508,12 @@ def main() -> int:
             "base_range_pct": m["base_range_pct"],
             "stop": sizing["stop"],
             "stop_pct": sizing["stop_pct"],
+            "target": sizing["target"],
+            "target_pct": sizing["target_pct"],
             "shares": sizing["shares"],
             "position_usd": sizing["position_usd"],
             "risk_usd": sizing["risk_usd"],
+            "reward_usd": sizing["reward_usd"],
             "size_note": sizing["note"],
             "week_change_pct": week_change,
             "sma50": m["sma50"],
@@ -508,6 +523,7 @@ def main() -> int:
             "next_earnings": earnings,
             "days_to_earnings": days_to_earnings,
             "earnings_soon": earnings_soon,
+            "earnings_in_hold": earnings_in_hold,
             "history": history,
             "reasons": reasons,
         })
@@ -525,6 +541,9 @@ def main() -> int:
         "budget": BUDGET,
         "risk_pct": RISK_PCT,
         "max_loss_per_trade": round(BUDGET * RISK_PCT / 100.0, 2),
+        "target_r": TARGET_R,
+        "atr_mult": ATR_MULT,
+        "hold_guide_days": HOLD_GUIDE,
         "plays": plays,
     }
 
@@ -546,6 +565,8 @@ def render_markdown(r: dict) -> str:
         f"- Scanned **{r['universe_size']}** names → **{r['count']}** plays",
         f"- Budget **${r['budget']:,.0f}**, risking **{r['risk_pct']}%** "
         f"(**${r['max_loss_per_trade']:,.2f}** max loss/trade)",
+        f"- Plan: **{r['target_r']}R** target, **{r['atr_mult']}× ATR** stop, "
+        f"~**{r['hold_guide_days']}-day** hold (let-winners-run, per the backtest sweep)",
         "",
     ]
     if not r["plays"]:
@@ -553,15 +574,15 @@ def render_markdown(r: dict) -> str:
         return "\n".join(lines) + "\n"
     lines += [
         "| # | Ticker | Sector | YTD % | RS | Setup | Price | Stop | Stop % | "
-        "Shares | Position $ | Risk $ |",
-        "|--:|:--|:--|--:|--:|:--|--:|--:|--:|--:|--:|--:|",
+        "Target | Shares | Position $ | Risk $ |",
+        "|--:|:--|:--|--:|--:|:--|--:|--:|--:|--:|--:|--:|--:|",
     ]
     for i, p in enumerate(r["plays"], 1):
         shares = p["shares"] if p["shares"] else (p["size_note"] or "0")
         lines.append(
             f"| {i} | {p['ticker']} | {p['sector']} | {p['ytd']} | {p['rs_vs_spy']} | "
             f"{p['setup']} | {p['price']} | {p['stop']} | {p['stop_pct']} | "
-            f"{shares} | {p['position_usd']} | {p['risk_usd']} |"
+            f"{p['target']} | {shares} | {p['position_usd']} | {p['risk_usd']} |"
         )
     return "\n".join(lines) + "\n"
 

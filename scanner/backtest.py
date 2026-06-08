@@ -29,17 +29,17 @@ import pandas as pd
 
 import scan
 
-HOLD = 20         # trading days held before a forced mark-to-market exit (canonical)
+HOLD = scan.HOLD_GUIDE   # canonical hold = the live let-winners-run guideline (40d)
 STEP = 5          # generate candidate signals weekly
 TEST_DAYS = 252   # look for signals across roughly the last year
-RR = 2.0          # reward target = RR x the risk (stop distance) (canonical)
+RR = scan.TARGET_R       # canonical target = the live target (3R)
 MAX_HOLD = 40     # longest forward window kept so the sweep can vary hold length
 
 # Exit-parameter sweep. Risk % is deliberately NOT swept: it only scales dollar
 # exposure, not the per-trade R outcome, so win rate / expectancy are identical
 # across risk levels. These three knobs actually move the edge.
 GRID_RR = [1.5, 2.0, 3.0]                 # reward:risk target
-GRID_ATR = [1.0, scan.ATR_MULT, 2.0]      # ATR stop multiple
+GRID_ATR = [1.0, 1.5, 2.0]                # ATR stop multiple
 GRID_HOLD = [10, 20, 40]                  # trading days held
 
 
