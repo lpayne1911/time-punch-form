@@ -1,42 +1,39 @@
 # Daily Play Watchlist
 
-_Generated 2026-06-08T23:43:24+00:00 — not financial advice._
+_Generated 2026-06-09T23:49:12+00:00 — not financial advice._
 
-- Benchmark **SPY** YTD: **8.5%** (leader threshold **17.0%**)
-- Leading sectors: Energy, Industrials, Information Technology, Materials, Real Estate
-- Scanned **503** names → **30** plays
+- Benchmark **SPY** YTD: **8.18%** (leader threshold **16.36%**)
+- Leading sectors: Consumer Staples, Energy, Industrials, Information Technology, Materials, Real Estate
+- Scanned **503** names → **27** plays
 - Budget **$2,500**, risking **1.0%** (**$25.00** max loss/trade)
 - Plan: **3.0R** target, **2.0× ATR** stop, ~**40-day** hold (let-winners-run, per the backtest sweep)
 
 | # | Ticker | Sector | YTD % | RS | Setup | Price | Stop | Stop % | Target | Shares | Position $ | Risk $ |
 |--:|:--|:--|--:|--:|:--|--:|--:|--:|--:|--:|--:|--:|
-| 1 | WDC | Information Technology | 180.94 | 21.29 | pullback | 526.93 | 464.54 | 11.84 | 714.1 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 2 | AMD | Information Technology | 119.42 | 14.05 | pullback | 490.33 | 426.78 | 12.96 | 680.97 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 3 | ON | Information Technology | 113.23 | 13.32 | pullback | 120.9 | 105.09 | 13.08 | 168.34 | 1 | 120.9 | 15.81 |
-| 4 | TER | Information Technology | 80.66 | 9.49 | pullback | 374.69 | 324.86 | 13.3 | 524.19 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 5 | DDOG | Information Technology | 73.19 | 8.61 | pullback | 231.68 | 203.79 | 12.04 | 315.36 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 6 | VLO | Energy | 58.01 | 6.82 | pullback | 258.39 | 240.46 | 6.94 | 312.19 | 1 | 258.39 | 17.93 |
-| 7 | FFIV | Information Technology | 54.38 | 6.4 | pullback | 396.19 | 368.93 | 6.88 | 477.96 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 8 | CAT | Industrials | 53.66 | 6.31 | pullback | 915.64 | 858.14 | 6.28 | 1088.15 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 9 | JBL | Information Technology | 51.48 | 6.06 | pullback | 363.95 | 333.81 | 8.28 | 454.36 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 10 | PANW | Information Technology | 48.48 | 5.7 | pullback | 266.33 | 238.21 | 10.56 | 350.7 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 11 | CRWD | Information Technology | 45.24 | 5.32 | pullback | 658.79 | 581.32 | 11.76 | 891.21 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 12 | PSX | Energy | 42.66 | 5.02 | pullback | 183.42 | 172.19 | 6.12 | 217.1 | 2 | 366.84 | 22.45 |
-| 13 | SLB | Energy | 42.24 | 4.97 | pullback | 56.55 | 52.99 | 6.3 | 67.24 | 7 | 395.85 | 24.94 |
-| 14 | FDX | Industrials | 40.37 | 4.75 | pullback | 330.22 | 311.49 | 5.67 | 386.4 | 1 | 330.22 | 18.73 |
-| 15 | EOG | Energy | 32.92 | 3.87 | pullback | 140.15 | 132.81 | 5.24 | 162.18 | 3 | 420.45 | 22.03 |
-| 16 | CSX | Industrials | 30.71 | 3.61 | pullback | 47.11 | 44.91 | 4.66 | 53.7 | 11 | 518.21 | 24.16 |
-| 17 | GWW | Industrials | 30.47 | 3.58 | pullback | 1304.57 | 1233.87 | 5.42 | 1516.67 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 18 | CARR | Industrials | 26.83 | 3.16 | pullback | 67.35 | 62.47 | 7.24 | 81.98 | 5 | 336.75 | 24.38 |
-| 19 | DOC | Real Estate | 25.66 | 3.02 | pullback | 19.77 | 18.89 | 4.46 | 22.42 | 28 | 553.56 | 24.69 |
-| 20 | FRT | Real Estate | 24.62 | 2.9 | pullback | 122.1 | 115.7 | 5.24 | 141.3 | 3 | 366.3 | 19.2 |
-| 21 | ETN | Industrials | 23.89 | 2.81 | pullback | 403.14 | 375.65 | 6.82 | 485.62 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 22 | CVX | Energy | 23.7 | 2.79 | pullback | 189.24 | 180.8 | 4.46 | 214.56 | 2 | 378.48 | 16.88 |
-| 23 | KIM | Real Estate | 23.53 | 2.77 | pullback | 24.24 | 23.09 | 4.75 | 27.69 | 21 | 509.04 | 24.18 |
-| 24 | DE | Industrials | 23.25 | 2.74 | pullback | 573.66 | 535.91 | 6.58 | 686.9 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 25 | IEX | Industrials | 22.96 | 2.7 | pullback | 218.59 | 206.67 | 5.45 | 254.34 | 2 | 437.18 | 23.84 |
-| 26 | PSA | Real Estate | 21.59 | 2.54 | pullback | 311.08 | 297.58 | 4.34 | 351.58 | 1 | 311.08 | 13.5 |
-| 27 | SWKS | Information Technology | 19.47 | 2.29 | pullback | 75.37 | 65.27 | 13.4 | 105.67 | 2 | 150.74 | 20.2 |
-| 28 | JCI | Industrials | 18.14 | 2.13 | pullback | 144.05 | 135.49 | 5.94 | 169.72 | 2 | 288.1 | 17.11 |
-| 29 | ANET | Information Technology | 17.07 | 2.01 | pullback | 156.4 | 139.98 | 10.5 | 205.67 | 1 | 156.4 | 16.42 |
-| 30 | UNP | Industrials | 17.06 | 2.01 | pullback | 268.67 | 254.38 | 5.32 | 311.55 | 1 | 268.67 | 14.29 |
+| 1 | STX | Information Technology | 194.74 | 23.81 | pullback | 846.01 | 741.78 | 12.32 | 1158.7 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 2 | WDC | Information Technology | 176.03 | 21.52 | pullback | 517.72 | 450.42 | 13.0 | 719.63 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 3 | TER | Information Technology | 78.02 | 9.54 | pullback | 369.21 | 313.68 | 15.04 | 535.8 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 4 | FTNT | Information Technology | 77.7 | 9.5 | pullback | 138.39 | 125.93 | 9.0 | 175.76 | 2 | 276.78 | 24.91 |
+| 5 | DDOG | Information Technology | 69.95 | 8.55 | pullback | 227.34 | 198.15 | 12.84 | 314.91 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 6 | CSCO | Information Technology | 59.14 | 7.23 | pullback | 120.36 | 110.73 | 8.0 | 149.25 | 2 | 240.72 | 19.26 |
+| 7 | MPC | Energy | 57.7 | 7.05 | pullback | 258.15 | 240.03 | 7.02 | 312.52 | 1 | 258.15 | 18.12 |
+| 8 | VLO | Energy | 55.19 | 6.75 | pullback | 253.78 | 235.3 | 7.28 | 309.21 | 1 | 253.78 | 18.48 |
+| 9 | FFIV | Information Technology | 54.01 | 6.6 | pullback | 395.23 | 366.14 | 7.36 | 482.5 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 10 | CAT | Industrials | 53.5 | 6.54 | pullback | 914.7 | 851.95 | 6.86 | 1102.95 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 11 | JBL | Information Technology | 50.83 | 6.21 | pullback | 362.38 | 329.62 | 9.04 | 460.66 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 12 | PANW | Information Technology | 45.24 | 5.53 | pullback | 260.52 | 231.5 | 11.14 | 347.59 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 13 | FDX | Industrials | 41.02 | 5.01 | pullback | 331.76 | 312.79 | 5.72 | 388.68 | 1 | 331.76 | 18.97 |
+| 14 | PSX | Energy | 39.22 | 4.79 | pullback | 179.0 | 167.69 | 6.32 | 212.94 | 2 | 358.0 | 22.63 |
+| 15 | BG | Consumer Staples | 38.36 | 4.69 | pullback | 126.68 | 118.6 | 6.38 | 150.93 | 3 | 380.04 | 24.25 |
+| 16 | CSX | Industrials | 31.19 | 3.81 | pullback | 47.28 | 45.05 | 4.72 | 53.97 | 11 | 520.08 | 24.52 |
+| 17 | FRT | Real Estate | 27.01 | 3.3 | breakout | 124.44 | 110.9 | 10.88 | 165.07 | 1 | 124.44 | 13.54 |
+| 18 | DE | Industrials | 24.04 | 2.94 | pullback | 577.33 | 539.0 | 6.64 | 692.33 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 19 | LIN | Materials | 20.94 | 2.56 | pullback | 515.59 | 495.59 | 3.88 | 575.6 | 1 | 515.59 | 20.0 |
+| 20 | NDSN | Industrials | 20.74 | 2.54 | pullback | 290.13 | 277.25 | 4.44 | 328.78 | 1 | 290.13 | 12.88 |
+| 21 | KO | Consumer Staples | 18.49 | 2.26 | pullback | 81.34 | 78.2 | 3.86 | 90.76 | 7 | 569.38 | 21.98 |
+| 22 | MNST | Consumer Staples | 18.37 | 2.25 | pullback | 90.15 | 86.01 | 4.59 | 102.56 | 6 | 540.9 | 24.81 |
+| 23 | MDLZ | Consumer Staples | 18.31 | 2.24 | pullback | 62.93 | 60.31 | 4.16 | 70.79 | 9 | 566.37 | 23.59 |
+| 24 | REG | Real Estate | 18.2 | 2.22 | breakout | 79.55 | 74.51 | 6.34 | 94.67 | 4 | 318.2 | 20.16 |
+| 25 | UNP | Industrials | 18.2 | 2.22 | pullback | 271.28 | 257.06 | 5.24 | 313.93 | 1 | 271.28 | 14.22 |
+| 26 | CHD | Consumer Staples | 18.16 | 2.22 | pullback | 97.03 | 92.7 | 4.46 | 110.01 | 5 | 485.15 | 21.64 |
+| 27 | SPG | Real Estate | 16.51 | 2.02 | pullback | 211.89 | 200.64 | 5.31 | 245.65 | 2 | 423.78 | 22.51 |
