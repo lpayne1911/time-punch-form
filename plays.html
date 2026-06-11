@@ -137,7 +137,7 @@ fetch('plays.json?_=' + Date.now())
         const earningsHold = (data.plays||[]).filter(p => p.earnings_in_hold && !p.earnings_soon).map(p => p.ticker);
         const rsNewHigh = (data.plays||[]).filter(p => (p.indicators||{}).rs_new_high).map(p => p.ticker);
         meta.innerHTML += `
-            <span class="chip">Plan: <strong>${data.target_r}R</strong> target · <strong>${data.atr_mult}× ATR</strong> stop · ~<strong>${data.hold_guide_days}d</strong> hold</span>
+            <span class="chip">Plan: <strong>${data.target_r}R</strong> target · <strong>${data.atr_mult}× ATR</strong> stop (≤<strong>${data.stop_cap_pct}%</strong>) · ~<strong>${data.hold_guide_days}d</strong> hold</span>
             <span class="chip">Quality: <strong>${tally.Constructive||0}</strong> constructive · <strong>${tally.Caution||0}</strong> caution</span>
             <span class="chip">Constructive &amp; affordable: <strong>${aff.join(', ') || '—'}</strong></span>
             <span class="chip">RS line at new high: <strong>${rsNewHigh.join(', ') || '—'}</strong></span>

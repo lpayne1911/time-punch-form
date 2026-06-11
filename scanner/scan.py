@@ -47,6 +47,7 @@ BUDGET = 2500.0          # account size the watchlist sizes positions against
 RISK_PCT = 1.0           # percent of the account risked per trade
 STOP_BUFFER = 0.02       # minimum buffer below the support level
 ATR_MULT = 2.0           # also keep the stop at least this many ATRs from price
+STOP_CAP = 0.12          # cap stop distance at this fraction of price (volatility guard)
 TARGET_R = 3.0           # profit target = this many R (risk units) above entry
 HOLD_GUIDE = 40          # let-winners-run holding-period guideline, in trading days
 
@@ -381,6 +382,10 @@ def size_position(price: float, setup: str, sma20: float, base_low: float,
     atr_stop = price - ATR_MULT * price * atr_pct / 100.0 if atr_pct else support_stop
     # Take the lower (wider) stop so we clear both support and the noise band.
     stop = min(support_stop, atr_stop, price * (1 - 0.005))
+    # Cap how far the stop can sit from price: a volatile name shouldn't be handed
+    # a runaway stop distance, which both over-risks the trade and shrinks size.
+    # On a very extended name this can place the stop above structural support.
+    stop = max(stop, price * (1 - STOP_CAP))
     stop_dist = (price - stop) / price
     if stop_dist <= 0:
         return {"stop": None, "stop_pct": None, "shares": 0,
@@ -543,6 +548,7 @@ def main() -> int:
         "max_loss_per_trade": round(BUDGET * RISK_PCT / 100.0, 2),
         "target_r": TARGET_R,
         "atr_mult": ATR_MULT,
+        "stop_cap_pct": round(STOP_CAP * 100, 1),
         "hold_guide_days": HOLD_GUIDE,
         "plays": plays,
     }
@@ -565,8 +571,9 @@ def render_markdown(r: dict) -> str:
         f"- Scanned **{r['universe_size']}** names → **{r['count']}** plays",
         f"- Budget **${r['budget']:,.0f}**, risking **{r['risk_pct']}%** "
         f"(**${r['max_loss_per_trade']:,.2f}** max loss/trade)",
-        f"- Plan: **{r['target_r']}R** target, **{r['atr_mult']}× ATR** stop, "
-        f"~**{r['hold_guide_days']}-day** hold (let-winners-run, per the backtest sweep)",
+        f"- Plan: **{r['target_r']}R** target, **{r['atr_mult']}× ATR** stop "
+        f"(capped at **{r['stop_cap_pct']}%**), ~**{r['hold_guide_days']}-day** hold "
+        f"(let-winners-run, per the backtest sweep)",
         "",
     ]
     if not r["plays"]:
