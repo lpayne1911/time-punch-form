@@ -1,18 +1,18 @@
 # Daily Play Watchlist
 
-_Generated 2026-06-10T23:54:24+00:00 — not financial advice._
+_Generated 2026-06-11T00:43:59+00:00 — not financial advice._
 
 - Benchmark **SPY** YTD: **6.48%** (leader threshold **12.96%**)
 - Leading sectors: Consumer Staples, Energy, Industrials, Information Technology, Materials, Real Estate
 - Scanned **503** names → **35** plays
 - Budget **$2,500**, risking **1.0%** (**$25.00** max loss/trade)
-- Plan: **3.0R** target, **2.0× ATR** stop, ~**40-day** hold (let-winners-run, per the backtest sweep)
+- Plan: **3.0R** target, **2.0× ATR** stop (capped at **12.0%**), ~**40-day** hold (let-winners-run, per the backtest sweep)
 
 | # | Ticker | Sector | YTD % | RS | Setup | Price | Stop | Stop % | Target | Shares | Position $ | Risk $ |
 |--:|:--|:--|--:|--:|:--|--:|--:|--:|--:|--:|--:|--:|
-| 1 | MU | Information Technology | 182.88 | 28.22 | pullback | 891.88 | 729.56 | 18.2 | 1378.85 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 1 | MU | Information Technology | 182.88 | 28.22 | pullback | 891.88 | 784.85 | 12.0 | 1212.96 | 1 share exceeds risk limit | 0.0 | 0.0 |
 | 2 | FTNT | Information Technology | 78.33 | 12.09 | pullback | 138.88 | 126.55 | 8.88 | 175.88 | 2 | 277.76 | 24.67 |
-| 3 | LRCX | Information Technology | 74.1 | 11.44 | pullback | 321.8 | 282.28 | 12.28 | 440.35 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 3 | LRCX | Information Technology | 74.1 | 11.44 | pullback | 321.8 | 283.18 | 12.0 | 437.65 | 1 share exceeds risk limit | 0.0 | 0.0 |
 | 4 | MPC | Energy | 60.84 | 9.39 | pullback | 263.28 | 244.85 | 7.0 | 318.57 | 1 | 263.28 | 18.43 |
 | 5 | VLO | Energy | 57.76 | 8.91 | pullback | 257.99 | 239.83 | 7.04 | 312.48 | 1 | 257.99 | 18.16 |
 | 6 | FFIV | Information Technology | 52.27 | 8.07 | pullback | 390.77 | 361.62 | 7.46 | 478.22 | 1 share exceeds risk limit | 0.0 | 0.0 |
@@ -44,4 +44,4 @@ _Generated 2026-06-10T23:54:24+00:00 — not financial advice._
 | 32 | PM | Consumer Staples | 15.15 | 2.34 | pullback | 182.95 | 173.03 | 5.42 | 212.7 | 2 | 365.9 | 19.83 |
 | 33 | FAST | Industrials | 15.06 | 2.32 | pullback | 46.03 | 43.88 | 4.66 | 52.47 | 11 | 506.33 | 23.6 |
 | 34 | PLD | Real Estate | 13.86 | 2.14 | pullback | 145.77 | 139.74 | 4.14 | 163.87 | 4 | 583.08 | 24.14 |
-| 35 | HPQ | Information Technology | 13.43 | 2.07 | pullback | 24.69 | 21.11 | 14.5 | 35.43 | 6 | 148.14 | 21.48 |
+| 35 | HPQ | Information Technology | 13.43 | 2.07 | pullback | 24.69 | 21.73 | 12.0 | 33.58 | 8 | 197.52 | 23.7 |

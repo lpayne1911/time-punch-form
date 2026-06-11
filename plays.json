@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-10T23:54:24+00:00",
+  "generated_at": "2026-06-11T00:43:59+00:00",
   "benchmark": "SPY",
   "spy_ytd": 6.48,
   "leader_threshold": 12.96,
@@ -18,6 +18,7 @@
   "max_loss_per_trade": 25.0,
   "target_r": 3.0,
   "atr_mult": 2.0,
+  "stop_cap_pct": 12.0,
   "hold_guide_days": 40,
   "plays": [
     {
@@ -31,10 +32,10 @@
       "pct_to_20ma": 2.14,
       "vol_ratio": 1.07,
       "base_range_pct": 58.4,
-      "stop": 729.56,
-      "stop_pct": 18.2,
-      "target": 1378.85,
-      "target_pct": 54.6,
+      "stop": 784.85,
+      "stop_pct": 12.0,
+      "target": 1212.96,
+      "target_pct": 36.0,
       "shares": 0,
       "position_usd": 0.0,
       "risk_usd": 0.0,
@@ -56,7 +57,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-06-24",
-      "days_to_earnings": 14,
+      "days_to_earnings": 13,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -146,7 +147,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-08-05",
-      "days_to_earnings": 56,
+      "days_to_earnings": 55,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -211,10 +212,10 @@
       "pct_to_20ma": 3.53,
       "vol_ratio": 1.42,
       "base_range_pct": 25.7,
-      "stop": 282.28,
-      "stop_pct": 12.28,
-      "target": 440.35,
-      "target_pct": 36.84,
+      "stop": 283.18,
+      "stop_pct": 12.0,
+      "target": 437.65,
+      "target_pct": 36.0,
       "shares": 0,
       "position_usd": 0.0,
       "risk_usd": 0.0,
@@ -236,7 +237,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-29",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -326,7 +327,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-08-04",
-      "days_to_earnings": 55,
+      "days_to_earnings": 54,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -416,7 +417,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-30",
-      "days_to_earnings": 50,
+      "days_to_earnings": 49,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -506,7 +507,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-29",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -596,7 +597,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-27",
-      "days_to_earnings": 47,
+      "days_to_earnings": 46,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -686,9 +687,9 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-08-06",
-      "days_to_earnings": 57,
+      "days_to_earnings": 56,
       "earnings_soon": false,
-      "earnings_in_hold": false,
+      "earnings_in_hold": true,
       "history": [
         {
           "date": "2026-06-02",
@@ -776,7 +777,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-08-18",
-      "days_to_earnings": 69,
+      "days_to_earnings": 68,
       "earnings_soon": false,
       "earnings_in_hold": false,
       "history": [
@@ -866,7 +867,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-14",
-      "days_to_earnings": 34,
+      "days_to_earnings": 33,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -956,7 +957,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-24",
-      "days_to_earnings": 44,
+      "days_to_earnings": 43,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -1046,7 +1047,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-29",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -1136,7 +1137,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-08-04",
-      "days_to_earnings": 55,
+      "days_to_earnings": 54,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -1226,7 +1227,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-29",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -1406,7 +1407,7 @@
       },
       "assessment": "extended: RSI overbought",
       "next_earnings": "2026-08-04",
-      "days_to_earnings": 55,
+      "days_to_earnings": 54,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -1496,7 +1497,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-08-19",
-      "days_to_earnings": 70,
+      "days_to_earnings": 69,
       "earnings_soon": false,
       "earnings_in_hold": false,
       "history": [
@@ -1586,7 +1587,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-30",
-      "days_to_earnings": 50,
+      "days_to_earnings": 49,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -1766,7 +1767,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-28",
-      "days_to_earnings": 48,
+      "days_to_earnings": 47,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2036,7 +2037,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-27",
-      "days_to_earnings": 47,
+      "days_to_earnings": 46,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2126,7 +2127,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-31",
-      "days_to_earnings": 51,
+      "days_to_earnings": 50,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2216,7 +2217,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-21",
-      "days_to_earnings": 41,
+      "days_to_earnings": 40,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2306,7 +2307,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-29",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2396,9 +2397,9 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-08-06",
-      "days_to_earnings": 57,
+      "days_to_earnings": 56,
       "earnings_soon": false,
-      "earnings_in_hold": false,
+      "earnings_in_hold": true,
       "history": [
         {
           "date": "2026-06-02",
@@ -2486,7 +2487,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-31",
-      "days_to_earnings": 51,
+      "days_to_earnings": 50,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2576,7 +2577,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-31",
-      "days_to_earnings": 51,
+      "days_to_earnings": 50,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2666,7 +2667,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-29",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2756,7 +2757,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-31",
-      "days_to_earnings": 51,
+      "days_to_earnings": 50,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2846,7 +2847,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-22",
-      "days_to_earnings": 42,
+      "days_to_earnings": 41,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -2936,7 +2937,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-13",
-      "days_to_earnings": 33,
+      "days_to_earnings": 32,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -3026,7 +3027,7 @@
       },
       "assessment": "constructive",
       "next_earnings": "2026-07-16",
-      "days_to_earnings": 36,
+      "days_to_earnings": 35,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
@@ -3091,14 +3092,14 @@
       "pct_to_20ma": 1.93,
       "vol_ratio": 0.94,
       "base_range_pct": 41.3,
-      "stop": 21.11,
-      "stop_pct": 14.5,
-      "target": 35.43,
-      "target_pct": 43.5,
-      "shares": 6,
-      "position_usd": 148.14,
-      "risk_usd": 21.48,
-      "reward_usd": 64.44,
+      "stop": 21.73,
+      "stop_pct": 12.0,
+      "target": 33.58,
+      "target_pct": 36.0,
+      "shares": 8,
+      "position_usd": 197.52,
+      "risk_usd": 23.7,
+      "reward_usd": 71.11,
       "size_note": "",
       "week_change_pct": -9.53,
       "sma50": 21.69,
@@ -3116,7 +3117,7 @@
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-08-26",
-      "days_to_earnings": 77,
+      "days_to_earnings": 76,
       "earnings_soon": false,
       "earnings_in_hold": false,
       "history": [
