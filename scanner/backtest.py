@@ -138,9 +138,10 @@ def evaluate(raw: list[dict], rr: float, atr_mult: float, hold: int) -> dict:
     trades = []
     for s in raw:
         price = s["entry"]
-        # Same stop rule as the live sizer, with the swept ATR multiple.
+        # Same stop rule as the live sizer, with the swept ATR multiple and cap.
         stop = min(s["s20"] * (1 - scan.STOP_BUFFER), price - atr_mult * s["atr"],
                    price * 0.995)
+        stop = max(stop, price * (1 - scan.STOP_CAP))
         stop_dist = (price - stop) / price
         if stop_dist <= 0:
             continue
