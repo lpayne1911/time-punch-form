@@ -1,47 +1,31 @@
 # Daily Play Watchlist
 
-_Generated 2026-06-11T00:43:59+00:00 — not financial advice._
+_Generated 2026-06-11T23:58:40+00:00 — not financial advice._
 
-- Benchmark **SPY** YTD: **6.48%** (leader threshold **12.96%**)
-- Leading sectors: Consumer Staples, Energy, Industrials, Information Technology, Materials, Real Estate
-- Scanned **503** names → **35** plays
+- Benchmark **SPY** YTD: **8.29%** (leader threshold **16.58%**)
+- Leading sectors: Consumer Staples, Energy, Information Technology, Materials, Real Estate
+- Scanned **503** names → **19** plays
 - Budget **$2,500**, risking **1.0%** (**$25.00** max loss/trade)
 - Plan: **3.0R** target, **2.0× ATR** stop (capped at **12.0%**), ~**40-day** hold (let-winners-run, per the backtest sweep)
 
 | # | Ticker | Sector | YTD % | RS | Setup | Price | Stop | Stop % | Target | Shares | Position $ | Risk $ |
 |--:|:--|:--|--:|--:|:--|--:|--:|--:|--:|--:|--:|--:|
-| 1 | MU | Information Technology | 182.88 | 28.22 | pullback | 891.88 | 784.85 | 12.0 | 1212.96 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 2 | FTNT | Information Technology | 78.33 | 12.09 | pullback | 138.88 | 126.55 | 8.88 | 175.88 | 2 | 277.76 | 24.67 |
-| 3 | LRCX | Information Technology | 74.1 | 11.44 | pullback | 321.8 | 283.18 | 12.0 | 437.65 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 4 | MPC | Energy | 60.84 | 9.39 | pullback | 263.28 | 244.85 | 7.0 | 318.57 | 1 | 263.28 | 18.43 |
-| 5 | VLO | Energy | 57.76 | 8.91 | pullback | 257.99 | 239.83 | 7.04 | 312.48 | 1 | 257.99 | 18.16 |
-| 6 | FFIV | Information Technology | 52.27 | 8.07 | pullback | 390.77 | 361.62 | 7.46 | 478.22 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 7 | NUE | Materials | 48.37 | 7.46 | pullback | 250.49 | 235.36 | 6.04 | 295.88 | 1 | 250.49 | 15.13 |
-| 8 | TRGP | Energy | 47.39 | 7.31 | pullback | 272.54 | 259.24 | 4.88 | 312.44 | 1 | 272.54 | 13.3 |
-| 9 | PANW | Information Technology | 46.75 | 7.21 | pullback | 263.22 | 234.53 | 10.9 | 349.29 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 10 | JBHT | Industrials | 43.22 | 6.67 | pullback | 280.75 | 263.85 | 6.02 | 331.45 | 1 | 280.75 | 16.9 |
-| 11 | PSX | Energy | 41.34 | 6.38 | pullback | 181.72 | 170.45 | 6.2 | 215.52 | 2 | 363.44 | 22.53 |
-| 12 | BG | Consumer Staples | 40.03 | 6.18 | pullback | 128.21 | 120.31 | 6.16 | 151.9 | 3 | 384.63 | 23.69 |
-| 13 | ADM | Consumer Staples | 39.6 | 6.11 | pullback | 81.28 | 76.76 | 5.56 | 94.84 | 5 | 406.4 | 22.6 |
-| 14 | HST | Real Estate | 33.29 | 5.14 | pullback | 23.95 | 22.57 | 5.76 | 28.09 | 18 | 431.1 | 24.85 |
-| 15 | EOG | Energy | 33.04 | 5.1 | pullback | 140.28 | 132.62 | 5.46 | 163.26 | 3 | 420.84 | 22.98 |
-| 16 | GWW | Industrials | 31.78 | 4.9 | pullback | 1317.63 | 1242.84 | 5.68 | 1542.01 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 17 | TGT | Consumer Staples | 29.84 | 4.6 | pullback | 127.98 | 120.61 | 5.76 | 150.09 | 3 | 383.94 | 22.11 |
-| 18 | MO | Consumer Staples | 29.74 | 4.59 | pullback | 73.13 | 69.97 | 4.32 | 82.61 | 7 | 511.91 | 22.11 |
-| 19 | CSX | Industrials | 28.77 | 4.44 | pullback | 46.41 | 44.46 | 4.2 | 52.26 | 12 | 556.92 | 23.39 |
-| 20 | CARR | Industrials | 28.0 | 4.32 | pullback | 67.97 | 62.82 | 7.58 | 83.43 | 4 | 271.88 | 20.61 |
-| 21 | FRT | Real Estate | 26.17 | 4.04 | pullback | 123.62 | 116.53 | 5.73 | 144.88 | 3 | 370.86 | 21.26 |
-| 22 | OKE | Energy | 24.98 | 3.85 | pullback | 90.57 | 85.62 | 5.46 | 105.41 | 5 | 452.85 | 24.73 |
-| 23 | CDNS | Information Technology | 24.08 | 3.72 | pullback | 385.13 | 346.15 | 10.12 | 502.06 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 24 | CVX | Energy | 24.06 | 3.71 | pullback | 189.8 | 181.71 | 4.26 | 214.06 | 3 | 569.4 | 24.26 |
-| 25 | KO | Consumer Staples | 21.77 | 3.36 | breakout | 83.59 | 75.28 | 9.94 | 108.51 | 3 | 250.77 | 24.92 |
-| 26 | IEX | Industrials | 20.66 | 3.19 | pullback | 214.5 | 204.8 | 4.52 | 243.59 | 2 | 429.0 | 19.39 |
-| 27 | MNST | Consumer Staples | 19.76 | 3.05 | pullback | 91.21 | 86.28 | 5.41 | 106.0 | 5 | 456.05 | 24.65 |
-| 28 | CHD | Consumer Staples | 19.57 | 3.02 | pullback | 98.19 | 93.87 | 4.4 | 111.15 | 5 | 490.95 | 21.6 |
-| 29 | LIN | Materials | 19.43 | 3.0 | pullback | 509.16 | 488.39 | 4.08 | 571.48 | 1 | 509.16 | 20.77 |
-| 30 | REG | Real Estate | 19.01 | 2.93 | pullback | 80.1 | 76.11 | 4.99 | 92.08 | 6 | 480.6 | 23.96 |
-| 31 | CL | Consumer Staples | 17.21 | 2.66 | pullback | 89.95 | 84.95 | 5.56 | 104.95 | 4 | 359.8 | 20.0 |
-| 32 | PM | Consumer Staples | 15.15 | 2.34 | pullback | 182.95 | 173.03 | 5.42 | 212.7 | 2 | 365.9 | 19.83 |
-| 33 | FAST | Industrials | 15.06 | 2.32 | pullback | 46.03 | 43.88 | 4.66 | 52.47 | 11 | 506.33 | 23.6 |
-| 34 | PLD | Real Estate | 13.86 | 2.14 | pullback | 145.77 | 139.74 | 4.14 | 163.87 | 4 | 583.08 | 24.14 |
-| 35 | HPQ | Information Technology | 13.43 | 2.07 | pullback | 24.69 | 21.73 | 12.0 | 33.58 | 8 | 197.52 | 23.7 |
+| 1 | STX | Information Technology | 202.43 | 24.42 | pullback | 868.09 | 763.92 | 12.0 | 1180.6 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 2 | WDC | Information Technology | 182.2 | 21.98 | pullback | 529.29 | 465.78 | 12.0 | 719.83 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 3 | AMD | Information Technology | 118.58 | 14.3 | pullback | 488.45 | 429.84 | 12.0 | 664.29 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 4 | DDOG | Information Technology | 75.11 | 9.06 | pullback | 234.24 | 206.13 | 12.0 | 318.57 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 5 | CSCO | Information Technology | 61.09 | 7.37 | pullback | 121.83 | 112.13 | 7.96 | 150.92 | 2 | 243.66 | 19.4 |
+| 6 | MPC | Energy | 59.33 | 7.16 | pullback | 260.81 | 243.02 | 6.82 | 314.17 | 1 | 260.81 | 17.79 |
+| 7 | VLO | Energy | 56.3 | 6.79 | pullback | 255.6 | 238.01 | 6.88 | 308.36 | 1 | 255.6 | 17.59 |
+| 8 | FFIV | Information Technology | 53.47 | 6.45 | pullback | 393.84 | 364.38 | 7.48 | 482.22 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 9 | CRWD | Information Technology | 52.46 | 6.33 | pullback | 691.53 | 608.55 | 12.0 | 940.48 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 10 | TRGP | Energy | 45.67 | 5.51 | pullback | 269.37 | 255.63 | 5.1 | 310.58 | 1 | 269.37 | 13.74 |
+| 11 | BG | Consumer Staples | 36.83 | 4.44 | pullback | 125.28 | 117.39 | 6.3 | 148.96 | 3 | 375.84 | 23.68 |
+| 12 | FCX | Materials | 28.35 | 3.42 | pullback | 66.34 | 59.67 | 10.06 | 86.36 | 3 | 199.02 | 20.02 |
+| 13 | CDNS | Information Technology | 23.63 | 2.85 | pullback | 383.74 | 345.06 | 10.08 | 499.78 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 14 | LIN | Materials | 20.9 | 2.52 | pullback | 515.44 | 494.82 | 4.0 | 577.29 | 1 | 515.44 | 20.62 |
+| 15 | KO | Consumer Staples | 20.22 | 2.44 | pullback | 82.53 | 78.85 | 4.46 | 93.57 | 6 | 495.18 | 22.08 |
+| 16 | REG | Real Estate | 19.89 | 2.4 | pullback | 80.69 | 76.3 | 5.44 | 93.85 | 5 | 403.45 | 21.94 |
+| 17 | MDLZ | Consumer Staples | 19.12 | 2.31 | pullback | 63.36 | 60.52 | 4.49 | 71.89 | 8 | 506.88 | 22.76 |
+| 18 | CHD | Consumer Staples | 18.22 | 2.2 | pullback | 97.08 | 92.87 | 4.34 | 109.72 | 5 | 485.4 | 21.07 |
+| 19 | ANET | Information Technology | 17.07 | 2.06 | pullback | 156.4 | 139.23 | 10.98 | 207.92 | 1 | 156.4 | 17.17 |
