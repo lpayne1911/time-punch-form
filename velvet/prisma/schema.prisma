@@ -1,0 +1,156 @@
+// Prisma schema for Velvet — compliant, privacy-first dating & community app.
+// NOTE: SQLite is used for zero-config local dev. In production this maps to
+// PostgreSQL (see blueprint §35). SQLite has no scalar list type, so tag
+// arrays are stored as JSON strings and (de)serialized in src/lib/tags.ts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  // Age & consent gates — enforced in onboarding before any browsing (blueprint §7, §8)
+  ageConfirmed  Boolean  @default(false) // self-attested 18+ at age gate
+  dobYear       Int? // coarse DOB for age assurance; we never store full DOB
+  // Versioned acceptances (blueprint §17 community standards / consent pledge)
+  consentPledgeVersion   String?
+  consentPledgeAcceptedAt DateTime?
+  standardsVersion        String?
+  standardsAcceptedAt     DateTime?
+  // Verification (blueprint §17). Basic tier in MVP; ID/photo verification later.
+  verification  String   @default("UNVERIFIED") // UNVERIFIED | EMAIL_VERIFIED | PHOTO_VERIFIED | ID_VERIFIED
+  status        String   @default("ACTIVE") // ACTIVE | PAUSED | SUSPENDED | DELETED
+  createdAt     DateTime @default(now())
+  deletedAt     DateTime?
+
+  profile       Profile?
+  sessions      Session[]
+  likesSent     Like[]    @relation("LikesSent")
+  likesReceived Like[]    @relation("LikesReceived")
+  messages      Message[]
+  blocksMade    Block[]   @relation("Blocker")
+  blocksAgainst Block[]   @relation("Blocked")
+  reportsMade   Report[]  @relation("Reporter")
+  reportsAgainst Report[] @relation("Reported")
+}
+
+model Session {
+  token     String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// Short-lived one-time codes for passwordless email auth (blueprint §7 auth/OTP).
+// In dev the code is surfaced to the client; in prod it is sent via an email/SMS
+// provider and NEVER returned in the API response.
+model OtpCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  consumed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model Profile {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  displayName      String   // pseudonym allowed (blueprint §9)
+  age              Int
+  location         String   // general city/region only — never precise (blueprint §19)
+
+  relationshipStatus String?
+  // Controlled-vocabulary tag groups, stored as JSON arrays (non-explicit, blueprint §13)
+  intentions       String   @default("[]") // relationship intention tags
+  communicationStyle String  @default("[]")
+  interests        String   @default("[]") // lifestyle interest tags
+  boundaries       String   @default("[]")
+  lookingFor       String   @default("[]")
+  values           String   @default("[]")
+  experienceLevel  String?  // newcomer | exploring | experienced
+
+  // Free-text prompt answers (moderated). Kept short; no explicit content.
+  promptCommunication String?
+  promptBoundary      String?
+  promptExploring     String?
+
+  // Privacy is private-by-default (blueprint §4, §19)
+  visibility       String   @default("VERIFIED_ONLY") // PUBLIC_MEMBERS | VERIFIED_ONLY | MATCHES_ONLY
+  incognito        Boolean  @default(false)
+  photoBlurUntilMatch Boolean @default(true)
+  discreetNotifications Boolean @default(true)
+
+  completed        Boolean  @default(false)
+  updatedAt        DateTime @updatedAt
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  fromUserId String
+  toUserId   String
+  from      User     @relation("LikesSent", fields: [fromUserId], references: [id], onDelete: Cascade)
+  to        User     @relation("LikesReceived", fields: [toUserId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([fromUserId, toUserId])
+  @@index([toUserId])
+}
+
+// A Match exists only on MUTUAL interest. Messaging is gated on this (blueprint §11).
+model Match {
+  id        String   @id @default(cuid())
+  userAId   String   // always the lexicographically smaller id for uniqueness
+  userBId   String
+  createdAt DateTime @default(now())
+  messages  Message[]
+
+  @@unique([userAId, userBId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  matchId   String
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  body      String
+  flagged   Boolean  @default(false) // set by message moderation (blueprint §11)
+  createdAt DateTime @default(now())
+
+  @@index([matchId])
+}
+
+model Block {
+  id        String   @id @default(cuid())
+  blockerId String
+  blockedId String
+  blocker   User     @relation("Blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked   User     @relation("Blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([blockerId, blockedId])
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  reporterId String
+  reportedId String
+  reporter   User     @relation("Reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reported   User     @relation("Reported", fields: [reportedId], references: [id], onDelete: Cascade)
+  category   String   // see src/lib/safety.ts REPORT_CATEGORIES (blueprint §17)
+  detail     String?
+  status     String   @default("OPEN") // OPEN | REVIEWING | ACTIONED | DISMISSED
+  createdAt  DateTime @default(now())
+}
