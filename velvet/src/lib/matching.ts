@@ -93,7 +93,10 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
       id: { not: userId },
       status: "ACTIVE",
       deletedAt: null,
-      profile: { is: { completed: true, incognito: false } },
+      // Respect incognito and premium "hide from discovery" (blueprint §20, §24).
+      profile: { is: { completed: true, incognito: false, hideFromDiscovery: false } },
+      // Premium "verified-only browsing" filter (blueprint §24).
+      ...(me.profile.discoverVerifiedOnly ? { verification: { not: "UNVERIFIED" } } : {}),
     },
     include: { profile: true },
     take: 200,

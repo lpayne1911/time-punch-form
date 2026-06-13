@@ -36,6 +36,29 @@ the safety and privacy primitives wired in from day one.
 | Admin/moderation dashboard (reports, photos, flagged msgs, users, audit) | §36 | ✅ |
 | Enforcement: warn / suspend / ban + lazy auto-expiry | §17 | ✅ |
 | Append-only audit log of every moderator action | §17, §19, §36 | ✅ |
+| Subscription tiers + entitlement model (Plus/Premium/Private Circle) | §21–§24 | ✅ |
+| Feature gating: likes cap, see-who-likes-you, incognito, verified-only, travel, hide | §22–§24 | ✅ |
+| Compliant paywall + cancel/resume (no dark patterns) | §29 | ✅ |
+| Store-billing-ready architecture (dev purchase stand-in) | §33 | ✅ |
+
+### Monetization (`/premium`)
+Revenue comes only from **privacy, discovery, and convenience** — never access to
+people or content (blueprint §21, §34). Safety tools are never gated (§22).
+- **Free** — full safety tools, basic discovery, 10 likes/day, messaging on mutual match.
+- **Plus** ($14.99/mo · $89.99/yr) — unlimited likes, see who likes you, read receipts.
+- **Premium** ($29.99/mo · $179.99/yr) — + incognito, verified-only browsing, travel mode,
+  advanced filters, hide-from-discovery, visibility audit.
+- **Private Circle** ($59.99/mo · $399.99/yr) — + private circles, priority review, concierge.
+
+Tiers, prices, and the cumulative feature map live in `src/lib/billing.ts`;
+entitlement resolution and the daily-like cap in `src/lib/entitlements.ts`. Gates
+are enforced server-side (API routes + server actions), not just hidden in the UI.
+
+**Payment compliance (§33):** on real iOS/Android, digital subscriptions go through
+Apple IAP / Google Play Billing (via RevenueCat), and a verified webhook grants the
+entitlement — we never route around store billing or collect card details in-app.
+The `/api/billing/subscribe` route is a **dev-only simulated purchase** (disabled in
+production) that exists solely to exercise the entitlement model locally.
 
 ### Moderation dashboard (`/admin`)
 Staff-only (role `MODERATOR`/`ADMIN`). Sign in as the seeded **admin@demo.velvet**

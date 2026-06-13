@@ -35,6 +35,7 @@ model User {
 
   profile       Profile?
   photos        Photo[]
+  subscription  Subscription?
   sessions      Session[]
   likesSent     Like[]    @relation("LikesSent")
   likesReceived Like[]    @relation("LikesReceived")
@@ -133,7 +134,10 @@ model Profile {
 
   // Privacy is private-by-default (blueprint §4, §19)
   visibility       String   @default("VERIFIED_ONLY") // PUBLIC_MEMBERS | VERIFIED_ONLY | MATCHES_ONLY
-  incognito        Boolean  @default(false)
+  incognito        Boolean  @default(false) // premium discretion feature
+  hideFromDiscovery Boolean @default(false) // premium: only reachable via direct link / existing matches
+  discoverVerifiedOnly Boolean @default(false) // premium filter: show only verified members
+  travelLocation   String?  // premium travel mode: browse as if in another city
   photoBlurUntilMatch Boolean @default(true)
   discreetNotifications Boolean @default(true)
 
@@ -203,4 +207,24 @@ model Report {
   createdAt  DateTime @default(now())
 
   @@index([status])
+}
+
+// Subscription / entitlement record (blueprint §21-§33). Monetization is built
+// around privacy, discovery, and convenience — NEVER access to people or content.
+// `provider` records WHERE billing happens: on real iOS/Android this is APPLE /
+// GOOGLE store billing (via RevenueCat); "dev" is the local simulated purchase
+// used by this web MVP. We never route around store billing for digital goods.
+model Subscription {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tier                String   @default("FREE") // FREE | PLUS | PREMIUM | PRIVATE_CIRCLE
+  interval            String   @default("MONTH") // MONTH | YEAR
+  status              String   @default("ACTIVE") // ACTIVE | CANCELED | EXPIRED
+  provider            String   @default("dev") // dev | apple | google | stripe
+  externalId          String? // store transaction / RevenueCat entitlement id
+  currentPeriodEnd    DateTime?
+  cancelAtPeriodEnd   Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }

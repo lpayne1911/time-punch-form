@@ -14,8 +14,10 @@ export default async function Nav() {
         </Link>
         <span className="spacer" />
         <Link href="/discover">Discover</Link>
+        <Link href="/likes">Likes</Link>
         <Link href="/matches">Matches</Link>
         <Link href="/profile">Profile</Link>
+        <Link href="/premium" style={{ color: "var(--gold)" }}>Membership</Link>
         <Link href="/safety">Safety</Link>
         <Link href="/settings">Settings</Link>
         {staff && (

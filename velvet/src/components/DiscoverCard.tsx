@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Candidate } from "@/lib/matching";
 
@@ -9,6 +10,7 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<null | "liked" | "passed">(null);
   const [matched, setMatched] = useState<string | null>(null);
+  const [limit, setLimit] = useState<string | null>(null);
 
   async function like() {
     setBusy(true);
@@ -19,11 +21,26 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
     });
     const data = await res.json();
     setBusy(false);
+    if (res.status === 402) {
+      setLimit(data.message ?? "Daily like limit reached.");
+      return;
+    }
     if (data.matched) {
       setMatched(data.matchId);
     } else {
       setDone("liked");
     }
+  }
+
+  if (limit) {
+    return (
+      <div className="card notice sans">
+        {limit}
+        <div style={{ marginTop: 10 }}>
+          <Link href="/premium?feature=unlimitedLikes" className="btn small">Upgrade to Plus</Link>
+        </div>
+      </div>
+    );
   }
 
   if (matched) {
