@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { applyDecision } from "@/lib/verification";
+import { verifySignature } from "@/lib/webhooks";
 
 const schema = z.object({
   checkId: z.string().min(1),
@@ -8,23 +9,31 @@ const schema = z.object({
   externalId: z.string().optional(),
 });
 
-// Verification provider callback. In production this receives the provider's
-// signed payload (Persona/Veriff/Stripe Identity) and MUST verify the signature
-// before trusting it. The dev simulation posts here directly and is only allowed
-// outside production.
+// Real verification-provider callback (Persona/Veriff/Stripe Identity). The
+// provider signs the raw body; we require a valid HMAC signature before trusting
+// it. The local dev simulation does NOT use this endpoint — it goes through an
+// authenticated server action (see /verify/simulate) — so this path can stay
+// strict in every environment.
 export async function POST(req: Request) {
-  if (process.env.NODE_ENV === "production") {
-    // TODO: verify provider webhook signature here before processing.
-    return NextResponse.json({ error: "Signature verification required." }, { status: 401 });
+  const secret = process.env.VERIFICATION_WEBHOOK_SECRET;
+  if (!secret) {
+    // No provider configured. Refuse rather than trust unauthenticated input.
+    return NextResponse.json({ error: "Webhook not configured." }, { status: 503 });
   }
 
-  const parsed = schema.safeParse(await req.json().catch(() => null));
+  const raw = await req.text();
+  const signature = req.headers.get("x-velvet-signature") ?? req.headers.get("x-signature");
+  if (!verifySignature(raw, signature, secret)) {
+    return NextResponse.json({ error: "Invalid signature." }, { status: 401 });
+  }
+
+  const parsed = schema.safeParse(JSON.parse(raw || "{}"));
   if (!parsed.success) return NextResponse.json({ error: "Bad payload." }, { status: 400 });
 
   const result = await applyDecision({
     checkId: parsed.data.checkId,
     approved: parsed.data.approved,
-    externalId: parsed.data.externalId ?? `dev_${parsed.data.checkId}`,
+    externalId: parsed.data.externalId,
   });
   if (!result) return NextResponse.json({ error: "Check not found or already resolved." }, { status: 404 });
 

@@ -8,8 +8,11 @@ generator client {
 }
 
 datasource db {
+  // Dev uses SQLite via DATABASE_URL (file:./dev.db). For production, switch
+  // `provider` to "postgresql" and point DATABASE_URL at your Postgres instance
+  // (blueprint §35) — no other schema changes are required for the swap.
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
 }
 
 model User {

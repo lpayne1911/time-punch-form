@@ -155,13 +155,37 @@ npm run dev         # http://localhost:3000
   production, augment with Hive / Perspective / Rekognition (blueprint §35).
 - `src/lib/matching.ts` — weighted compatibility scoring; photos contribute nothing.
 - `src/lib/policy.ts` — versioned pledge/standards text; bumping a version forces re-acceptance.
-- `next.config.ts` sets `X-Robots-Tag: noindex` — no public indexing of member content.
+- `next.config.ts` sets security headers (X-Frame-Options, nosniff, Referrer-Policy,
+  Permissions-Policy, `X-Robots-Tag: noindex`, and HSTS in production).
 
-## Before production (not yet built — later phases per blueprint §37)
-- Real email/SMS delivery for OTP; rate-limiting + abuse protection on auth.
-- Swap SQLite → PostgreSQL; encryption at rest, secrets management.
-- Real image upload + automated nudity moderation + human review queue UI (admin dashboard, §36).
-- Provider-based age assurance & identity/photo verification (§17).
-- Apple IAP / Google Play Billing via RevenueCat for subscriptions (§33) — none of the
-  monetization surfaces are in this slice by design.
+## Hardening (implemented)
+- **Auth rate limiting** (`src/lib/ratelimit.ts`): OTP requests are capped per
+  email (3 / 15 min) and per IP (10 / 15 min); verify attempts per email (5) and
+  per IP (30) — combined with the 10-minute code expiry this defeats code
+  brute-force. In-memory for now; swap the Map for Redis in production.
+- **Webhook signature verification** (`src/lib/webhooks.ts`): constant-time HMAC-
+  SHA256 over the raw body. The verification webhook **fails closed** — it refuses
+  unsigned/invalid calls and returns 503 when no secret is configured. The dev
+  verification flow does NOT use the public webhook; it runs through an
+  authenticated server action (`/verify/simulate`), so the webhook stays strict
+  in every environment.
+- **Security headers** + `poweredByHeader: false` (no `X-Powered-By`).
+- **Env-driven datasource** for a one-line Postgres swap.
+
+### Required production environment variables
+- `DATABASE_URL` — Postgres connection string (and set `provider = "postgresql"`).
+- `VERIFICATION_WEBHOOK_SECRET` — HMAC secret shared with the identity provider.
+- `BILLING_WEBHOOK_SECRET` — for the (future) RevenueCat/Stripe billing webhook.
+- Run with `NODE_ENV=production` (this disables all dev-only routes: OTP-code
+  echo, the simulated subscribe/purchase, and the verification simulate page).
+
+## Before production (still outstanding)
+- Real email/SMS delivery for OTP codes.
+- Swap SQLite → PostgreSQL (`provider` + `DATABASE_URL`); encryption at rest, a
+  managed secrets store, and a shared rate-limit store (Redis).
+- Wire a real image-moderation provider (Hive/Rekognition) into the photo pipeline.
+- Integrate real identity verification (Persona/Veriff/Stripe Identity) → the
+  signed webhook is ready; point the provider at `/api/verification/webhook`.
+- Apple IAP / Google Play Billing via RevenueCat for subscriptions and consumables,
+  plus Stripe Connect + a signed billing webhook for events (§33).
 - Legal review of ToS, privacy policy, FOSTA/SESTA posture (§40).
