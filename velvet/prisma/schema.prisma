@@ -25,6 +25,7 @@ model User {
   standardsAcceptedAt     DateTime?
   // Verification (blueprint §17). Basic tier in MVP; ID/photo verification later.
   verification  String   @default("UNVERIFIED") // UNVERIFIED | EMAIL_VERIFIED | PHOTO_VERIFIED | ID_VERIFIED
+  ageAssured    Boolean  @default(false) // provider-backed age assurance (stronger than the self-attested age gate)
   status        String   @default("ACTIVE") // ACTIVE | PAUSED | SUSPENDED | DELETED
   // Trust & safety (blueprint §17). Role gates the admin/moderation dashboard.
   role          String   @default("USER") // USER | MODERATOR | ADMIN
@@ -43,6 +44,7 @@ model User {
   rsvps             Rsvp[]
   circlesCreated    Circle[]           @relation("CircleCreator")
   circleMemberships CircleMembership[]
+  verificationChecks VerificationCheck[]
   likesSent     Like[]    @relation("LikesSent")
   likesReceived Like[]    @relation("LikesReceived")
   messages      Message[]
@@ -303,6 +305,31 @@ model CircleMembership {
   createdAt DateTime @default(now())
 
   @@unique([circleId, userId])
+}
+
+// Provider-backed verification (blueprint §17). A check represents one attempt at
+// a hosted verification flow (selfie liveness or government-ID). On real devices
+// `provider` is persona/veriff/stripe and the result arrives via a signed
+// webhook; "dev" is the local simulation. We store only the decision and a
+// tokenized externalId — never raw ID images or document numbers (blueprint §19,
+// §40 sensitive data). The resulting trust level lives on User.verification.
+model VerificationCheck {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type         String   // PHOTO_LIVENESS | ID_DOCUMENT
+  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  provider     String   @default("dev") // dev | persona | veriff | stripe
+  externalId   String? // provider session/verification id (tokenized reference)
+  resultLevel  String? // PHOTO_VERIFIED | ID_VERIFIED (granted on approval)
+  ageVerified  Boolean  @default(false) // true when an ID check confirmed 18+
+  reviewedById String? // set when a moderator manually decides
+  reviewedAt   DateTime?
+  note         String?
+  createdAt    DateTime @default(now())
+
+  @@index([status])
+  @@index([userId])
 }
 
 // Subscription / entitlement record (blueprint §21-§33). Monetization is built

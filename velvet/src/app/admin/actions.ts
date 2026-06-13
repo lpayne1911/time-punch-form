@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { requireStaff, audit } from "@/lib/admin";
+import { applyDecision } from "@/lib/verification";
 
 export async function resolveReport(formData: FormData) {
   const staff = await requireStaff();
@@ -72,6 +73,18 @@ export async function reinstateUser(formData: FormData) {
   });
   await audit(staff.id, "REINSTATE", userId, "Reinstated");
   revalidatePath("/admin/users");
+}
+
+// --- Verification review (blueprint §17) ---
+// For checks that need a human decision (e.g. flagged ID documents). Automated
+// provider results normally arrive via the webhook without manual review.
+export async function reviewVerification(formData: FormData) {
+  const staff = await requireStaff();
+  const checkId = String(formData.get("checkId"));
+  const decision = String(formData.get("decision")); // APPROVED | REJECTED
+  const note = String(formData.get("note") ?? "").slice(0, 500) || undefined;
+  await applyDecision({ checkId, approved: decision === "APPROVED", reviewerId: staff.id, note });
+  revalidatePath("/admin/verification");
 }
 
 // --- Community & events moderation (blueprint §12, §26, §27, §36) ---

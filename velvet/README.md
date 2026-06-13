@@ -60,6 +60,24 @@ are enforced server-side (API routes + server actions), not just hidden in the U
 | Event reporting → moderation queue | §12 | ✅ |
 | Private circles (tier-gated, moderated, approval-based) | §12, §24 | ✅ |
 | Admin community queue (hosts, events, circles, memberships) | §36 | ✅ |
+| Provider-based verification (photo liveness + ID) with webhook flow | §17 | ✅ |
+| Verification levels + trust badges + provider-backed age assurance | §17 | ✅ |
+| Admin verification review queue | §17, §36 | ✅ |
+
+### Verification (`/verify`)
+Trust levels: **Unverified → Email → Photo → ID** (`src/lib/verification-levels.ts`).
+- `src/lib/verification.ts` is a **provider abstraction** shaped like Persona /
+  Veriff / Stripe Identity: `start()` opens a hosted flow, the provider POSTs a
+  signed result to `/api/verification/webhook`, and `applyDecision()` raises the
+  user's level (never downgrades) and sets age assurance on ID approval.
+- The **dev provider** routes to `/verify/simulate/[checkId]` (a local stand-in
+  for the hosted flow) which calls the same webhook a real provider would.
+- The webhook **rejects unsigned calls in production** (signature verification is
+  the documented TODO) and only accepts the dev simulation outside production.
+- **Privacy:** we store only the decision + a tokenized `externalId` — never raw
+  ID images or document numbers (§19, §40).
+- Checks needing human review surface in the **admin verification queue**
+  (`/admin/verification`); every manual decision is written to the audit log.
 
 ### Community & events (`/events`, `/circles`)
 - **Hosts** apply (`/events/host`); a moderator approves before they can publish.

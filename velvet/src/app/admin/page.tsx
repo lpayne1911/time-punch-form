@@ -45,6 +45,7 @@ export default async function AdminDashboard() {
     prisma.circle.count({ where: { status: "PENDING" } }),
   ]);
   const communityPending = pendingHosts + pendingEvents + pendingCircles;
+  const pendingVerifications = await prisma.verificationCheck.count({ where: { status: "PENDING" } });
 
   // Simple safety north-stars (blueprint §32). Report rate = open reports per active user.
   const reportRate = activeUsers ? ((openReports / activeUsers) * 100).toFixed(1) : "0.0";
@@ -67,6 +68,7 @@ export default async function AdminDashboard() {
         <Stat label="Photos awaiting review" value={pendingPhotos} href="/admin/photos" />
         <Stat label="Flagged messages" value={flaggedMessages} href="/admin/messages" />
         <Stat label="Community approvals" value={communityPending} href="/admin/community" />
+        <Stat label="Verification reviews" value={pendingVerifications} href="/admin/verification" />
       </div>
 
       <h2>Community health</h2>
