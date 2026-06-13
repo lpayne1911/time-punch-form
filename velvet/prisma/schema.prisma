@@ -26,10 +26,15 @@ model User {
   // Verification (blueprint §17). Basic tier in MVP; ID/photo verification later.
   verification  String   @default("UNVERIFIED") // UNVERIFIED | EMAIL_VERIFIED | PHOTO_VERIFIED | ID_VERIFIED
   status        String   @default("ACTIVE") // ACTIVE | PAUSED | SUSPENDED | DELETED
+  // Trust & safety (blueprint §17). Role gates the admin/moderation dashboard.
+  role          String   @default("USER") // USER | MODERATOR | ADMIN
+  suspendedUntil DateTime? // set on temporary suspension; cleared on reinstatement
+  warningCount  Int      @default(0)
   createdAt     DateTime @default(now())
   deletedAt     DateTime?
 
   profile       Profile?
+  photos        Photo[]
   sessions      Session[]
   likesSent     Like[]    @relation("LikesSent")
   likesReceived Like[]    @relation("LikesReceived")
@@ -38,6 +43,46 @@ model User {
   blocksAgainst Block[]   @relation("Blocked")
   reportsMade   Report[]  @relation("Reporter")
   reportsAgainst Report[] @relation("Reported")
+  auditActions  AuditLog[] @relation("Actor")
+  auditTargets  AuditLog[] @relation("Target")
+}
+
+// Profile photos go through a moderation pipeline (blueprint §17, §18): every
+// upload starts PENDING, an automated screen flags risk, and a human approves or
+// rejects in the admin dashboard. Photos are only ever served to the owner, to
+// a confirmed mutual match (when APPROVED), or to a moderator — never publicly.
+model Photo {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  filename        String   // stored under /uploads (gitignored); never web-indexed
+  mime            String
+  status          String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  autoFlagged     Boolean  @default(false)
+  autoFlagReason  String?
+  moderationNote  String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+  createdAt       DateTime @default(now())
+
+  @@index([status])
+  @@index([userId])
+}
+
+// Immutable record of every moderator/admin action (blueprint §17 incident
+// tracking, §19 admin audit logs, §36 audit logs). Append-only by convention.
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorId      String
+  actor        User     @relation("Actor", fields: [actorId], references: [id], onDelete: Cascade)
+  targetUserId String?
+  target       User?    @relation("Target", fields: [targetUserId], references: [id], onDelete: SetNull)
+  action       String   // RESOLVE_REPORT | WARN | SUSPEND | BAN | REINSTATE | APPROVE_PHOTO | REJECT_PHOTO
+  detail       String?
+  createdAt    DateTime @default(now())
+
+  @@index([targetUserId])
+  @@index([createdAt])
 }
 
 model Session {
@@ -152,5 +197,10 @@ model Report {
   category   String   // see src/lib/safety.ts REPORT_CATEGORIES (blueprint §17)
   detail     String?
   status     String   @default("OPEN") // OPEN | REVIEWING | ACTIONED | DISMISSED
+  resolvedById String?
+  resolvedAt DateTime?
+  resolution String?  // free-text moderator note on how it was handled
   createdAt  DateTime @default(now())
+
+  @@index([status])
 }

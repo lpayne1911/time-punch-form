@@ -67,8 +67,21 @@ export async function getCurrentUser() {
     include: { user: { include: { profile: true } } },
   });
   if (!session || session.expiresAt < new Date()) return null;
-  if (session.user.status === "DELETED" || session.user.deletedAt) return null;
-  return session.user;
+  const u = session.user;
+  if (u.status === "DELETED" || u.deletedAt) return null;
+
+  // Enforce moderation state (blueprint §17). A SUSPENDED account is blocked
+  // while the suspension is active; a temporary suspension auto-expires (lazy
+  // reinstatement). A permanent ban has no end date and stays blocked.
+  if (u.status === "SUSPENDED") {
+    if (u.suspendedUntil && u.suspendedUntil <= new Date()) {
+      await prisma.user.update({ where: { id: u.id }, data: { status: "ACTIVE", suspendedUntil: null } });
+      u.status = "ACTIVE";
+    } else {
+      return null;
+    }
+  }
+  return u;
 }
 
 /**

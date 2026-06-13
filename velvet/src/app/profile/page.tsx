@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { requireOnboarded } from "@/lib/guard";
+import { prisma } from "@/lib/db";
 import Nav from "@/components/Nav";
+import PhotoManager from "@/components/PhotoManager";
 import { parseTags } from "@/lib/tags";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +24,11 @@ function TagRow({ label, tags }: { label: string; tags: string[] }) {
 export default async function MyProfile() {
   const user = await requireOnboarded();
   const p = user.profile!;
+  const photos = await prisma.photo.findMany({
+    where: { userId: user.id },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, status: true },
+  });
 
   return (
     <>
@@ -31,6 +38,8 @@ export default async function MyProfile() {
           <h1>Your profile</h1>
           <Link href="/onboarding/profile" className="btn ghost small sans">Edit</Link>
         </div>
+
+        <PhotoManager photos={photos} />
 
         <div className="card">
           <div className="blur-photo">Photos blurred to others until mutual interest</div>

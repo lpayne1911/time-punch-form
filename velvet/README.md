@@ -31,6 +31,25 @@ the safety and privacy primitives wired in from day one.
 | Visibility controls, incognito, emergency pause | §19, §20 | ✅ |
 | Data export + hard account deletion | §19, §22 | ✅ |
 | Safety Center | §5, §17 | ✅ |
+| Photo upload + moderation pipeline (PENDING → human review) | §17, §18 | ✅ |
+| Access-controlled photo serving (hidden until mutual match) | §9, §19, §20 | ✅ |
+| Admin/moderation dashboard (reports, photos, flagged msgs, users, audit) | §36 | ✅ |
+| Enforcement: warn / suspend / ban + lazy auto-expiry | §17 | ✅ |
+| Append-only audit log of every moderator action | §17, §19, §36 | ✅ |
+
+### Moderation dashboard (`/admin`)
+Staff-only (role `MODERATOR`/`ADMIN`). Sign in as the seeded **admin@demo.velvet**
+via the normal OTP flow, then open **/admin**:
+- **Dashboard** — queue counts + safety north-stars (report rate, etc., blueprint §32)
+- **Reports** — open reports, urgent (minor-safety/threats) first; resolve with a note
+- **Photos** — approve/reject pending uploads (hidden from members until approved)
+- **Flagged** — messages auto-flagged for solicitation/threats
+- **Users** — search + warn / suspend (N days) / ban / reinstate
+- **Audit** — append-only log of every action (who, what, whom, when)
+
+Photos live outside `public/` and are only served through `/api/photo/[id]`,
+which serves the image to the owner, a moderator, or a confirmed mutual match
+(when approved) — everyone else gets a blurred placeholder.
 
 ## Run it
 ```bash

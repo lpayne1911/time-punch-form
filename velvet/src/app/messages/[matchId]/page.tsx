@@ -30,6 +30,14 @@ export default async function MessageThread({
     orderBy: { createdAt: "asc" },
   });
 
+  // Now that there's a mutual match, the other member's approved photo is
+  // viewable (blueprint §9 — blurred until mutual interest).
+  const otherPhoto = await prisma.photo.findFirst({
+    where: { userId: otherId, status: "APPROVED" },
+    orderBy: { createdAt: "desc" },
+    select: { id: true },
+  });
+
   const blocked = await prisma.block.findFirst({
     where: { blockerId: user.id, blockedId: otherId },
   });
@@ -43,6 +51,7 @@ export default async function MessageThread({
           meId={user.id}
           otherId={otherId}
           otherName={other?.profile?.displayName ?? "Member"}
+          otherPhotoId={otherPhoto?.id ?? null}
           initialMessages={messages.map((m) => ({
             id: m.id,
             body: m.body,

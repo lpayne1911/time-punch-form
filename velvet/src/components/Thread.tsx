@@ -11,6 +11,7 @@ export default function Thread({
   meId,
   otherId,
   otherName,
+  otherPhotoId,
   initialMessages,
   alreadyBlocked,
 }: {
@@ -18,6 +19,7 @@ export default function Thread({
   meId: string;
   otherId: string;
   otherName: string;
+  otherPhotoId: string | null;
   initialMessages: Msg[];
   alreadyBlocked: boolean;
 }) {
@@ -72,7 +74,17 @@ export default function Thread({
     <>
       <div className="between sans">
         <button className="btn ghost small" onClick={() => router.push("/matches")}>‹ Matches</button>
-        <strong>{otherName}</strong>
+        <div className="row" style={{ gap: 8 }}>
+          {otherPhotoId && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={`/api/photo/${otherPhotoId}`}
+              alt={otherName}
+              style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }}
+            />
+          )}
+          <strong>{otherName}</strong>
+        </div>
         <div className="row">
           <button className="btn ghost small" onClick={() => setShowReport((s) => !s)}>Report</button>
           {!blocked && <button className="btn danger small" onClick={block}>Block</button>}

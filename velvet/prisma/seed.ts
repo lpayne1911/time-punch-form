@@ -100,7 +100,24 @@ async function main() {
       update: {},
     });
   }
-  console.log(`Seeded ${members.length} demo members.`);
+  // A moderator/admin account for the dashboard (blueprint §36). Sign in with
+  // this email via the normal OTP flow, then visit /admin.
+  await prisma.user.upsert({
+    where: { email: "admin@demo.velvet" },
+    create: {
+      email: "admin@demo.velvet",
+      role: "ADMIN",
+      ageConfirmed: true,
+      verification: "ID_VERIFIED",
+      consentPledgeAcceptedAt: new Date(),
+      consentPledgeVersion: "1.0",
+      standardsAcceptedAt: new Date(),
+      standardsVersion: "1.0",
+    },
+    update: { role: "ADMIN" },
+  });
+
+  console.log(`Seeded ${members.length} demo members + 1 admin (admin@demo.velvet).`);
 }
 
 main()
