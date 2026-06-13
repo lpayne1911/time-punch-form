@@ -27,6 +27,9 @@ export default async function AdminDashboard() {
     suspended,
     newThisWeek,
     totalMatches,
+    pendingHosts,
+    pendingEvents,
+    pendingCircles,
   ] = await Promise.all([
     prisma.report.count({ where: { status: "OPEN" } }),
     prisma.report.count({ where: { status: "OPEN", category: "MINOR_SAFETY" } }),
@@ -37,7 +40,11 @@ export default async function AdminDashboard() {
     prisma.user.count({ where: { status: "SUSPENDED" } }),
     prisma.user.count({ where: { createdAt: { gte: since }, deletedAt: null } }),
     prisma.match.count(),
+    prisma.hostApplication.count({ where: { status: "PENDING" } }),
+    prisma.event.count({ where: { status: "PENDING" } }),
+    prisma.circle.count({ where: { status: "PENDING" } }),
   ]);
+  const communityPending = pendingHosts + pendingEvents + pendingCircles;
 
   // Simple safety north-stars (blueprint §32). Report rate = open reports per active user.
   const reportRate = activeUsers ? ((openReports / activeUsers) * 100).toFixed(1) : "0.0";
@@ -59,6 +66,7 @@ export default async function AdminDashboard() {
         <Stat label="Open reports" value={openReports} href="/admin/reports" urgent />
         <Stat label="Photos awaiting review" value={pendingPhotos} href="/admin/photos" />
         <Stat label="Flagged messages" value={flaggedMessages} href="/admin/messages" />
+        <Stat label="Community approvals" value={communityPending} href="/admin/community" />
       </div>
 
       <h2>Community health</h2>

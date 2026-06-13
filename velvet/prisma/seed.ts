@@ -117,7 +117,64 @@ async function main() {
     update: { role: "ADMIN" },
   });
 
-  console.log(`Seeded ${members.length} demo members + 1 admin (admin@demo.velvet).`);
+  // Make Kai a verified host with one approved event (so /events isn't empty)
+  // and one pending event + a pending host application (for the admin queue demo).
+  const admin = await prisma.user.findUnique({ where: { email: "admin@demo.velvet" } });
+  const kai = await prisma.user.findUnique({ where: { email: "kai@demo.velvet" } });
+  if (kai && admin) {
+    await prisma.user.update({ where: { id: kai.id }, data: { isHost: true } });
+    await prisma.hostApplication.upsert({
+      where: { userId: kai.id },
+      create: { userId: kai.id, bio: "Longtime community organizer.", status: "APPROVED", reviewedById: admin.id, reviewedAt: new Date() },
+      update: {},
+    });
+    const inTwoWeeks = new Date(Date.now() + 14 * 86_400_000);
+    const existing = await prisma.event.findFirst({ where: { hostId: kai.id, title: "Communication & Boundaries: An Evening Conversation" } });
+    if (!existing) {
+      await prisma.event.create({
+        data: {
+          hostId: kai.id,
+          title: "Communication & Boundaries: An Evening Conversation",
+          description: "A facilitated, respectful discussion on consent, communication, and negotiating boundaries. Newcomers welcome. A clear code of conduct applies.",
+          category: "CONSENT_SEMINAR",
+          format: "IN_PERSON",
+          location: "Downtown Seattle",
+          startsAt: inTwoWeeks,
+          capacity: 24,
+          priceCents: 1500,
+          status: "APPROVED",
+          reviewedById: admin.id,
+          reviewedAt: new Date(),
+        },
+      });
+      await prisma.event.create({
+        data: {
+          hostId: kai.id,
+          title: "Monthly Community Mixer",
+          description: "A relaxed, lifestyle-neutral social mixer to meet other members in a low-pressure setting.",
+          category: "SOCIAL_MIXER",
+          format: "IN_PERSON",
+          location: "Seattle",
+          startsAt: new Date(Date.now() + 21 * 86_400_000),
+          capacity: 40,
+          priceCents: 0,
+          status: "PENDING",
+        },
+      });
+    }
+  }
+
+  // A pending host application from Sage for the admin queue demo.
+  const sage = await prisma.user.findUnique({ where: { email: "sage@demo.velvet" } });
+  if (sage) {
+    await prisma.hostApplication.upsert({
+      where: { userId: sage.id },
+      create: { userId: sage.id, bio: "I'd love to host beginner-friendly communication workshops.", experience: "Facilitation background.", status: "PENDING" },
+      update: {},
+    });
+  }
+
+  console.log(`Seeded ${members.length} demo members + 1 admin + host/events.`);
 }
 
 main()

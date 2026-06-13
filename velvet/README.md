@@ -54,6 +54,28 @@ Tiers, prices, and the cumulative feature map live in `src/lib/billing.ts`;
 entitlement resolution and the daily-like cap in `src/lib/entitlements.ts`. Gates
 are enforced server-side (API routes + server actions), not just hidden in the UI.
 
+| Verified-host applications + admin host review | §27 | ✅ |
+| Event lifecycle: create → admin approval → public listing | §12, §26 | ✅ |
+| RSVP with capacity/waitlist + attendee privacy (count only) | §12, §26 | ✅ |
+| Event reporting → moderation queue | §12 | ✅ |
+| Private circles (tier-gated, moderated, approval-based) | §12, §24 | ✅ |
+| Admin community queue (hosts, events, circles, memberships) | §36 | ✅ |
+
+### Community & events (`/events`, `/circles`)
+- **Hosts** apply (`/events/host`); a moderator approves before they can publish.
+- **Events** are created by verified hosts and are **reviewed before listing** —
+  only the non-explicit, lawful categories in `src/lib/events.ts` are allowed.
+- **RSVP** respects capacity (auto-waitlist) and keeps attendee identities private
+  (only an aggregate count is shown). Free events RSVP directly.
+- **Paid tickets are real-world goods** settled by an external processor (Stripe
+  Connect), kept separate from store-billed subscriptions (§33). Hosts receive
+  payouts minus a 15% platform fee and handle their own taxes. The demo records
+  the reservation; a real build creates a Stripe Checkout session + payment webhook.
+- **Private circles** are reserved for the Private Circle tier, moderated, and
+  approval-gated (both the circle and each join request).
+- The **admin Community queue** (`/admin/community`) approves hosts, events,
+  circles, and membership requests; every decision is written to the audit log.
+
 **Payment compliance (§33):** on real iOS/Android, digital subscriptions go through
 Apple IAP / Google Play Billing (via RevenueCat), and a verified webhook grants the
 entitlement — we never route around store billing or collect card details in-app.

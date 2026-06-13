@@ -74,6 +74,67 @@ export async function reinstateUser(formData: FormData) {
   revalidatePath("/admin/users");
 }
 
+// --- Community & events moderation (blueprint §12, §26, §27, §36) ---
+
+export async function reviewHostApplication(formData: FormData) {
+  const staff = await requireStaff();
+  const userId = String(formData.get("userId"));
+  const decision = String(formData.get("decision")); // APPROVED | REJECTED
+  const note = String(formData.get("note") ?? "").slice(0, 500) || null;
+  const approved = decision === "APPROVED";
+
+  await prisma.hostApplication.update({
+    where: { userId },
+    data: { status: approved ? "APPROVED" : "REJECTED", reviewedById: staff.id, reviewedAt: new Date(), note },
+  });
+  await prisma.user.update({ where: { id: userId }, data: { isHost: approved } });
+  await audit(staff.id, approved ? "APPROVE_HOST" : "REJECT_HOST", userId, note ?? "");
+  revalidatePath("/admin/community");
+}
+
+export async function reviewEvent(formData: FormData) {
+  const staff = await requireStaff();
+  const eventId = String(formData.get("eventId"));
+  const decision = String(formData.get("decision")); // APPROVED | REJECTED
+  const note = String(formData.get("note") ?? "").slice(0, 500) || null;
+  const event = await prisma.event.findUnique({ where: { id: eventId } });
+  if (!event) return;
+
+  await prisma.event.update({
+    where: { id: eventId },
+    data: { status: decision === "APPROVED" ? "APPROVED" : "REJECTED", reviewedById: staff.id, reviewedAt: new Date(), moderationNote: note },
+  });
+  await audit(staff.id, decision === "APPROVED" ? "APPROVE_EVENT" : "REJECT_EVENT", event.hostId, `${event.title}: ${note ?? ""}`);
+  revalidatePath("/admin/community");
+}
+
+export async function reviewCircle(formData: FormData) {
+  const staff = await requireStaff();
+  const circleId = String(formData.get("circleId"));
+  const decision = String(formData.get("decision"));
+  const circle = await prisma.circle.findUnique({ where: { id: circleId } });
+  if (!circle) return;
+
+  await prisma.circle.update({
+    where: { id: circleId },
+    data: { status: decision === "APPROVED" ? "APPROVED" : "REJECTED", reviewedById: staff.id, reviewedAt: new Date() },
+  });
+  await audit(staff.id, decision === "APPROVED" ? "APPROVE_CIRCLE" : "REJECT_CIRCLE", circle.createdById, circle.name);
+  revalidatePath("/admin/community");
+}
+
+export async function reviewMembership(formData: FormData) {
+  const staff = await requireStaff();
+  const membershipId = String(formData.get("membershipId"));
+  const decision = String(formData.get("decision")); // APPROVED | REMOVED
+  const m = await prisma.circleMembership.update({
+    where: { id: membershipId },
+    data: { status: decision === "APPROVED" ? "APPROVED" : "REMOVED" },
+  });
+  await audit(staff.id, decision === "APPROVED" ? "APPROVE_MEMBERSHIP" : "DENY_MEMBERSHIP", m.userId, m.circleId);
+  revalidatePath("/admin/community");
+}
+
 export async function reviewPhoto(formData: FormData) {
   const staff = await requireStaff();
   const photoId = String(formData.get("photoId"));

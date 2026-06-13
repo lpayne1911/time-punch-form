@@ -28,6 +28,7 @@ model User {
   status        String   @default("ACTIVE") // ACTIVE | PAUSED | SUSPENDED | DELETED
   // Trust & safety (blueprint §17). Role gates the admin/moderation dashboard.
   role          String   @default("USER") // USER | MODERATOR | ADMIN
+  isHost        Boolean  @default(false) // approved to create events (blueprint §27)
   suspendedUntil DateTime? // set on temporary suspension; cleared on reinstatement
   warningCount  Int      @default(0)
   createdAt     DateTime @default(now())
@@ -37,6 +38,11 @@ model User {
   photos        Photo[]
   subscription  Subscription?
   sessions      Session[]
+  hostApplication   HostApplication?
+  events            Event[]            @relation("Hosted")
+  rsvps             Rsvp[]
+  circlesCreated    Circle[]           @relation("CircleCreator")
+  circleMemberships CircleMembership[]
   likesSent     Like[]    @relation("LikesSent")
   likesReceived Like[]    @relation("LikesReceived")
   messages      Message[]
@@ -207,6 +213,96 @@ model Report {
   createdAt  DateTime @default(now())
 
   @@index([status])
+}
+
+// Hosts are verified before they can publish events (blueprint §27). An approved
+// application sets User.isHost. Hosts can earn from approved event types only —
+// never explicit services, content sales, or off-platform solicitation.
+model HostApplication {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio          String
+  experience   String?
+  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  reviewedById String?
+  reviewedAt   DateTime?
+  note         String?
+  createdAt    DateTime @default(now())
+}
+
+// Events are reviewed and approved BEFORE they are publicly listed (blueprint
+// §12, §26). Only approved, non-explicit, lawful categories are permitted.
+// Paid tickets are real-world goods settled via an external processor (Stripe),
+// kept separate from in-app digital subscriptions (blueprint §33).
+model Event {
+  id             String   @id @default(cuid())
+  hostId         String
+  host           User     @relation("Hosted", fields: [hostId], references: [id], onDelete: Cascade)
+  title          String
+  description    String
+  category       String   // see src/lib/events.ts EVENT_CATEGORIES
+  format         String   @default("IN_PERSON") // IN_PERSON | ONLINE
+  location       String   // general venue/city or "Online"; no precise address pre-RSVP
+  startsAt       DateTime
+  capacity       Int      @default(20)
+  priceCents     Int      @default(0) // 0 = free; >0 = paid ticket via external processor
+  status         String   @default("PENDING") // DRAFT | PENDING | APPROVED | REJECTED | CANCELED
+  reviewedById   String?
+  reviewedAt     DateTime?
+  moderationNote String?
+  canceledAt     DateTime?
+  createdAt      DateTime @default(now())
+
+  rsvps          Rsvp[]
+
+  @@index([status])
+  @@index([startsAt])
+}
+
+model Rsvp {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String   @default("RESERVED") // RESERVED | WAITLIST | CANCELED
+  createdAt DateTime @default(now())
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+}
+
+// Private interest circles (blueprint §12). Moderated, approval-gated, and
+// reserved for the Private Circle tier. This MVP models the gated directory +
+// membership requests; a moderated discussion feed is a later addition.
+model Circle {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  topic        String
+  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  createdById  String
+  createdBy    User     @relation("CircleCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  reviewedById String?
+  reviewedAt   DateTime?
+  createdAt    DateTime @default(now())
+
+  memberships  CircleMembership[]
+
+  @@index([status])
+}
+
+model CircleMembership {
+  id        String   @id @default(cuid())
+  circleId  String
+  circle    Circle   @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String   @default("PENDING") // PENDING | APPROVED | REMOVED
+  createdAt DateTime @default(now())
+
+  @@unique([circleId, userId])
 }
 
 // Subscription / entitlement record (blueprint §21-§33). Monetization is built
