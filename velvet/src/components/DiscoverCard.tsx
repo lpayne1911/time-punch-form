@@ -32,6 +32,23 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
     }
   }
 
+  async function superLike() {
+    setBusy(true);
+    const res = await fetch("/api/superlike", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ toUserId: candidate.userId }),
+    });
+    const data = await res.json();
+    setBusy(false);
+    if (res.status === 402) {
+      setLimit("You're out of thoughtful intros. Pick some up in Add-ons.");
+      return;
+    }
+    if (data.matched) setMatched(data.matchId);
+    else setDone("liked");
+  }
+
   if (limit) {
     return (
       <div className="card notice sans">
@@ -93,6 +110,9 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
       <div className="row sans" style={{ marginTop: 14 }}>
         <button className="btn" onClick={like} disabled={busy}>
           {busy ? "…" : "Express interest"}
+        </button>
+        <button className="btn ghost" onClick={superLike} disabled={busy} title="Thoughtful intro">
+          ⭐ Intro
         </button>
         <button className="btn ghost" onClick={() => setDone("passed")} disabled={busy}>
           Pass

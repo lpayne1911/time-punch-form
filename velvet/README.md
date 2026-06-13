@@ -63,6 +63,19 @@ are enforced server-side (API routes + server actions), not just hidden in the U
 | Provider-based verification (photo liveness + ID) with webhook flow | §17 | ✅ |
 | Verification levels + trust badges + provider-backed age assurance | §17 | ✅ |
 | Admin verification review queue | §17, §36 | ✅ |
+| À-la-carte add-ons: profile boost, thoughtful intros, travel pass | §25 | ✅ |
+
+### Add-ons (`/shop`)
+One-time consumable purchases that improve **visibility, discovery, or
+convenience** — never access to a person or content (`src/lib/shop.ts`,
+`src/lib/purchases.ts`):
+- **Profile Boost** — a 60-minute window that raises your discovery ranking for
+  other members (visibility only, never a guaranteed match).
+- **Thoughtful Intros (super-likes)** — surface higher on someone's Likes list;
+  connection still requires **mutual interest** (no paid access to a person, §34).
+- **Travel Pass** — 24-hour temporary travel mode for non-premium members.
+- Credits are granted on purchase and consumed atomically. Purchases use the same
+  store-billing-ready, dev-only simulated flow as subscriptions (§33).
 
 ### Verification (`/verify`)
 Trust levels: **Unverified → Email → Photo → ID** (`src/lib/verification-levels.ts`).

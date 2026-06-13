@@ -20,6 +20,7 @@ export default async function Nav() {
         <Link href="/circles">Circles</Link>
         <Link href="/profile">Profile</Link>
         <Link href="/verify">Verify</Link>
+        <Link href="/shop">Add-ons</Link>
         <Link href="/premium" style={{ color: "var(--gold)" }}>Membership</Link>
         <Link href="/safety">Safety</Link>
         <Link href="/settings">Settings</Link>

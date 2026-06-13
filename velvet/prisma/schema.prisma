@@ -45,6 +45,9 @@ model User {
   circlesCreated    Circle[]           @relation("CircleCreator")
   circleMemberships CircleMembership[]
   verificationChecks VerificationCheck[]
+  purchases         Purchase[]
+  credits           Credit[]
+  boosts            Boost[]
   likesSent     Like[]    @relation("LikesSent")
   likesReceived Like[]    @relation("LikesReceived")
   messages      Message[]
@@ -146,6 +149,7 @@ model Profile {
   hideFromDiscovery Boolean @default(false) // premium: only reachable via direct link / existing matches
   discoverVerifiedOnly Boolean @default(false) // premium filter: show only verified members
   travelLocation   String?  // premium travel mode: browse as if in another city
+  travelExpiresAt  DateTime? // set by an à-la-carte travel pass (temporary, non-premium)
   photoBlurUntilMatch Boolean @default(true)
   discreetNotifications Boolean @default(true)
 
@@ -159,10 +163,51 @@ model Like {
   toUserId   String
   from      User     @relation("LikesSent", fields: [fromUserId], references: [id], onDelete: Cascade)
   to        User     @relation("LikesReceived", fields: [toUserId], references: [id], onDelete: Cascade)
+  superLike Boolean  @default(false) // à-la-carte "thoughtful intro" — surfaces higher, still needs mutual consent
   createdAt DateTime @default(now())
 
   @@unique([fromUserId, toUserId])
   @@index([toUserId])
+}
+
+// À-la-carte purchases (blueprint §25). Consumable, one-time items that improve
+// visibility / discovery / convenience — NEVER access to a person or content.
+// Like subscriptions, real iOS/Android purchases go through store billing; "dev"
+// is the local simulation (blueprint §33).
+model Purchase {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind       String   // BOOST | SUPER_LIKE | TRAVEL_PASS
+  quantity   Int
+  priceCents Int
+  provider   String   @default("dev")
+  externalId String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+}
+
+// Current consumable balance per item kind.
+model Credit {
+  id        String @id @default(cuid())
+  userId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String
+  remaining Int    @default(0)
+
+  @@unique([userId, kind])
+}
+
+// An active profile boost window (raises discovery ranking for others, briefly).
+model Boost {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expiresAt])
 }
 
 // A Match exists only on MUTUAL interest. Messaging is gated on this (blueprint §11).

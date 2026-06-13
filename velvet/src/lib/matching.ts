@@ -1,5 +1,7 @@
 import { prisma } from "./db";
 import { parseTags } from "./tags";
+import { boostedUserIds } from "./purchases";
+import { BOOST_SCORE_BONUS } from "./shop";
 
 // Compatibility scoring (blueprint §10). Matching is values/compatibility-based,
 // NOT appearance-based: photos are blurred pre-match and contribute nothing to
@@ -103,6 +105,7 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
   });
 
   const myVerified = me.verification !== "UNVERIFIED";
+  const boosted = await boostedUserIds(); // à-la-carte boost ranking (blueprint §25)
 
   const candidates: Candidate[] = [];
   for (const other of others) {
@@ -115,6 +118,7 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
 
     const { score, reason } = scorePair(me.profile, other.profile);
     if (score <= 0) continue;
+    const boostedScore = boosted.has(other.id) ? score + BOOST_SCORE_BONUS : score;
 
     candidates.push({
       userId: other.id,
@@ -126,7 +130,7 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
       interests: parseTags(other.profile.interests),
       intentions: parseTags(other.profile.intentions),
       values: parseTags(other.profile.values),
-      score,
+      score: boostedScore,
       reason,
       photoBlurred: other.profile.photoBlurUntilMatch,
     });
@@ -145,13 +149,13 @@ export function orderPair(a: string, b: string): [string, string] {
  * Records a like. If the other user already liked back, creates a Match and
  * returns it (mutual interest). Messaging is unlocked only when a Match exists.
  */
-export async function like(fromUserId: string, toUserId: string) {
+export async function like(fromUserId: string, toUserId: string, superLike = false) {
   if (fromUserId === toUserId) throw new Error("cannot like self");
 
   await prisma.like.upsert({
     where: { fromUserId_toUserId: { fromUserId, toUserId } },
-    create: { fromUserId, toUserId },
-    update: {},
+    create: { fromUserId, toUserId, superLike },
+    update: superLike ? { superLike: true } : {},
   });
 
   const reciprocal = await prisma.like.findUnique({

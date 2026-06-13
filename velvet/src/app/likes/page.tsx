@@ -26,9 +26,10 @@ export default async function Likes() {
     orderBy: { createdAt: "desc" },
     include: { from: { include: { profile: true } } },
   });
-  const pending = incoming.filter(
-    (l) => !blockedIds.has(l.fromUserId) && !likedBack.has(l.fromUserId) && l.from.profile?.completed,
-  );
+  const pending = incoming
+    .filter((l) => !blockedIds.has(l.fromUserId) && !likedBack.has(l.fromUserId) && l.from.profile?.completed)
+    // Thoughtful intros (super-likes) surface first (blueprint §25).
+    .sort((a, b) => Number(b.superLike) - Number(a.superLike));
 
   return (
     <>
@@ -68,7 +69,7 @@ export default async function Likes() {
                 intentions: parseTags(p.intentions),
                 values: parseTags(p.values),
                 score: 0,
-                reason: "Already expressed interest in you.",
+                reason: l.superLike ? "⭐ Sent you a thoughtful intro." : "Already expressed interest in you.",
                 photoBlurred: true,
               };
               return <DiscoverCard key={l.id} candidate={candidate} />;
