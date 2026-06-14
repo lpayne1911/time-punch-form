@@ -12,6 +12,13 @@ export async function POST(req: Request) {
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Bad request." }, { status: 400 });
 
+  if (parsed.data.blockedId === user.id) {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  // Only allow blocking a real user (avoid orphan block rows).
+  const target = await prisma.user.findUnique({ where: { id: parsed.data.blockedId }, select: { id: true } });
+  if (!target) return NextResponse.json({ error: "Member not found." }, { status: 404 });
+
   await prisma.block.upsert({
     where: { blockerId_blockedId: { blockerId: user.id, blockedId: parsed.data.blockedId } },
     create: { blockerId: user.id, blockedId: parsed.data.blockedId },

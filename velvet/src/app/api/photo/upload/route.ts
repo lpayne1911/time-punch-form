@@ -2,12 +2,17 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { savePhoto, ALLOWED_MIME, MAX_BYTES } from "@/lib/photos";
+import { rateLimit } from "@/lib/ratelimit";
 
 const MAX_PHOTOS = 6;
 
 export async function POST(req: Request) {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
+
+  if (!rateLimit(`upload:${user.id}`, 20, 60 * 60_000).ok) {
+    return NextResponse.json({ error: "Too many uploads. Please try again later." }, { status: 429 });
+  }
 
   const count = await prisma.photo.count({ where: { userId: user.id } });
   if (count >= MAX_PHOTOS) {

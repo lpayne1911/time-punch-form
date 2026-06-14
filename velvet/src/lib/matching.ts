@@ -2,6 +2,8 @@ import { prisma } from "./db";
 import { parseTags } from "./tags";
 import { boostedUserIds } from "./purchases";
 import { BOOST_SCORE_BONUS } from "./shop";
+import { getEntitlements } from "./entitlements";
+import { effectiveTier, featuresFor, type Tier } from "./billing";
 
 // Compatibility scoring (blueprint §10). Matching is values/compatibility-based,
 // NOT appearance-based: photos are blurred pre-match and contribute nothing to
@@ -90,17 +92,21 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
   const liked = await prisma.like.findMany({ where: { fromUserId: userId }, select: { toUserId: true } });
   const likedIds = new Set(liked.map((l) => l.toUserId));
 
+  // The viewer's premium "verified-only browsing" filter only applies while the
+  // viewer is actually entitled (entitlements are re-checked on read, not trusted
+  // from the stored flag — blueprint §24).
+  const myEnt = await getEntitlements(userId);
+  const applyVerifiedOnly = me.profile.discoverVerifiedOnly && myEnt.has("verifiedOnlyBrowsing");
+
   const others = await prisma.user.findMany({
     where: {
       id: { not: userId },
       status: "ACTIVE",
       deletedAt: null,
-      // Respect incognito and premium "hide from discovery" (blueprint §20, §24).
-      profile: { is: { completed: true, incognito: false, hideFromDiscovery: false } },
-      // Premium "verified-only browsing" filter (blueprint §24).
-      ...(me.profile.discoverVerifiedOnly ? { verification: { not: "UNVERIFIED" } } : {}),
+      profile: { is: { completed: true } },
+      ...(applyVerifiedOnly ? { verification: { not: "UNVERIFIED" } } : {}),
     },
-    include: { profile: true },
+    include: { profile: true, subscription: true },
     take: 200,
   });
 
@@ -111,6 +117,23 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
   for (const other of others) {
     if (!other.profile) continue;
     if (blockedIds.has(other.id) || likedIds.has(other.id)) continue;
+
+    // Honor incognito / hide-from-discovery ONLY if the candidate currently holds
+    // the entitlement — a lapsed subscriber no longer gets the privacy benefit.
+    const theirFeatures = featuresFor(
+      effectiveTier(
+        other.subscription
+          ? {
+              tier: other.subscription.tier as Tier,
+              status: other.subscription.status,
+              currentPeriodEnd: other.subscription.currentPeriodEnd,
+              cancelAtPeriodEnd: other.subscription.cancelAtPeriodEnd,
+            }
+          : null,
+      ),
+    );
+    if (other.profile.incognito && theirFeatures.has("incognito")) continue;
+    if (other.profile.hideFromDiscovery && theirFeatures.has("hideFromDiscovery")) continue;
 
     // Respect the candidate's visibility preference.
     if (other.profile.visibility === "MATCHES_ONLY") continue; // not discoverable

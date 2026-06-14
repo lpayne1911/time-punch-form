@@ -54,8 +54,10 @@ const startOfToday = () => {
 export async function likesRemainingToday(userId: string): Promise<number | "unlimited"> {
   const ent = await getEntitlements(userId);
   if (ent.has("unlimitedLikes")) return "unlimited";
+  // Purchased "thoughtful intros" (super-likes) are paid for separately and must
+  // not burn a free daily like (audit #9).
   const used = await prisma.like.count({
-    where: { fromUserId: userId, createdAt: { gte: startOfToday() } },
+    where: { fromUserId: userId, superLike: false, createdAt: { gte: startOfToday() } },
   });
   return Math.max(0, FREE_DAILY_LIKE_LIMIT - used);
 }

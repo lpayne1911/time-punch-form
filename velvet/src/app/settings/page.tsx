@@ -42,7 +42,8 @@ function PremiumToggle({
         {locked && <span className="badge" style={{ fontSize: "0.65rem" }}>Premium</span>}
         <p className="muted small" style={{ margin: 0 }}>{desc}</p>
       </div>
-      {locked ? (
+      {/* Locked + already on → still allow turning it off (no lock-in). */}
+      {locked && !enabled ? (
         <Link href={`/premium?feature=${feature}`} className="btn ghost small">Upgrade</Link>
       ) : (
         action
@@ -167,6 +168,19 @@ export default async function Settings() {
                 <button className="btn small">Save</button>
               </div>
             </form>
+          ) : p.travelLocation ? (
+            // Not entitled but a destination is still set — let them clear it.
+            <div className="between" style={{ marginTop: 14 }}>
+              <div>
+                <strong>Travel mode</strong>{" "}
+                <span className="badge" style={{ fontSize: "0.65rem" }}>Premium</span>
+                <p className="muted small" style={{ margin: 0 }}>Currently browsing as {p.travelLocation}.</p>
+              </div>
+              <form action={setTravelLocation}>
+                <input type="hidden" name="travelLocation" value="" />
+                <button className="btn ghost small">Turn off</button>
+              </form>
+            </div>
           ) : (
             <PremiumToggle
               title="Travel mode"

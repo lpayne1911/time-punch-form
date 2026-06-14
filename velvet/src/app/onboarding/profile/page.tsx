@@ -47,11 +47,16 @@ export default async function ProfileSetup({
         Velvet matches on who you are and what you value — not on photos. Be thoughtful; keep
         everything respectful and non-explicit.
       </p>
-      {error && (
+      {error === "prompt" ? (
+        <div className="notice danger small sans">
+          Your prompt answers can't include contact details or anything that reads as solicitation.
+          Please keep them respectful and non-explicit.
+        </div>
+      ) : error ? (
         <div className="notice danger small sans">
           Please add a display name, age (18+), location, and at least one interest and intention.
         </div>
-      )}
+      ) : null}
       <div className="card">
         <ProfileForm
           action={saveProfile}

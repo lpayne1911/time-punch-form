@@ -3,12 +3,17 @@ import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { moderateText } from "@/lib/safety";
+import { rateLimit } from "@/lib/ratelimit";
 
 const schema = z.object({ matchId: z.string().min(1), body: z.string().min(1).max(2000) });
 
 export async function POST(req: Request) {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
+
+  if (!rateLimit(`message:${user.id}`, 30, 60_000).ok) {
+    return NextResponse.json({ error: "You're sending messages too fast." }, { status: 429 });
+  }
 
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Message can't be empty." }, { status: 400 });

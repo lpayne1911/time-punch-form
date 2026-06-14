@@ -7,6 +7,7 @@ import {
   CONSENT_PLEDGE_VERSION,
   STANDARDS_VERSION,
 } from "@/lib/policy";
+import { moderateText } from "@/lib/safety";
 import {
   sanitizeTags,
   serializeTags,
@@ -82,6 +83,17 @@ export async function saveProfile(formData: FormData) {
 
   const promptCommunication = String(formData.get("promptCommunication") ?? "").trim().slice(0, 280);
   const promptBoundary = String(formData.get("promptBoundary") ?? "").trim().slice(0, 280);
+
+  // Free-text prompts are the one non-vocabulary channel on a profile, so they
+  // must be screened (blueprint §13, §18). Flag solicitation/threat patterns or
+  // contact info and reject the save rather than store explicit/solicitation text.
+  for (const text of [promptCommunication, promptBoundary]) {
+    if (!text) continue;
+    const mod = moderateText(text);
+    if (mod.flagged || mod.containsContactInfo) {
+      redirect("/onboarding/profile?error=prompt");
+    }
+  }
 
   const validExperience = (EXPERIENCE_LEVELS as readonly string[]).includes(experienceLevel)
     ? experienceLevel

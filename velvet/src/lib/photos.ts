@@ -1,4 +1,4 @@
-import { mkdir, writeFile, readFile } from "fs/promises";
+import { mkdir, writeFile, readFile, unlink } from "fs/promises";
 import { existsSync } from "fs";
 import path from "path";
 import { randomBytes } from "crypto";
@@ -48,6 +48,13 @@ export async function savePhoto(userId: string, buffer: Buffer, mime: string) {
   });
 }
 
+// Best-effort removal of photo files from disk (used on account deletion, §19).
+export async function unlinkPhotoFiles(filenames: string[]): Promise<void> {
+  await Promise.all(
+    filenames.map((f) => unlink(path.join(UPLOAD_DIR, path.basename(f))).catch(() => {})),
+  );
+}
+
 export async function readPhotoFile(filename: string): Promise<Buffer | null> {
   const safe = path.basename(filename); // guard against traversal
   const full = path.join(UPLOAD_DIR, safe);
@@ -69,6 +76,18 @@ export async function canViewPhoto(
   if (photo.userId === viewer.id) return true;
   if (isStaff(viewer.role)) return true;
   if (photo.status !== "APPROVED") return false;
+
+  // A block in either direction revokes photo visibility, even if a prior match
+  // still exists (the match row is intentionally kept).
+  const blocked = await prisma.block.findFirst({
+    where: {
+      OR: [
+        { blockerId: viewer.id, blockedId: photo.userId },
+        { blockerId: photo.userId, blockedId: viewer.id },
+      ],
+    },
+  });
+  if (blocked) return false;
 
   const [a, b] = orderPair(viewer.id, photo.userId);
   const match = await prisma.match.findUnique({ where: { userAId_userBId: { userAId: a, userBId: b } } });

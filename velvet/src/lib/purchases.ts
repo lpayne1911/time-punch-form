@@ -55,6 +55,15 @@ export async function useSuperLike(userId: string): Promise<boolean> {
   return consume(userId, "SUPER_LIKE");
 }
 
+// Return a consumed credit (used if the downstream action fails after consume).
+export async function refundSuperLike(userId: string): Promise<void> {
+  await prisma.credit.upsert({
+    where: { userId_kind: { userId, kind: "SUPER_LIKE" } },
+    create: { userId, kind: "SUPER_LIKE", remaining: 1 },
+    update: { remaining: { increment: 1 } },
+  });
+}
+
 export async function hasActiveBoost(userId: string): Promise<boolean> {
   const b = await prisma.boost.findFirst({ where: { userId, expiresAt: { gt: new Date() } } });
   return !!b;

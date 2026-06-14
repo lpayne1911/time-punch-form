@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import { like } from "@/lib/matching";
 import { likesRemainingToday } from "@/lib/entitlements";
 import { FREE_DAILY_LIKE_LIMIT } from "@/lib/billing";
+import { rateLimit } from "@/lib/ratelimit";
 
 const schema = z.object({ toUserId: z.string().min(1) });
 
@@ -12,9 +13,24 @@ export async function POST(req: Request) {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
 
+  if (!rateLimit(`like:${user.id}`, 60, 60_000).ok) {
+    return NextResponse.json({ error: "Slow down a moment." }, { status: 429 });
+  }
+
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Bad request." }, { status: 400 });
   const { toUserId } = parsed.data;
+
+  if (toUserId === user.id) {
+    return NextResponse.json({ error: "You can't like yourself." }, { status: 400 });
+  }
+
+  // Target must be a real, discoverable member.
+  const target = await prisma.user.findFirst({
+    where: { id: toUserId, status: "ACTIVE", deletedAt: null, profile: { is: { completed: true } } },
+    select: { id: true },
+  });
+  if (!target) return NextResponse.json({ error: "Member unavailable." }, { status: 404 });
 
   // Cannot interact with users you've blocked or who blocked you.
   const blocked = await prisma.block.findFirst({
