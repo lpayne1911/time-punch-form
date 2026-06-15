@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { like } from "@/lib/matching";
 import { useSuperLike, refundSuperLike } from "@/lib/purchases";
 import { rateLimit } from "@/lib/ratelimit";
+import { blockExistsBetween, findDiscoverableMember } from "@/lib/relations";
 
 const schema = z.object({ toUserId: z.string().min(1) });
 
@@ -29,21 +29,12 @@ export async function POST(req: Request) {
 
   // Validate the target is a real, discoverable member BEFORE spending a credit,
   // so a bad target can never burn a paid intro (audit #6).
-  const target = await prisma.user.findFirst({
-    where: { id: toUserId, status: "ACTIVE", deletedAt: null, profile: { is: { completed: true } } },
-    select: { id: true },
-  });
-  if (!target) return NextResponse.json({ error: "Member unavailable." }, { status: 404 });
-
-  const blocked = await prisma.block.findFirst({
-    where: {
-      OR: [
-        { blockerId: user.id, blockedId: toUserId },
-        { blockerId: toUserId, blockedId: user.id },
-      ],
-    },
-  });
-  if (blocked) return NextResponse.json({ error: "Unavailable." }, { status: 403 });
+  if (!(await findDiscoverableMember(toUserId))) {
+    return NextResponse.json({ error: "Member unavailable." }, { status: 404 });
+  }
+  if (await blockExistsBetween(user.id, toUserId)) {
+    return NextResponse.json({ error: "Unavailable." }, { status: 403 });
+  }
 
   const ok = await useSuperLike(user.id);
   if (!ok) {

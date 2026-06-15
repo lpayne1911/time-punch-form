@@ -232,6 +232,7 @@ model Message {
   sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
   body      String
   flagged   Boolean  @default(false) // set by message moderation (blueprint §11)
+  quarantined Boolean @default(false) // high-severity: withheld from recipient until a moderator clears it
   createdAt DateTime @default(now())
 
   @@index([matchId])

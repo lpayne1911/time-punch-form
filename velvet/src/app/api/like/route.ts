@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "@/lib/auth";
-import { prisma } from "@/lib/db";
 import { like } from "@/lib/matching";
 import { likesRemainingToday } from "@/lib/entitlements";
 import { FREE_DAILY_LIKE_LIMIT } from "@/lib/billing";
 import { rateLimit } from "@/lib/ratelimit";
+import { blockExistsBetween, findDiscoverableMember } from "@/lib/relations";
 
 const schema = z.object({ toUserId: z.string().min(1) });
 
@@ -25,23 +25,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "You can't like yourself." }, { status: 400 });
   }
 
-  // Target must be a real, discoverable member.
-  const target = await prisma.user.findFirst({
-    where: { id: toUserId, status: "ACTIVE", deletedAt: null, profile: { is: { completed: true } } },
-    select: { id: true },
-  });
-  if (!target) return NextResponse.json({ error: "Member unavailable." }, { status: 404 });
-
-  // Cannot interact with users you've blocked or who blocked you.
-  const blocked = await prisma.block.findFirst({
-    where: {
-      OR: [
-        { blockerId: user.id, blockedId: toUserId },
-        { blockerId: toUserId, blockedId: user.id },
-      ],
-    },
-  });
-  if (blocked) return NextResponse.json({ error: "Unavailable." }, { status: 403 });
+  if (!(await findDiscoverableMember(toUserId))) {
+    return NextResponse.json({ error: "Member unavailable." }, { status: 404 });
+  }
+  if (await blockExistsBetween(user.id, toUserId)) {
+    return NextResponse.json({ error: "Unavailable." }, { status: 403 });
+  }
 
   // Free-tier daily like cap (blueprint §22/§29). A soft conversion lever — never
   // applied to safety actions, which are always free.

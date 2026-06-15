@@ -25,8 +25,10 @@ export default async function MessageThread({
     include: { profile: true },
   });
 
+  // Quarantined (high-severity) messages are withheld from the recipient until a
+  // moderator clears them; the sender still sees their own, marked pending.
   const messages = await prisma.message.findMany({
-    where: { matchId },
+    where: { matchId, OR: [{ quarantined: false }, { senderId: user.id }] },
     orderBy: { createdAt: "asc" },
   });
 
@@ -57,6 +59,7 @@ export default async function MessageThread({
             body: m.body,
             senderId: m.senderId,
             flagged: m.flagged,
+            quarantined: m.quarantined,
           }))}
           alreadyBlocked={!!blocked}
         />

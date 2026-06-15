@@ -87,6 +87,27 @@ export async function reviewVerification(formData: FormData) {
   revalidatePath("/admin/verification");
 }
 
+// --- Message moderation (blueprint §11, §18) ---
+// Quarantined (high-severity) messages are withheld from the recipient until a
+// moderator releases them (delivers + clears the flag) or removes them.
+export async function reviewMessage(formData: FormData) {
+  const staff = await requireStaff();
+  const messageId = String(formData.get("messageId"));
+  const decision = String(formData.get("decision")); // RELEASE | REMOVE
+  const msg = await prisma.message.findUnique({ where: { id: messageId } });
+  if (!msg) return;
+
+  if (decision === "REMOVE") {
+    await prisma.message.delete({ where: { id: messageId } });
+    await audit(staff.id, "REMOVE_MESSAGE", msg.senderId, msg.body.slice(0, 120));
+  } else {
+    await prisma.message.update({ where: { id: messageId }, data: { quarantined: false, flagged: false } });
+    await audit(staff.id, "RELEASE_MESSAGE", msg.senderId, msg.body.slice(0, 120));
+  }
+  revalidatePath("/admin/messages");
+  revalidatePath("/admin");
+}
+
 // --- Community & events moderation (blueprint §12, §26, §27, §36) ---
 
 export async function reviewHostApplication(formData: FormData) {

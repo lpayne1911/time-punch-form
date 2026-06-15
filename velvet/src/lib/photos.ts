@@ -5,6 +5,7 @@ import { randomBytes } from "crypto";
 import { prisma } from "./db";
 import { isStaff } from "./admin";
 import { orderPair } from "./matching";
+import { blockExistsBetween } from "./relations";
 
 // Photos are stored OUTSIDE the public/ dir so they can never be fetched without
 // going through the access-controlled /api/photo/[id] route (blueprint §19).
@@ -79,15 +80,7 @@ export async function canViewPhoto(
 
   // A block in either direction revokes photo visibility, even if a prior match
   // still exists (the match row is intentionally kept).
-  const blocked = await prisma.block.findFirst({
-    where: {
-      OR: [
-        { blockerId: viewer.id, blockedId: photo.userId },
-        { blockerId: photo.userId, blockedId: viewer.id },
-      ],
-    },
-  });
-  if (blocked) return false;
+  if (await blockExistsBetween(viewer.id, photo.userId)) return false;
 
   const [a, b] = orderPair(viewer.id, photo.userId);
   const match = await prisma.match.findUnique({ where: { userAId_userBId: { userAId: a, userBId: b } } });

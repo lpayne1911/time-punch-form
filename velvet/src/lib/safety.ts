@@ -37,10 +37,15 @@ const CONTACT_PATTERNS = [
   /\b[\w.+-]+@[\w-]+\.[\w.-]+\b/, // email
 ];
 
+export type Severity = "none" | "low" | "high";
+
 export type ModerationResult = {
   flagged: boolean;
   reasons: string[];
   containsContactInfo: boolean;
+  // "high" => withhold from the recipient and quarantine for review (solicitation
+  // / threats). "low" => deliver but nudge (off-platform contact info). "none" => clean.
+  severity: Severity;
 };
 
 export function moderateText(text: string): ModerationResult {
@@ -48,7 +53,9 @@ export function moderateText(text: string): ModerationResult {
   if (SOLICITATION_PATTERNS.some((re) => re.test(text))) reasons.push("possible_solicitation");
   if (THREAT_PATTERNS.some((re) => re.test(text))) reasons.push("possible_threat");
   const containsContactInfo = CONTACT_PATTERNS.some((re) => re.test(text));
-  return { flagged: reasons.length > 0, reasons, containsContactInfo };
+  const flagged = reasons.length > 0;
+  const severity: Severity = flagged ? "high" : containsContactInfo ? "low" : "none";
+  return { flagged, reasons, containsContactInfo, severity };
 }
 
 // First-message consent reminder copy (blueprint §11).

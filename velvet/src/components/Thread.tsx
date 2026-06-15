@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CONSENT_REMINDER, MEETING_SAFETY_NUDGE, REPORT_CATEGORIES } from "@/lib/safety";
 
-type Msg = { id: string; body: string; senderId: string; flagged: boolean };
+type Msg = { id: string; body: string; senderId: string; flagged: boolean; quarantined?: boolean };
 
 export default function Thread({
   matchId,
@@ -117,11 +117,15 @@ export default function Thread({
             className={`msg sans ${m.senderId === meId ? "me" : "them"} ${m.flagged ? "flagged" : ""}`}
           >
             {m.body}
-            {m.flagged && (
+            {m.quarantined ? (
+              <div className="small" style={{ opacity: 0.8, marginTop: 4 }}>
+                ⏳ Held for review — not delivered yet
+              </div>
+            ) : m.flagged ? (
               <div className="small" style={{ opacity: 0.8, marginTop: 4 }}>
                 ⚑ Flagged for review
               </div>
-            )}
+            ) : null}
           </div>
         ))}
       </div>

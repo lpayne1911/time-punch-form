@@ -171,6 +171,19 @@ npm run dev         # http://localhost:3000
   in every environment.
 - **Security headers** + `poweredByHeader: false` (no `X-Powered-By`).
 - **Env-driven datasource** for a one-line Postgres swap.
+- **Message quarantine** (`src/lib/safety.ts` severity tiers): high-severity content
+  (solicitation/threats) is withheld from the recipient and queued for review;
+  low-severity (off-platform contact info) is delivered with a nudge. Moderators
+  **release or remove** held messages from `/admin/messages` (audit-logged).
+- **Shared relational guards** (`src/lib/relations.ts`): one place for the
+  block-between-users and discoverable-target checks (used by like/superlike/
+  message/photo).
+
+## Tests
+Unit tests cover the pure, deterministic logic (no DB/network) — run `npm test`:
+moderation severity, billing entitlements (tier resolution, cumulative features,
+expiry), verification levels, webhook signature verification, tag/vocabulary
+sanitization, and event/shop math. 34 tests across 6 files.
 
 ### Required production environment variables
 - `DATABASE_URL` — Postgres connection string (and set `provider = "postgresql"`).
