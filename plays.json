@@ -1,10 +1,9 @@
 {
-  "generated_at": "2026-06-16T23:53:41+00:00",
+  "generated_at": "2026-06-17T23:55:21+00:00",
   "benchmark": "SPY",
-  "spy_ytd": 10.13,
-  "leader_threshold": 20.26,
+  "spy_ytd": 8.76,
+  "leader_threshold": 17.52,
   "leading_sectors": [
-    "Consumer Staples",
     "Energy",
     "Industrials",
     "Information Technology",
@@ -12,7 +11,7 @@
     "Real Estate"
   ],
   "universe_size": 503,
-  "count": 17,
+  "count": 25,
   "budget": 2500.0,
   "risk_pct": 1.0,
   "max_loss_per_trade": 25.0,
@@ -22,145 +21,49 @@
   "hold_guide_days": 40,
   "plays": [
     {
-      "ticker": "INTC",
-      "name": "Intel",
-      "sector": "Information Technology",
-      "ytd": 197.23,
-      "rs_vs_spy": 19.47,
-      "setup": "pullback",
-      "price": 117.05,
-      "pct_to_20ma": 1.71,
-      "vol_ratio": 0.94,
-      "base_range_pct": 28.9,
-      "stop": 103.0,
-      "stop_pct": 12.0,
-      "target": 159.19,
-      "target_pct": 36.0,
-      "shares": 1,
-      "position_usd": 117.05,
-      "risk_usd": 14.05,
-      "reward_usd": 42.14,
-      "size_note": "",
-      "week_change_pct": 6.15,
-      "sma50": 98.56,
-      "sma200": 54.48,
-      "indicators": {
-        "rsi14": 47.0,
-        "atr_pct": 8.66,
-        "from_52w_high_pct": -9.57,
-        "distribution_days_20": 4,
-        "last_day_chg_pct": -8.45,
-        "last_day_vol_ratio": 0.94,
-        "rs_20d": 6.52,
-        "rs_50d": 102.43,
-        "rs_new_high": false
-      },
-      "assessment": "caution: under distribution (4+ heavy down days/20)",
-      "next_earnings": "2026-07-23",
-      "days_to_earnings": 37,
-      "earnings_soon": false,
-      "earnings_in_hold": true,
-      "history": [
-        {
-          "date": "2026-06-08",
-          "close": 110.27,
-          "chg_pct": null,
-          "volume": 136973900
-        },
-        {
-          "date": "2026-06-09",
-          "close": 107.92,
-          "chg_pct": -2.13,
-          "volume": 149623100
-        },
-        {
-          "date": "2026-06-10",
-          "close": 107.04,
-          "chg_pct": -0.82,
-          "volume": 122653500
-        },
-        {
-          "date": "2026-06-11",
-          "close": 116.96,
-          "chg_pct": 9.27,
-          "volume": 188430300
-        },
-        {
-          "date": "2026-06-12",
-          "close": 124.57,
-          "chg_pct": 6.51,
-          "volume": 151169400
-        },
-        {
-          "date": "2026-06-15",
-          "close": 127.86,
-          "chg_pct": 2.64,
-          "volume": 134507500
-        },
-        {
-          "date": "2026-06-16",
-          "close": 117.05,
-          "chg_pct": -8.45,
-          "volume": 131400739
-        }
-      ],
-      "reasons": [
-        "leader: YTD 197.23% \u2265 20.26%",
-        "leading group: Information Technology (29.36%)",
-        "above 20/50/200-day MAs",
-        "pullback setup"
-      ]
-    },
-    {
       "ticker": "AMD",
       "name": "Advanced Micro Devices",
       "sector": "Information Technology",
-      "ytd": 127.01,
-      "rs_vs_spy": 12.54,
+      "ytd": 129.33,
+      "rs_vs_spy": 14.76,
       "setup": "pullback",
-      "price": 507.29,
-      "pct_to_20ma": 3.01,
-      "vol_ratio": 0.71,
-      "base_range_pct": 32.2,
-      "stop": 446.42,
+      "price": 512.48,
+      "pct_to_20ma": 3.04,
+      "vol_ratio": 0.68,
+      "base_range_pct": 22.3,
+      "stop": 450.98,
       "stop_pct": 12.0,
-      "target": 689.91,
+      "target": 696.97,
       "target_pct": 36.0,
       "shares": 0,
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "reward_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
-      "week_change_pct": 3.46,
-      "sma50": 399.12,
-      "sma200": 257.53,
+      "week_change_pct": 7.77,
+      "sma50": 404.94,
+      "sma200": 259.28,
       "indicators": {
-        "rsi14": 51.7,
-        "atr_pct": 7.27,
-        "from_52w_high_pct": -7.3,
+        "rsi14": 49.1,
+        "atr_pct": 7.08,
+        "from_52w_high_pct": -6.36,
         "distribution_days_20": 1,
-        "last_day_chg_pct": -7.3,
-        "last_day_vol_ratio": 0.71,
-        "rs_20d": 18.62,
-        "rs_50d": 102.33,
+        "last_day_chg_pct": 1.02,
+        "last_day_vol_ratio": 0.68,
+        "rs_20d": 22.56,
+        "rs_50d": 105.82,
         "rs_new_high": false
       },
       "assessment": "constructive",
       "next_earnings": "2026-08-04",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 490.33,
-          "chg_pct": null,
-          "volume": 25158800
-        },
-        {
           "date": "2026-06-09",
           "close": 475.51,
-          "chg_pct": -3.02,
+          "chg_pct": null,
           "volume": 37799800
         },
         {
@@ -191,192 +94,198 @@
           "date": "2026-06-16",
           "close": 507.29,
           "chg_pct": -7.3,
-          "volume": 26857508
+          "volume": 28411700
+        },
+        {
+          "date": "2026-06-17",
+          "close": 512.48,
+          "chg_pct": 1.02,
+          "volume": 26052016
         }
       ],
       "reasons": [
-        "leader: YTD 127.01% \u2265 20.26%",
-        "leading group: Information Technology (29.36%)",
+        "leader: YTD 129.33% \u2265 17.52%",
+        "leading group: Information Technology (28.92%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
     },
     {
-      "ticker": "IRM",
-      "name": "Iron Mountain",
-      "sector": "Real Estate",
-      "ytd": 56.34,
-      "rs_vs_spy": 5.56,
+      "ticker": "GNRC",
+      "name": "Generac",
+      "sector": "Industrials",
+      "ytd": 90.08,
+      "rs_vs_spy": 10.28,
       "setup": "pullback",
-      "price": 128.21,
-      "pct_to_20ma": 1.93,
-      "vol_ratio": 1.05,
-      "base_range_pct": 5.6,
-      "stop": 120.88,
-      "stop_pct": 5.72,
-      "target": 150.21,
-      "target_pct": 17.16,
-      "shares": 3,
-      "position_usd": 384.63,
-      "risk_usd": 22.0,
-      "reward_usd": 66.0,
-      "size_note": "",
-      "week_change_pct": 4.52,
-      "sma50": 121.68,
-      "sma200": 101.58,
-      "indicators": {
-        "rsi14": 53.9,
-        "atr_pct": 2.86,
-        "from_52w_high_pct": -2.25,
-        "distribution_days_20": 1,
-        "last_day_chg_pct": 1.53,
-        "last_day_vol_ratio": 1.05,
-        "rs_20d": 2.51,
-        "rs_50d": 8.63,
-        "rs_new_high": false
-      },
-      "assessment": "constructive",
-      "next_earnings": null,
-      "days_to_earnings": null,
-      "earnings_soon": false,
-      "earnings_in_hold": false,
-      "history": [
-        {
-          "date": "2026-06-08",
-          "close": 122.66,
-          "chg_pct": null,
-          "volume": 1436400
-        },
-        {
-          "date": "2026-06-09",
-          "close": 125.28,
-          "chg_pct": 2.14,
-          "volume": 1368900
-        },
-        {
-          "date": "2026-06-10",
-          "close": 122.52,
-          "chg_pct": -2.2,
-          "volume": 846400
-        },
-        {
-          "date": "2026-06-11",
-          "close": 124.32,
-          "chg_pct": 1.47,
-          "volume": 1239400
-        },
-        {
-          "date": "2026-06-12",
-          "close": 126.38,
-          "chg_pct": 1.65,
-          "volume": 928200
-        },
-        {
-          "date": "2026-06-15",
-          "close": 126.28,
-          "chg_pct": -0.08,
-          "volume": 1257000
-        },
-        {
-          "date": "2026-06-16",
-          "close": 128.21,
-          "chg_pct": 1.53,
-          "volume": 1571487
-        }
-      ],
-      "reasons": [
-        "leader: YTD 56.34% \u2265 20.26%",
-        "leading group: Real Estate (12.44%)",
-        "above 20/50/200-day MAs",
-        "pullback setup"
-      ]
-    },
-    {
-      "ticker": "JBL",
-      "name": "Jabil",
-      "sector": "Information Technology",
-      "ytd": 56.29,
-      "rs_vs_spy": 5.56,
-      "setup": "pullback",
-      "price": 375.51,
-      "pct_to_20ma": 2.61,
-      "vol_ratio": 1.38,
-      "base_range_pct": 15.8,
-      "stop": 341.26,
-      "stop_pct": 9.12,
-      "target": 478.25,
-      "target_pct": 27.36,
+      "price": 268.2,
+      "pct_to_20ma": 0.37,
+      "vol_ratio": 0.69,
+      "base_range_pct": 19.3,
+      "stop": 237.36,
+      "stop_pct": 11.5,
+      "target": 360.73,
+      "target_pct": 34.5,
       "shares": 0,
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "reward_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
-      "week_change_pct": 3.18,
-      "sma50": 344.87,
-      "sma200": 258.91,
+      "week_change_pct": 2.76,
+      "sma50": 249.31,
+      "sma200": 195.13,
       "indicators": {
-        "rsi14": 51.7,
-        "atr_pct": 4.56,
-        "from_52w_high_pct": -2.62,
+        "rsi14": 45.3,
+        "atr_pct": 5.75,
+        "from_52w_high_pct": -6.0,
         "distribution_days_20": 3,
-        "last_day_chg_pct": -2.62,
-        "last_day_vol_ratio": 1.38,
-        "rs_20d": 9.13,
-        "rs_50d": 23.32,
+        "last_day_chg_pct": 0.96,
+        "last_day_vol_ratio": 0.69,
+        "rs_20d": 8.86,
+        "rs_50d": 24.86,
         "rs_new_high": false
       },
       "assessment": "constructive",
-      "next_earnings": "2026-06-17",
-      "days_to_earnings": 1,
-      "earnings_soon": true,
+      "next_earnings": "2026-07-29",
+      "days_to_earnings": 42,
+      "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 363.95,
-          "chg_pct": null,
-          "volume": 895000
-        },
-        {
           "date": "2026-06-09",
-          "close": 362.38,
-          "chg_pct": -0.43,
-          "volume": 1194400
+          "close": 260.99,
+          "chg_pct": null,
+          "volume": 916100
         },
         {
           "date": "2026-06-10",
-          "close": 352.36,
-          "chg_pct": -2.77,
-          "volume": 989000
+          "close": 239.11,
+          "chg_pct": -8.38,
+          "volume": 1565000
         },
         {
           "date": "2026-06-11",
-          "close": 376.89,
-          "chg_pct": 6.96,
-          "volume": 998400
+          "close": 257.33,
+          "chg_pct": 7.62,
+          "volume": 994100
         },
         {
           "date": "2026-06-12",
-          "close": 384.82,
-          "chg_pct": 2.1,
-          "volume": 978100
+          "close": 262.36,
+          "chg_pct": 1.95,
+          "volume": 520000
         },
         {
           "date": "2026-06-15",
-          "close": 385.63,
-          "chg_pct": 0.21,
-          "volume": 1210900
+          "close": 270.1,
+          "chg_pct": 2.95,
+          "volume": 857100
         },
         {
           "date": "2026-06-16",
-          "close": 375.51,
-          "chg_pct": -2.62,
-          "volume": 1631612
+          "close": 265.66,
+          "chg_pct": -1.64,
+          "volume": 795900
+        },
+        {
+          "date": "2026-06-17",
+          "close": 268.2,
+          "chg_pct": 0.96,
+          "volume": 576337
         }
       ],
       "reasons": [
-        "leader: YTD 56.29% \u2265 20.26%",
-        "leading group: Information Technology (29.36%)",
+        "leader: YTD 90.08% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "FTNT",
+      "name": "Fortinet",
+      "sector": "Information Technology",
+      "ytd": 85.08,
+      "rs_vs_spy": 9.71,
+      "setup": "pullback",
+      "price": 144.14,
+      "pct_to_20ma": 2.51,
+      "vol_ratio": 1.21,
+      "base_range_pct": 17.0,
+      "stop": 130.99,
+      "stop_pct": 9.12,
+      "target": 183.58,
+      "target_pct": 27.36,
+      "shares": 1,
+      "position_usd": 144.14,
+      "risk_usd": 13.15,
+      "reward_usd": 39.44,
+      "size_note": "",
+      "week_change_pct": 4.15,
+      "sma50": 112.83,
+      "sma200": 89.56,
+      "indicators": {
+        "rsi14": 63.8,
+        "atr_pct": 4.56,
+        "from_52w_high_pct": -3.69,
+        "distribution_days_20": 5,
+        "last_day_chg_pct": -1.96,
+        "last_day_vol_ratio": 1.21,
+        "rs_20d": 11.83,
+        "rs_50d": 53.18,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-08-05",
+      "days_to_earnings": 49,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 138.39,
+          "chg_pct": null,
+          "volume": 7801500
+        },
+        {
+          "date": "2026-06-10",
+          "close": 138.88,
+          "chg_pct": 0.35,
+          "volume": 6267100
+        },
+        {
+          "date": "2026-06-11",
+          "close": 145.06,
+          "chg_pct": 4.45,
+          "volume": 7433800
+        },
+        {
+          "date": "2026-06-12",
+          "close": 146.3,
+          "chg_pct": 0.85,
+          "volume": 5083700
+        },
+        {
+          "date": "2026-06-15",
+          "close": 149.49,
+          "chg_pct": 2.18,
+          "volume": 5207300
+        },
+        {
+          "date": "2026-06-16",
+          "close": 147.02,
+          "chg_pct": -1.65,
+          "volume": 5194600
+        },
+        {
+          "date": "2026-06-17",
+          "close": 144.14,
+          "chg_pct": -1.96,
+          "volume": 7645548
+        }
+      ],
+      "reasons": [
+        "leader: YTD 85.08% \u2265 17.52%",
+        "leading group: Information Technology (28.92%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
@@ -385,52 +294,46 @@
       "ticker": "PANW",
       "name": "Palo Alto Networks",
       "sector": "Information Technology",
-      "ytd": 56.05,
-      "rs_vs_spy": 5.53,
+      "ytd": 57.29,
+      "rs_vs_spy": 6.54,
       "setup": "pullback",
-      "price": 279.9,
-      "pct_to_20ma": 3.9,
-      "vol_ratio": 0.58,
-      "base_range_pct": 25.1,
-      "stop": 250.51,
-      "stop_pct": 10.5,
-      "target": 368.07,
-      "target_pct": 31.5,
+      "price": 282.13,
+      "pct_to_20ma": 3.91,
+      "vol_ratio": 0.59,
+      "base_range_pct": 21.8,
+      "stop": 253.13,
+      "stop_pct": 10.28,
+      "target": 369.14,
+      "target_pct": 30.84,
       "shares": 0,
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "reward_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
-      "week_change_pct": 5.1,
-      "sma50": 220.06,
-      "sma200": 195.19,
+      "week_change_pct": 8.29,
+      "sma50": 222.3,
+      "sma200": 195.65,
       "indicators": {
-        "rsi14": 63.0,
-        "atr_pct": 5.25,
-        "from_52w_high_pct": -6.85,
+        "rsi14": 60.7,
+        "atr_pct": 5.14,
+        "from_52w_high_pct": -6.11,
         "distribution_days_20": 4,
-        "last_day_chg_pct": -1.63,
-        "last_day_vol_ratio": 0.58,
-        "rs_20d": 11.31,
-        "rs_50d": 51.78,
+        "last_day_chg_pct": 0.8,
+        "last_day_vol_ratio": 0.59,
+        "rs_20d": 16.34,
+        "rs_50d": 47.76,
         "rs_new_high": false
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-08-18",
-      "days_to_earnings": 63,
+      "days_to_earnings": 62,
       "earnings_soon": false,
       "earnings_in_hold": false,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 266.33,
-          "chg_pct": null,
-          "volume": 7009800
-        },
-        {
           "date": "2026-06-09",
           "close": 260.52,
-          "chg_pct": -2.18,
+          "chg_pct": null,
           "volume": 7662900
         },
         {
@@ -461,372 +364,558 @@
           "date": "2026-06-16",
           "close": 279.9,
           "chg_pct": -1.63,
-          "volume": 4963420
+          "volume": 5017100
+        },
+        {
+          "date": "2026-06-17",
+          "close": 282.13,
+          "chg_pct": 0.8,
+          "volume": 4989367
         }
       ],
       "reasons": [
-        "leader: YTD 56.05% \u2265 20.26%",
-        "leading group: Information Technology (29.36%)",
+        "leader: YTD 57.29% \u2265 17.52%",
+        "leading group: Information Technology (28.92%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
     },
     {
-      "ticker": "NTAP",
-      "name": "NetApp",
+      "ticker": "JBL",
+      "name": "Jabil",
       "sector": "Information Technology",
-      "ytd": 52.24,
-      "rs_vs_spy": 5.16,
+      "ytd": 56.07,
+      "rs_vs_spy": 6.4,
       "setup": "pullback",
-      "price": 161.26,
-      "pct_to_20ma": 3.22,
-      "vol_ratio": 0.83,
-      "base_range_pct": 52.2,
-      "stop": 141.91,
-      "stop_pct": 12.0,
-      "target": 219.31,
-      "target_pct": 36.0,
-      "shares": 1,
-      "position_usd": 161.26,
-      "risk_usd": 19.35,
-      "reward_usd": 58.05,
-      "size_note": "",
-      "week_change_pct": -5.31,
-      "sma50": 127.9,
-      "sma200": 113.64,
+      "price": 374.98,
+      "pct_to_20ma": 1.88,
+      "vol_ratio": 2.4,
+      "base_range_pct": 11.7,
+      "stop": 334.63,
+      "stop_pct": 10.76,
+      "target": 496.02,
+      "target_pct": 32.28,
+      "shares": 0,
+      "position_usd": 0.0,
+      "risk_usd": 0.0,
+      "reward_usd": 0.0,
+      "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 3.48,
+      "sma50": 346.91,
+      "sma200": 259.76,
       "indicators": {
-        "rsi14": 62.2,
-        "atr_pct": 6.68,
-        "from_52w_high_pct": -10.95,
-        "distribution_days_20": 6,
-        "last_day_chg_pct": -0.35,
-        "last_day_vol_ratio": 0.83,
-        "rs_20d": 31.63,
-        "rs_50d": 40.35,
-        "rs_new_high": false
-      },
-      "assessment": "caution: under distribution (4+ heavy down days/20)",
-      "next_earnings": null,
-      "days_to_earnings": null,
-      "earnings_soon": false,
-      "earnings_in_hold": false,
-      "history": [
-        {
-          "date": "2026-06-08",
-          "close": 170.31,
-          "chg_pct": null,
-          "volume": 2621700
-        },
-        {
-          "date": "2026-06-09",
-          "close": 165.0,
-          "chg_pct": -3.12,
-          "volume": 2725700
-        },
-        {
-          "date": "2026-06-10",
-          "close": 160.66,
-          "chg_pct": -2.63,
-          "volume": 3177000
-        },
-        {
-          "date": "2026-06-11",
-          "close": 160.47,
-          "chg_pct": -0.12,
-          "volume": 2463200
-        },
-        {
-          "date": "2026-06-12",
-          "close": 161.61,
-          "chg_pct": 0.71,
-          "volume": 1774600
-        },
-        {
-          "date": "2026-06-15",
-          "close": 161.82,
-          "chg_pct": 0.13,
-          "volume": 3001700
-        },
-        {
-          "date": "2026-06-16",
-          "close": 161.26,
-          "chg_pct": -0.35,
-          "volume": 2493970
-        }
-      ],
-      "reasons": [
-        "leader: YTD 52.24% \u2265 20.26%",
-        "leading group: Information Technology (29.36%)",
-        "above 20/50/200-day MAs",
-        "pullback setup"
-      ]
-    },
-    {
-      "ticker": "ODFL",
-      "name": "Old Dominion",
-      "sector": "Industrials",
-      "ytd": 45.89,
-      "rs_vs_spy": 4.53,
-      "setup": "pullback",
-      "price": 231.62,
-      "pct_to_20ma": 0.97,
-      "vol_ratio": 1.01,
-      "base_range_pct": 21.8,
-      "stop": 211.1,
-      "stop_pct": 8.86,
-      "target": 293.18,
-      "target_pct": 26.58,
-      "shares": 1,
-      "position_usd": 231.62,
-      "risk_usd": 20.52,
-      "reward_usd": 61.56,
-      "size_note": "",
-      "week_change_pct": -6.23,
-      "sma50": 216.12,
-      "sma200": 175.33,
-      "indicators": {
-        "rsi14": 58.2,
-        "atr_pct": 4.43,
-        "from_52w_high_pct": -6.88,
-        "distribution_days_20": 4,
-        "last_day_chg_pct": -2.44,
-        "last_day_vol_ratio": 1.01,
-        "rs_20d": 11.84,
-        "rs_50d": 0.73,
-        "rs_new_high": false
-      },
-      "assessment": "caution: under distribution (4+ heavy down days/20)",
-      "next_earnings": "2026-07-29",
-      "days_to_earnings": 43,
-      "earnings_soon": false,
-      "earnings_in_hold": true,
-      "history": [
-        {
-          "date": "2026-06-08",
-          "close": 247.01,
-          "chg_pct": null,
-          "volume": 1924400
-        },
-        {
-          "date": "2026-06-09",
-          "close": 248.73,
-          "chg_pct": 0.7,
-          "volume": 1540900
-        },
-        {
-          "date": "2026-06-10",
-          "close": 235.95,
-          "chg_pct": -5.14,
-          "volume": 3210400
-        },
-        {
-          "date": "2026-06-11",
-          "close": 247.76,
-          "chg_pct": 5.01,
-          "volume": 1954600
-        },
-        {
-          "date": "2026-06-12",
-          "close": 245.75,
-          "chg_pct": -0.81,
-          "volume": 1075100
-        },
-        {
-          "date": "2026-06-15",
-          "close": 237.42,
-          "chg_pct": -3.39,
-          "volume": 1980300
-        },
-        {
-          "date": "2026-06-16",
-          "close": 231.62,
-          "chg_pct": -2.44,
-          "volume": 1970251
-        }
-      ],
-      "reasons": [
-        "leader: YTD 45.89% \u2265 20.26%",
-        "leading group: Industrials (14.16%)",
-        "above 20/50/200-day MAs",
-        "pullback setup"
-      ]
-    },
-    {
-      "ticker": "JBHT",
-      "name": "J.B. Hunt",
-      "sector": "Industrials",
-      "ytd": 42.75,
-      "rs_vs_spy": 4.22,
-      "setup": "pullback",
-      "price": 279.82,
-      "pct_to_20ma": 1.28,
-      "vol_ratio": 1.17,
-      "base_range_pct": 12.8,
-      "stop": 261.46,
-      "stop_pct": 6.56,
-      "target": 334.89,
-      "target_pct": 19.68,
-      "shares": 1,
-      "position_usd": 279.82,
-      "risk_usd": 18.36,
-      "reward_usd": 55.07,
-      "size_note": "",
-      "week_change_pct": -2.9,
-      "sma50": 255.67,
-      "sma200": 201.69,
-      "indicators": {
-        "rsi14": 58.8,
-        "atr_pct": 3.28,
-        "from_52w_high_pct": -3.3,
-        "distribution_days_20": 4,
-        "last_day_chg_pct": -1.18,
-        "last_day_vol_ratio": 1.17,
-        "rs_20d": 5.36,
-        "rs_50d": 13.26,
-        "rs_new_high": false
-      },
-      "assessment": "caution: under distribution (4+ heavy down days/20)",
-      "next_earnings": "2026-07-14",
-      "days_to_earnings": 28,
-      "earnings_soon": false,
-      "earnings_in_hold": true,
-      "history": [
-        {
-          "date": "2026-06-08",
-          "close": 288.17,
-          "chg_pct": null,
-          "volume": 1360000
-        },
-        {
-          "date": "2026-06-09",
-          "close": 287.19,
-          "chg_pct": -0.34,
-          "volume": 974600
-        },
-        {
-          "date": "2026-06-10",
-          "close": 280.75,
-          "chg_pct": -2.24,
-          "volume": 1198000
-        },
-        {
-          "date": "2026-06-11",
-          "close": 289.14,
-          "chg_pct": 2.99,
-          "volume": 683900
-        },
-        {
-          "date": "2026-06-12",
-          "close": 289.36,
-          "chg_pct": 0.08,
-          "volume": 551000
-        },
-        {
-          "date": "2026-06-15",
-          "close": 283.16,
-          "chg_pct": -2.14,
-          "volume": 868100
-        },
-        {
-          "date": "2026-06-16",
-          "close": 279.82,
-          "chg_pct": -1.18,
-          "volume": 1126676
-        }
-      ],
-      "reasons": [
-        "leader: YTD 42.75% \u2265 20.26%",
-        "leading group: Industrials (14.16%)",
-        "above 20/50/200-day MAs",
-        "pullback setup"
-      ]
-    },
-    {
-      "ticker": "FDX",
-      "name": "FedEx",
-      "sector": "Industrials",
-      "ytd": 42.72,
-      "rs_vs_spy": 4.22,
-      "setup": "pullback",
-      "price": 335.74,
-      "pct_to_20ma": 2.59,
-      "vol_ratio": 0.43,
-      "base_range_pct": 12.1,
-      "stop": 316.2,
-      "stop_pct": 5.82,
-      "target": 394.36,
-      "target_pct": 17.46,
-      "shares": 1,
-      "position_usd": 335.74,
-      "risk_usd": 19.54,
-      "reward_usd": 58.62,
-      "size_note": "",
-      "week_change_pct": 1.67,
-      "sma50": 314.36,
-      "sma200": 255.31,
-      "indicators": {
-        "rsi14": 53.0,
-        "atr_pct": 2.91,
-        "from_52w_high_pct": -0.89,
-        "distribution_days_20": 1,
-        "last_day_chg_pct": -0.89,
-        "last_day_vol_ratio": 0.43,
-        "rs_20d": 10.94,
-        "rs_50d": 1.97,
+        "rsi14": 54.9,
+        "atr_pct": 5.38,
+        "from_52w_high_pct": -2.76,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -0.14,
+        "last_day_vol_ratio": 2.4,
+        "rs_20d": 11.55,
+        "rs_50d": 22.3,
         "rs_new_high": false
       },
       "assessment": "constructive",
-      "next_earnings": "2026-06-23",
-      "days_to_earnings": 7,
+      "next_earnings": "2026-06-17",
+      "days_to_earnings": 0,
       "earnings_soon": true,
       "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 330.22,
-          "chg_pct": null,
-          "volume": 1761000
-        },
-        {
           "date": "2026-06-09",
-          "close": 331.76,
-          "chg_pct": 0.47,
-          "volume": 1656900
+          "close": 362.38,
+          "chg_pct": null,
+          "volume": 1194400
         },
         {
           "date": "2026-06-10",
-          "close": 319.25,
-          "chg_pct": -3.77,
-          "volume": 1700400
+          "close": 352.36,
+          "chg_pct": -2.77,
+          "volume": 989000
         },
         {
           "date": "2026-06-11",
-          "close": 338.0,
-          "chg_pct": 5.87,
-          "volume": 2521600
+          "close": 376.89,
+          "chg_pct": 6.96,
+          "volume": 998400
         },
         {
           "date": "2026-06-12",
-          "close": 338.31,
-          "chg_pct": 0.09,
-          "volume": 1176600
+          "close": 384.82,
+          "chg_pct": 2.1,
+          "volume": 978100
         },
         {
           "date": "2026-06-15",
-          "close": 338.75,
-          "chg_pct": 0.13,
-          "volume": 1956300
+          "close": 385.63,
+          "chg_pct": 0.21,
+          "volume": 1210900
         },
         {
           "date": "2026-06-16",
-          "close": 335.74,
-          "chg_pct": -0.89,
-          "volume": 841576
+          "close": 375.51,
+          "chg_pct": -2.62,
+          "volume": 1643000
+        },
+        {
+          "date": "2026-06-17",
+          "close": 374.98,
+          "chg_pct": -0.14,
+          "volume": 2933331
         }
       ],
       "reasons": [
-        "leader: YTD 42.72% \u2265 20.26%",
-        "leading group: Industrials (14.16%)",
+        "leader: YTD 56.07% \u2265 17.52%",
+        "leading group: Information Technology (28.92%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "STLD",
+      "name": "Steel Dynamics",
+      "sector": "Materials",
+      "ytd": 53.91,
+      "rs_vs_spy": 6.15,
+      "setup": "pullback",
+      "price": 270.13,
+      "pct_to_20ma": 2.56,
+      "vol_ratio": 1.01,
+      "base_range_pct": 23.9,
+      "stop": 250.25,
+      "stop_pct": 7.36,
+      "target": 329.77,
+      "target_pct": 22.08,
+      "shares": 1,
+      "position_usd": 270.13,
+      "risk_usd": 19.88,
+      "reward_usd": 59.64,
+      "size_note": "",
+      "week_change_pct": 0.12,
+      "sma50": 237.17,
+      "sma200": 182.82,
+      "indicators": {
+        "rsi14": 57.5,
+        "atr_pct": 3.68,
+        "from_52w_high_pct": -4.47,
+        "distribution_days_20": 6,
+        "last_day_chg_pct": -1.52,
+        "last_day_vol_ratio": 1.01,
+        "rs_20d": 19.75,
+        "rs_50d": 35.63,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-07-20",
+      "days_to_earnings": 33,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 269.8,
+          "chg_pct": null,
+          "volume": 870300
+        },
+        {
+          "date": "2026-06-10",
+          "close": 268.34,
+          "chg_pct": -0.54,
+          "volume": 1225600
+        },
+        {
+          "date": "2026-06-11",
+          "close": 279.55,
+          "chg_pct": 4.18,
+          "volume": 805100
+        },
+        {
+          "date": "2026-06-12",
+          "close": 282.76,
+          "chg_pct": 1.15,
+          "volume": 799500
+        },
+        {
+          "date": "2026-06-15",
+          "close": 272.19,
+          "chg_pct": -3.74,
+          "volume": 1614100
+        },
+        {
+          "date": "2026-06-16",
+          "close": 274.29,
+          "chg_pct": 0.77,
+          "volume": 1239400
+        },
+        {
+          "date": "2026-06-17",
+          "close": 270.13,
+          "chg_pct": -1.52,
+          "volume": 1131780
+        }
+      ],
+      "reasons": [
+        "leader: YTD 53.91% \u2265 17.52%",
+        "leading group: Materials (13.29%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "NUE",
+      "name": "Nucor",
+      "sector": "Materials",
+      "ytd": 49.62,
+      "rs_vs_spy": 5.66,
+      "setup": "pullback",
+      "price": 252.6,
+      "pct_to_20ma": 0.82,
+      "vol_ratio": 1.25,
+      "base_range_pct": 18.0,
+      "stop": 235.63,
+      "stop_pct": 6.72,
+      "target": 303.52,
+      "target_pct": 20.16,
+      "shares": 1,
+      "position_usd": 252.6,
+      "risk_usd": 16.97,
+      "reward_usd": 50.92,
+      "size_note": "",
+      "week_change_pct": -0.68,
+      "sma50": 228.69,
+      "sma200": 175.91,
+      "indicators": {
+        "rsi14": 52.9,
+        "atr_pct": 3.36,
+        "from_52w_high_pct": -5.16,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -2.5,
+        "last_day_vol_ratio": 1.25,
+        "rs_20d": 12.81,
+        "rs_50d": 29.71,
+        "rs_new_high": false
+      },
+      "assessment": "constructive",
+      "next_earnings": "2026-07-27",
+      "days_to_earnings": 40,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 254.32,
+          "chg_pct": null,
+          "volume": 1111000
+        },
+        {
+          "date": "2026-06-10",
+          "close": 250.49,
+          "chg_pct": -1.51,
+          "volume": 1214500
+        },
+        {
+          "date": "2026-06-11",
+          "close": 260.9,
+          "chg_pct": 4.16,
+          "volume": 1440900
+        },
+        {
+          "date": "2026-06-12",
+          "close": 266.35,
+          "chg_pct": 2.09,
+          "volume": 1204200
+        },
+        {
+          "date": "2026-06-15",
+          "close": 259.32,
+          "chg_pct": -2.64,
+          "volume": 2180900
+        },
+        {
+          "date": "2026-06-16",
+          "close": 259.08,
+          "chg_pct": -0.09,
+          "volume": 1470400
+        },
+        {
+          "date": "2026-06-17",
+          "close": 252.6,
+          "chg_pct": -2.5,
+          "volume": 1890208
+        }
+      ],
+      "reasons": [
+        "leader: YTD 49.62% \u2265 17.52%",
+        "leading group: Materials (13.29%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "MCHP",
+      "name": "Microchip Technology",
+      "sector": "Information Technology",
+      "ytd": 46.3,
+      "rs_vs_spy": 5.29,
+      "setup": "pullback",
+      "price": 94.11,
+      "pct_to_20ma": 0.02,
+      "vol_ratio": 0.84,
+      "base_range_pct": 14.1,
+      "stop": 83.08,
+      "stop_pct": 11.72,
+      "target": 127.2,
+      "target_pct": 35.16,
+      "shares": 2,
+      "position_usd": 188.22,
+      "risk_usd": 22.06,
+      "reward_usd": 66.18,
+      "size_note": "",
+      "week_change_pct": 2.89,
+      "sma50": 89.97,
+      "sma200": 71.66,
+      "indicators": {
+        "rsi14": 47.8,
+        "atr_pct": 5.86,
+        "from_52w_high_pct": -8.1,
+        "distribution_days_20": 6,
+        "last_day_chg_pct": -1.59,
+        "last_day_vol_ratio": 0.84,
+        "rs_20d": 2.01,
+        "rs_50d": 24.65,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-08-06",
+      "days_to_earnings": 50,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 91.47,
+          "chg_pct": null,
+          "volume": 15334200
+        },
+        {
+          "date": "2026-06-10",
+          "close": 87.91,
+          "chg_pct": -3.89,
+          "volume": 10497600
+        },
+        {
+          "date": "2026-06-11",
+          "close": 92.94,
+          "chg_pct": 5.72,
+          "volume": 15470300
+        },
+        {
+          "date": "2026-06-12",
+          "close": 95.24,
+          "chg_pct": 2.47,
+          "volume": 8384800
+        },
+        {
+          "date": "2026-06-15",
+          "close": 100.32,
+          "chg_pct": 5.33,
+          "volume": 11611700
+        },
+        {
+          "date": "2026-06-16",
+          "close": 95.63,
+          "chg_pct": -4.68,
+          "volume": 11664300
+        },
+        {
+          "date": "2026-06-17",
+          "close": 94.11,
+          "chg_pct": -1.59,
+          "volume": 9429301
+        }
+      ],
+      "reasons": [
+        "leader: YTD 46.3% \u2265 17.52%",
+        "leading group: Information Technology (28.92%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "EQIX",
+      "name": "Equinix",
+      "sector": "Real Estate",
+      "ytd": 43.94,
+      "rs_vs_spy": 5.02,
+      "setup": "pullback",
+      "price": 1088.52,
+      "pct_to_20ma": 1.8,
+      "vol_ratio": 1.06,
+      "base_range_pct": 5.4,
+      "stop": 1038.01,
+      "stop_pct": 4.64,
+      "target": 1240.04,
+      "target_pct": 13.92,
+      "shares": 0,
+      "position_usd": 0.0,
+      "risk_usd": 0.0,
+      "reward_usd": 0.0,
+      "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 2.71,
+      "sma50": 1069.28,
+      "sma200": 884.61,
+      "indicators": {
+        "rsi14": 55.6,
+        "atr_pct": 2.32,
+        "from_52w_high_pct": -1.92,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -0.56,
+        "last_day_vol_ratio": 1.06,
+        "rs_20d": 3.32,
+        "rs_50d": -3.38,
+        "rs_new_high": false
+      },
+      "assessment": "constructive",
+      "next_earnings": "2026-07-29",
+      "days_to_earnings": 42,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 1059.84,
+          "chg_pct": null,
+          "volume": 413600
+        },
+        {
+          "date": "2026-06-10",
+          "close": 1038.33,
+          "chg_pct": -2.03,
+          "volume": 597500
+        },
+        {
+          "date": "2026-06-11",
+          "close": 1043.18,
+          "chg_pct": 0.47,
+          "volume": 584700
+        },
+        {
+          "date": "2026-06-12",
+          "close": 1055.85,
+          "chg_pct": 1.21,
+          "volume": 500200
+        },
+        {
+          "date": "2026-06-15",
+          "close": 1064.38,
+          "chg_pct": 0.81,
+          "volume": 672800
+        },
+        {
+          "date": "2026-06-16",
+          "close": 1094.68,
+          "chg_pct": 2.85,
+          "volume": 594300
+        },
+        {
+          "date": "2026-06-17",
+          "close": 1088.52,
+          "chg_pct": -0.56,
+          "volume": 582512
+        }
+      ],
+      "reasons": [
+        "leader: YTD 43.94% \u2265 17.52%",
+        "leading group: Real Estate (9.62%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "HST",
+      "name": "Host Hotels & Resorts",
+      "sector": "Real Estate",
+      "ytd": 37.02,
+      "rs_vs_spy": 4.23,
+      "setup": "pullback",
+      "price": 24.62,
+      "pct_to_20ma": 3.42,
+      "vol_ratio": 1.22,
+      "base_range_pct": 11.7,
+      "stop": 23.33,
+      "stop_pct": 5.22,
+      "target": 28.48,
+      "target_pct": 15.67,
+      "shares": 19,
+      "position_usd": 467.78,
+      "risk_usd": 24.44,
+      "reward_usd": 73.31,
+      "size_note": "",
+      "week_change_pct": 0.61,
+      "sma50": 22.19,
+      "sma200": 18.81,
+      "indicators": {
+        "rsi14": 66.5,
+        "atr_pct": 2.38,
+        "from_52w_high_pct": -1.12,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -1.12,
+        "last_day_vol_ratio": 1.22,
+        "rs_20d": 11.89,
+        "rs_50d": 14.74,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-07-29",
+      "days_to_earnings": 42,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 24.47,
+          "chg_pct": null,
+          "volume": 13539200
+        },
+        {
+          "date": "2026-06-10",
+          "close": 23.95,
+          "chg_pct": -2.13,
+          "volume": 10977800
+        },
+        {
+          "date": "2026-06-11",
+          "close": 24.34,
+          "chg_pct": 1.63,
+          "volume": 12883400
+        },
+        {
+          "date": "2026-06-12",
+          "close": 24.89,
+          "chg_pct": 2.26,
+          "volume": 7626200
+        },
+        {
+          "date": "2026-06-15",
+          "close": 24.81,
+          "chg_pct": -0.32,
+          "volume": 11071800
+        },
+        {
+          "date": "2026-06-16",
+          "close": 24.9,
+          "chg_pct": 0.36,
+          "volume": 11725500
+        },
+        {
+          "date": "2026-06-17",
+          "close": 24.62,
+          "chg_pct": -1.12,
+          "volume": 10454937
+        }
+      ],
+      "reasons": [
+        "leader: YTD 37.02% \u2265 17.52%",
+        "leading group: Real Estate (9.62%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
@@ -835,52 +924,46 @@
       "ticker": "GWW",
       "name": "W. W. Grainger",
       "sector": "Industrials",
-      "ytd": 31.99,
-      "rs_vs_spy": 3.16,
+      "ytd": 31.12,
+      "rs_vs_spy": 3.55,
       "setup": "pullback",
-      "price": 1319.72,
-      "pct_to_20ma": 3.29,
-      "vol_ratio": 0.86,
+      "price": 1311.1,
+      "pct_to_20ma": 2.35,
+      "vol_ratio": 0.89,
       "base_range_pct": 7.7,
-      "stop": 1252.09,
-      "stop_pct": 5.12,
-      "target": 1522.62,
-      "target_pct": 15.37,
+      "stop": 1255.36,
+      "stop_pct": 4.25,
+      "target": 1478.32,
+      "target_pct": 12.75,
       "shares": 0,
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "reward_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
-      "week_change_pct": 1.16,
-      "sma50": 1217.61,
-      "sma200": 1070.49,
+      "week_change_pct": -1.41,
+      "sma50": 1221.71,
+      "sma200": 1072.01,
       "indicators": {
-        "rsi14": 77.2,
-        "atr_pct": 1.93,
-        "from_52w_high_pct": -0.76,
+        "rsi14": 72.3,
+        "atr_pct": 1.9,
+        "from_52w_high_pct": -1.41,
         "distribution_days_20": 3,
-        "last_day_chg_pct": 0.44,
-        "last_day_vol_ratio": 0.86,
-        "rs_20d": 2.7,
-        "rs_50d": 3.94,
+        "last_day_chg_pct": -0.65,
+        "last_day_vol_ratio": 0.89,
+        "rs_20d": 4.33,
+        "rs_50d": 5.48,
         "rs_new_high": false
       },
-      "assessment": "extended: RSI overbought",
+      "assessment": "constructive",
       "next_earnings": "2026-08-04",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 1304.57,
-          "chg_pct": null,
-          "volume": 265000
-        },
-        {
           "date": "2026-06-09",
           "close": 1329.8,
-          "chg_pct": 1.93,
+          "chg_pct": null,
           "volume": 297500
         },
         {
@@ -911,372 +994,288 @@
           "date": "2026-06-16",
           "close": 1319.72,
           "chg_pct": 0.44,
-          "volume": 228816
+          "volume": 293400
+        },
+        {
+          "date": "2026-06-17",
+          "close": 1311.1,
+          "chg_pct": -0.65,
+          "volume": 237107
         }
       ],
       "reasons": [
-        "leader: YTD 31.99% \u2265 20.26%",
-        "leading group: Industrials (14.16%)",
+        "leader: YTD 31.12% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
     },
     {
-      "ticker": "CSX",
-      "name": "CSX Corporation",
+      "ticker": "CARR",
+      "name": "Carrier Global",
       "sector": "Industrials",
-      "ytd": 30.13,
-      "rs_vs_spy": 2.97,
+      "ytd": 30.86,
+      "rs_vs_spy": 3.52,
       "setup": "pullback",
-      "price": 46.9,
-      "pct_to_20ma": 0.97,
-      "vol_ratio": 0.82,
-      "base_range_pct": 5.1,
-      "stop": 44.85,
-      "stop_pct": 4.38,
-      "target": 53.06,
-      "target_pct": 13.14,
-      "shares": 12,
-      "position_usd": 562.8,
-      "risk_usd": 24.65,
-      "reward_usd": 73.95,
+      "price": 69.49,
+      "pct_to_20ma": 3.81,
+      "vol_ratio": 0.83,
+      "base_range_pct": 14.6,
+      "stop": 64.18,
+      "stop_pct": 7.64,
+      "target": 85.42,
+      "target_pct": 22.92,
+      "shares": 4,
+      "position_usd": 277.96,
+      "risk_usd": 21.24,
+      "reward_usd": 63.71,
       "size_note": "",
-      "week_change_pct": -0.45,
-      "sma50": 45.0,
-      "sma200": 38.72,
+      "week_change_pct": -2.46,
+      "sma50": 64.8,
+      "sma200": 59.3,
       "indicators": {
-        "rsi14": 49.3,
-        "atr_pct": 2.19,
-        "from_52w_high_pct": -1.41,
-        "distribution_days_20": 4,
-        "last_day_chg_pct": -1.03,
-        "last_day_vol_ratio": 0.82,
-        "rs_20d": 0.24,
-        "rs_50d": -0.4,
+        "rsi14": 65.5,
+        "atr_pct": 3.82,
+        "from_52w_high_pct": -12.91,
+        "distribution_days_20": 3,
+        "last_day_chg_pct": -2.33,
+        "last_day_vol_ratio": 0.83,
+        "rs_20d": 12.0,
+        "rs_50d": 11.91,
         "rs_new_high": false
       },
-      "assessment": "caution: under distribution (4+ heavy down days/20)",
-      "next_earnings": null,
-      "days_to_earnings": null,
+      "assessment": "constructive",
+      "next_earnings": "2026-07-28",
+      "days_to_earnings": 41,
       "earnings_soon": false,
-      "earnings_in_hold": false,
+      "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 47.11,
-          "chg_pct": null,
-          "volume": 9096400
-        },
-        {
           "date": "2026-06-09",
-          "close": 47.28,
-          "chg_pct": 0.36,
-          "volume": 10091500
+          "close": 71.24,
+          "chg_pct": null,
+          "volume": 10221000
         },
         {
           "date": "2026-06-10",
-          "close": 46.41,
-          "chg_pct": -1.84,
-          "volume": 9500700
+          "close": 67.97,
+          "chg_pct": -4.59,
+          "volume": 7555800
         },
         {
           "date": "2026-06-11",
-          "close": 47.37,
-          "chg_pct": 2.07,
-          "volume": 11141400
+          "close": 69.74,
+          "chg_pct": 2.6,
+          "volume": 6321600
         },
         {
           "date": "2026-06-12",
-          "close": 47.57,
-          "chg_pct": 0.42,
-          "volume": 11393700
+          "close": 69.91,
+          "chg_pct": 0.24,
+          "volume": 4414900
         },
         {
           "date": "2026-06-15",
-          "close": 47.39,
-          "chg_pct": -0.38,
-          "volume": 13764800
+          "close": 71.13,
+          "chg_pct": 1.75,
+          "volume": 5412100
         },
         {
           "date": "2026-06-16",
-          "close": 46.9,
-          "chg_pct": -1.03,
-          "volume": 10109081
+          "close": 71.15,
+          "chg_pct": 0.03,
+          "volume": 4347400
+        },
+        {
+          "date": "2026-06-17",
+          "close": 69.49,
+          "chg_pct": -2.33,
+          "volume": 5631661
         }
       ],
       "reasons": [
-        "leader: YTD 30.13% \u2265 20.26%",
-        "leading group: Industrials (14.16%)",
+        "leader: YTD 30.86% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
     },
     {
-      "ticker": "DOC",
-      "name": "Healthpeak Properties",
-      "sector": "Real Estate",
-      "ytd": 28.33,
-      "rs_vs_spy": 2.8,
+      "ticker": "WAB",
+      "name": "Wabtec",
+      "sector": "Industrials",
+      "ytd": 26.0,
+      "rs_vs_spy": 2.97,
       "setup": "pullback",
-      "price": 20.09,
-      "pct_to_20ma": 1.85,
-      "vol_ratio": 0.51,
-      "base_range_pct": 8.9,
-      "stop": 19.09,
-      "stop_pct": 5.0,
-      "target": 23.1,
-      "target_pct": 15.0,
-      "shares": 24,
-      "position_usd": 482.16,
-      "risk_usd": 24.11,
-      "reward_usd": 72.32,
+      "price": 271.86,
+      "pct_to_20ma": 3.7,
+      "vol_ratio": 0.45,
+      "base_range_pct": 6.8,
+      "stop": 256.91,
+      "stop_pct": 5.5,
+      "target": 316.72,
+      "target_pct": 16.5,
+      "shares": 1,
+      "position_usd": 271.86,
+      "risk_usd": 14.95,
+      "reward_usd": 44.86,
       "size_note": "",
-      "week_change_pct": 2.12,
-      "sma50": 18.26,
-      "sma200": 17.22,
+      "week_change_pct": 2.29,
+      "sma50": 263.59,
+      "sma200": 230.26,
       "indicators": {
-        "rsi14": 54.1,
-        "atr_pct": 2.5,
-        "from_52w_high_pct": -2.42,
-        "distribution_days_20": 3,
-        "last_day_chg_pct": -1.66,
-        "last_day_vol_ratio": 0.51,
-        "rs_20d": 1.98,
-        "rs_50d": 7.56,
+        "rsi14": 60.7,
+        "atr_pct": 2.53,
+        "from_52w_high_pct": -0.1,
+        "distribution_days_20": 1,
+        "last_day_chg_pct": -0.1,
+        "last_day_vol_ratio": 0.45,
+        "rs_20d": 5.58,
+        "rs_50d": -5.42,
+        "rs_new_high": false
+      },
+      "assessment": "constructive",
+      "next_earnings": "2026-07-23",
+      "days_to_earnings": 36,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 265.77,
+          "chg_pct": null,
+          "volume": 1120900
+        },
+        {
+          "date": "2026-06-10",
+          "close": 256.52,
+          "chg_pct": -3.48,
+          "volume": 859300
+        },
+        {
+          "date": "2026-06-11",
+          "close": 262.09,
+          "chg_pct": 2.17,
+          "volume": 815400
+        },
+        {
+          "date": "2026-06-12",
+          "close": 265.2,
+          "chg_pct": 1.19,
+          "volume": 622600
+        },
+        {
+          "date": "2026-06-15",
+          "close": 268.89,
+          "chg_pct": 1.39,
+          "volume": 695100
+        },
+        {
+          "date": "2026-06-16",
+          "close": 272.12,
+          "chg_pct": 1.2,
+          "volume": 743000
+        },
+        {
+          "date": "2026-06-17",
+          "close": 271.86,
+          "chg_pct": -0.1,
+          "volume": 437798
+        }
+      ],
+      "reasons": [
+        "leader: YTD 26.0% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "ETN",
+      "name": "Eaton Corporation",
+      "sector": "Industrials",
+      "ytd": 25.89,
+      "rs_vs_spy": 2.96,
+      "setup": "pullback",
+      "price": 409.64,
+      "pct_to_20ma": 2.31,
+      "vol_ratio": 0.86,
+      "base_range_pct": 12.2,
+      "stop": 377.77,
+      "stop_pct": 7.78,
+      "target": 505.25,
+      "target_pct": 23.34,
+      "shares": 0,
+      "position_usd": 0.0,
+      "risk_usd": 0.0,
+      "reward_usd": 0.0,
+      "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 1.97,
+      "sma50": 403.88,
+      "sma200": 366.61,
+      "indicators": {
+        "rsi14": 53.2,
+        "atr_pct": 3.89,
+        "from_52w_high_pct": -5.14,
+        "distribution_days_20": 2,
+        "last_day_chg_pct": 0.47,
+        "last_day_vol_ratio": 0.86,
+        "rs_20d": 9.08,
+        "rs_50d": -0.92,
         "rs_new_high": false
       },
       "assessment": "constructive",
       "next_earnings": "2026-08-04",
-      "days_to_earnings": 49,
+      "days_to_earnings": 48,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 19.67,
-          "chg_pct": null,
-          "volume": 7656000
-        },
-        {
           "date": "2026-06-09",
-          "close": 20.4,
-          "chg_pct": 3.69,
-          "volume": 8129600
+          "close": 401.72,
+          "chg_pct": null,
+          "volume": 2335800
         },
         {
           "date": "2026-06-10",
-          "close": 20.37,
-          "chg_pct": -0.15,
-          "volume": 4995000
+          "close": 375.46,
+          "chg_pct": -6.54,
+          "volume": 3555500
         },
         {
           "date": "2026-06-11",
-          "close": 20.4,
-          "chg_pct": 0.15,
-          "volume": 6970300
+          "close": 393.64,
+          "chg_pct": 4.84,
+          "volume": 2639800
         },
         {
           "date": "2026-06-12",
-          "close": 20.59,
-          "chg_pct": 0.93,
-          "volume": 5278000
+          "close": 391.39,
+          "chg_pct": -0.57,
+          "volume": 2175100
         },
         {
           "date": "2026-06-15",
-          "close": 20.43,
-          "chg_pct": -0.77,
-          "volume": 9183200
+          "close": 407.06,
+          "chg_pct": 4.0,
+          "volume": 2336700
         },
         {
           "date": "2026-06-16",
-          "close": 20.09,
-          "chg_pct": -1.66,
-          "volume": 4624317
+          "close": 407.71,
+          "chg_pct": 0.16,
+          "volume": 1788700
+        },
+        {
+          "date": "2026-06-17",
+          "close": 409.64,
+          "chg_pct": 0.47,
+          "volume": 2235911
         }
       ],
       "reasons": [
-        "leader: YTD 28.33% \u2265 20.26%",
-        "leading group: Real Estate (12.44%)",
-        "above 20/50/200-day MAs",
-        "pullback setup"
-      ]
-    },
-    {
-      "ticker": "KIM",
-      "name": "Kimco Realty",
-      "sector": "Real Estate",
-      "ytd": 27.91,
-      "rs_vs_spy": 2.76,
-      "setup": "pullback",
-      "price": 25.1,
-      "pct_to_20ma": 3.36,
-      "vol_ratio": 1.3,
-      "base_range_pct": 12.2,
-      "stop": 23.79,
-      "stop_pct": 5.2,
-      "target": 29.02,
-      "target_pct": 15.6,
-      "shares": 19,
-      "position_usd": 476.9,
-      "risk_usd": 24.81,
-      "reward_usd": 74.42,
-      "size_note": "",
-      "week_change_pct": 3.55,
-      "sma50": 23.65,
-      "sma200": 21.63,
-      "indicators": {
-        "rsi14": 61.5,
-        "atr_pct": 2.07,
-        "from_52w_high_pct": -3.13,
-        "distribution_days_20": 3,
-        "last_day_chg_pct": -0.99,
-        "last_day_vol_ratio": 1.3,
-        "rs_20d": 6.43,
-        "rs_50d": -0.78,
-        "rs_new_high": false
-      },
-      "assessment": "constructive",
-      "next_earnings": "2026-07-30",
-      "days_to_earnings": 44,
-      "earnings_soon": false,
-      "earnings_in_hold": true,
-      "history": [
-        {
-          "date": "2026-06-08",
-          "close": 24.24,
-          "chg_pct": null,
-          "volume": 5151500
-        },
-        {
-          "date": "2026-06-09",
-          "close": 25.19,
-          "chg_pct": 3.92,
-          "volume": 6320000
-        },
-        {
-          "date": "2026-06-10",
-          "close": 25.38,
-          "chg_pct": 0.75,
-          "volume": 8147900
-        },
-        {
-          "date": "2026-06-11",
-          "close": 25.75,
-          "chg_pct": 1.46,
-          "volume": 17408200
-        },
-        {
-          "date": "2026-06-12",
-          "close": 25.91,
-          "chg_pct": 0.62,
-          "volume": 6563200
-        },
-        {
-          "date": "2026-06-15",
-          "close": 25.35,
-          "chg_pct": -2.16,
-          "volume": 7404300
-        },
-        {
-          "date": "2026-06-16",
-          "close": 25.1,
-          "chg_pct": -0.99,
-          "volume": 6329405
-        }
-      ],
-      "reasons": [
-        "leader: YTD 27.91% \u2265 20.26%",
-        "leading group: Real Estate (12.44%)",
-        "above 20/50/200-day MAs",
-        "pullback setup"
-      ]
-    },
-    {
-      "ticker": "FRT",
-      "name": "Federal Realty Investment Trust",
-      "sector": "Real Estate",
-      "ytd": 25.93,
-      "rs_vs_spy": 2.56,
-      "setup": "pullback",
-      "price": 123.38,
-      "pct_to_20ma": 1.93,
-      "vol_ratio": 0.89,
-      "base_range_pct": 9.6,
-      "stop": 118.62,
-      "stop_pct": 3.86,
-      "target": 137.66,
-      "target_pct": 11.58,
-      "shares": 5,
-      "position_usd": 616.9,
-      "risk_usd": 23.8,
-      "reward_usd": 71.41,
-      "size_note": "",
-      "week_change_pct": 1.05,
-      "sma50": 115.7,
-      "sma200": 103.57,
-      "indicators": {
-        "rsi14": 58.1,
-        "atr_pct": 1.61,
-        "from_52w_high_pct": -1.95,
-        "distribution_days_20": 5,
-        "last_day_chg_pct": -1.07,
-        "last_day_vol_ratio": 0.89,
-        "rs_20d": 5.68,
-        "rs_50d": 1.47,
-        "rs_new_high": false
-      },
-      "assessment": "caution: under distribution (4+ heavy down days/20)",
-      "next_earnings": "2026-07-31",
-      "days_to_earnings": 45,
-      "earnings_soon": false,
-      "earnings_in_hold": true,
-      "history": [
-        {
-          "date": "2026-06-08",
-          "close": 122.1,
-          "chg_pct": null,
-          "volume": 1022300
-        },
-        {
-          "date": "2026-06-09",
-          "close": 124.44,
-          "chg_pct": 1.92,
-          "volume": 1790100
-        },
-        {
-          "date": "2026-06-10",
-          "close": 123.62,
-          "chg_pct": -0.66,
-          "volume": 1109000
-        },
-        {
-          "date": "2026-06-11",
-          "close": 124.72,
-          "chg_pct": 0.89,
-          "volume": 1501900
-        },
-        {
-          "date": "2026-06-12",
-          "close": 125.84,
-          "chg_pct": 0.9,
-          "volume": 804300
-        },
-        {
-          "date": "2026-06-15",
-          "close": 124.71,
-          "chg_pct": -0.9,
-          "volume": 1091400
-        },
-        {
-          "date": "2026-06-16",
-          "close": 123.38,
-          "chg_pct": -1.07,
-          "volume": 861458
-        }
-      ],
-      "reasons": [
-        "leader: YTD 25.93% \u2265 20.26%",
-        "leading group: Real Estate (12.44%)",
+        "leader: YTD 25.89% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
@@ -1285,52 +1284,46 @@
       "ticker": "CDNS",
       "name": "Cadence Design Systems",
       "sector": "Information Technology",
-      "ytd": 24.95,
-      "rs_vs_spy": 2.46,
+      "ytd": 25.52,
+      "rs_vs_spy": 2.91,
       "setup": "pullback",
-      "price": 387.85,
-      "pct_to_20ma": 1.09,
-      "vol_ratio": 0.65,
-      "base_range_pct": 23.1,
-      "stop": 350.93,
-      "stop_pct": 9.52,
-      "target": 498.62,
-      "target_pct": 28.56,
+      "price": 389.6,
+      "pct_to_20ma": 0.87,
+      "vol_ratio": 0.81,
+      "base_range_pct": 18.7,
+      "stop": 352.04,
+      "stop_pct": 9.64,
+      "target": 502.27,
+      "target_pct": 28.92,
       "shares": 0,
       "position_usd": 0.0,
       "risk_usd": 0.0,
       "reward_usd": 0.0,
       "size_note": "1 share exceeds risk limit",
-      "week_change_pct": -1.62,
-      "sma50": 349.55,
-      "sma200": 325.91,
+      "week_change_pct": -0.33,
+      "sma50": 351.76,
+      "sma200": 326.1,
       "indicators": {
-        "rsi14": 55.1,
-        "atr_pct": 4.76,
-        "from_52w_high_pct": -6.85,
+        "rsi14": 55.7,
+        "atr_pct": 4.82,
+        "from_52w_high_pct": -6.43,
         "distribution_days_20": 4,
-        "last_day_chg_pct": -1.69,
-        "last_day_vol_ratio": 0.65,
-        "rs_20d": 10.35,
-        "rs_50d": 21.91,
+        "last_day_chg_pct": 0.45,
+        "last_day_vol_ratio": 0.81,
+        "rs_20d": 14.1,
+        "rs_50d": 24.02,
         "rs_new_high": false
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-27",
-      "days_to_earnings": 41,
+      "days_to_earnings": 40,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 394.24,
-          "chg_pct": null,
-          "volume": 2582900
-        },
-        {
           "date": "2026-06-09",
           "close": 390.9,
-          "chg_pct": -0.85,
+          "chg_pct": null,
           "volume": 2595400
         },
         {
@@ -1361,102 +1354,378 @@
           "date": "2026-06-16",
           "close": 387.85,
           "chg_pct": -1.69,
-          "volume": 1590334
+          "volume": 1650700
+        },
+        {
+          "date": "2026-06-17",
+          "close": 389.6,
+          "chg_pct": 0.45,
+          "volume": 1997027
         }
       ],
       "reasons": [
-        "leader: YTD 24.95% \u2265 20.26%",
-        "leading group: Information Technology (29.36%)",
+        "leader: YTD 25.52% \u2265 17.52%",
+        "leading group: Information Technology (28.92%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
     },
     {
-      "ticker": "NDSN",
-      "name": "Nordson Corporation",
-      "sector": "Industrials",
-      "ytd": 21.89,
-      "rs_vs_spy": 2.16,
+      "ticker": "KIM",
+      "name": "Kimco Realty",
+      "sector": "Real Estate",
+      "ytd": 24.8,
+      "rs_vs_spy": 2.83,
       "setup": "pullback",
-      "price": 292.9,
-      "pct_to_20ma": 2.52,
-      "vol_ratio": 0.58,
-      "base_range_pct": 7.8,
-      "stop": 279.78,
-      "stop_pct": 4.48,
-      "target": 332.27,
-      "target_pct": 13.44,
-      "shares": 1,
-      "position_usd": 292.9,
-      "risk_usd": 13.12,
-      "reward_usd": 39.37,
+      "price": 24.49,
+      "pct_to_20ma": 0.56,
+      "vol_ratio": 0.83,
+      "base_range_pct": 10.8,
+      "stop": 23.38,
+      "stop_pct": 4.52,
+      "target": 27.81,
+      "target_pct": 13.56,
+      "shares": 22,
+      "position_usd": 538.78,
+      "risk_usd": 24.35,
+      "reward_usd": 73.06,
       "size_note": "",
-      "week_change_pct": 3.79,
-      "sma50": 282.33,
-      "sma200": 257.58,
+      "week_change_pct": -2.78,
+      "sma50": 23.69,
+      "sma200": 21.65,
       "indicators": {
-        "rsi14": 53.7,
-        "atr_pct": 2.24,
-        "from_52w_high_pct": -1.83,
+        "rsi14": 56.5,
+        "atr_pct": 2.26,
+        "from_52w_high_pct": -5.48,
         "distribution_days_20": 3,
-        "last_day_chg_pct": 0.23,
-        "last_day_vol_ratio": 0.58,
-        "rs_20d": 4.18,
-        "rs_50d": -2.28,
+        "last_day_chg_pct": -2.43,
+        "last_day_vol_ratio": 0.83,
+        "rs_20d": 5.0,
+        "rs_50d": -2.75,
         "rs_new_high": false
       },
       "assessment": "constructive",
-      "next_earnings": "2026-08-19",
-      "days_to_earnings": 64,
+      "next_earnings": "2026-08-04",
+      "days_to_earnings": 48,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 25.19,
+          "chg_pct": null,
+          "volume": 6320000
+        },
+        {
+          "date": "2026-06-10",
+          "close": 25.38,
+          "chg_pct": 0.75,
+          "volume": 8147900
+        },
+        {
+          "date": "2026-06-11",
+          "close": 25.75,
+          "chg_pct": 1.46,
+          "volume": 17408200
+        },
+        {
+          "date": "2026-06-12",
+          "close": 25.91,
+          "chg_pct": 0.62,
+          "volume": 6563200
+        },
+        {
+          "date": "2026-06-15",
+          "close": 25.35,
+          "chg_pct": -2.16,
+          "volume": 7404300
+        },
+        {
+          "date": "2026-06-16",
+          "close": 25.1,
+          "chg_pct": -0.99,
+          "volume": 8168600
+        },
+        {
+          "date": "2026-06-17",
+          "close": 24.49,
+          "chg_pct": -2.43,
+          "volume": 4079055
+        }
+      ],
+      "reasons": [
+        "leader: YTD 24.8% \u2265 17.52%",
+        "leading group: Real Estate (9.62%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "URI",
+      "name": "United Rentals",
+      "sector": "Industrials",
+      "ytd": 24.67,
+      "rs_vs_spy": 2.82,
+      "setup": "pullback",
+      "price": 1048.97,
+      "pct_to_20ma": 2.22,
+      "vol_ratio": 0.47,
+      "base_range_pct": 17.4,
+      "stop": 983.3,
+      "stop_pct": 6.26,
+      "target": 1245.97,
+      "target_pct": 18.78,
+      "shares": 0,
+      "position_usd": 0.0,
+      "risk_usd": 0.0,
+      "reward_usd": 0.0,
+      "size_note": "1 share exceeds risk limit",
+      "week_change_pct": -4.13,
+      "sma50": 943.49,
+      "sma200": 881.19,
+      "indicators": {
+        "rsi14": 62.3,
+        "atr_pct": 3.13,
+        "from_52w_high_pct": -4.13,
+        "distribution_days_20": 2,
+        "last_day_chg_pct": -1.95,
+        "last_day_vol_ratio": 0.47,
+        "rs_20d": 11.98,
+        "rs_50d": 27.63,
+        "rs_new_high": false
+      },
+      "assessment": "constructive",
+      "next_earnings": "2026-07-22",
+      "days_to_earnings": 35,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 1094.17,
+          "chg_pct": null,
+          "volume": 455400
+        },
+        {
+          "date": "2026-06-10",
+          "close": 1056.35,
+          "chg_pct": -3.46,
+          "volume": 575300
+        },
+        {
+          "date": "2026-06-11",
+          "close": 1068.49,
+          "chg_pct": 1.15,
+          "volume": 720900
+        },
+        {
+          "date": "2026-06-12",
+          "close": 1074.24,
+          "chg_pct": 0.54,
+          "volume": 450500
+        },
+        {
+          "date": "2026-06-15",
+          "close": 1084.01,
+          "chg_pct": 0.91,
+          "volume": 671200
+        },
+        {
+          "date": "2026-06-16",
+          "close": 1069.81,
+          "chg_pct": -1.31,
+          "volume": 434900
+        },
+        {
+          "date": "2026-06-17",
+          "close": 1048.97,
+          "chg_pct": -1.95,
+          "volume": 254755
+        }
+      ],
+      "reasons": [
+        "leader: YTD 24.67% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "ANET",
+      "name": "Arista Networks",
+      "sector": "Information Technology",
+      "ytd": 23.45,
+      "rs_vs_spy": 2.68,
+      "setup": "pullback",
+      "price": 164.93,
+      "pct_to_20ma": 3.31,
+      "vol_ratio": 0.62,
+      "base_range_pct": 24.8,
+      "stop": 147.15,
+      "stop_pct": 10.78,
+      "target": 218.27,
+      "target_pct": 32.34,
+      "shares": 1,
+      "position_usd": 164.93,
+      "risk_usd": 17.78,
+      "reward_usd": 53.34,
+      "size_note": "",
+      "week_change_pct": 8.39,
+      "sma50": 158.04,
+      "sma200": 142.0,
+      "indicators": {
+        "rsi14": 57.0,
+        "atr_pct": 5.39,
+        "from_52w_high_pct": -7.2,
+        "distribution_days_20": 1,
+        "last_day_chg_pct": -1.83,
+        "last_day_vol_ratio": 0.62,
+        "rs_20d": 15.36,
+        "rs_50d": 9.8,
+        "rs_new_high": false
+      },
+      "assessment": "constructive",
+      "next_earnings": "2026-08-04",
+      "days_to_earnings": 48,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 152.16,
+          "chg_pct": null,
+          "volume": 7334100
+        },
+        {
+          "date": "2026-06-10",
+          "close": 151.76,
+          "chg_pct": -0.26,
+          "volume": 6867400
+        },
+        {
+          "date": "2026-06-11",
+          "close": 156.4,
+          "chg_pct": 3.06,
+          "volume": 5326700
+        },
+        {
+          "date": "2026-06-12",
+          "close": 163.24,
+          "chg_pct": 4.37,
+          "volume": 6052500
+        },
+        {
+          "date": "2026-06-15",
+          "close": 169.09,
+          "chg_pct": 3.58,
+          "volume": 7240800
+        },
+        {
+          "date": "2026-06-16",
+          "close": 168.01,
+          "chg_pct": -0.64,
+          "volume": 8090900
+        },
+        {
+          "date": "2026-06-17",
+          "close": 164.93,
+          "chg_pct": -1.83,
+          "volume": 6079980
+        }
+      ],
+      "reasons": [
+        "leader: YTD 23.45% \u2265 17.52%",
+        "leading group: Information Technology (28.92%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "PSA",
+      "name": "Public Storage",
+      "sector": "Real Estate",
+      "ytd": 23.31,
+      "rs_vs_spy": 2.66,
+      "setup": "pullback",
+      "price": 312.58,
+      "pct_to_20ma": 1.42,
+      "vol_ratio": 0.58,
+      "base_range_pct": 10.2,
+      "stop": 298.51,
+      "stop_pct": 4.5,
+      "target": 354.78,
+      "target_pct": 13.5,
+      "shares": 1,
+      "position_usd": 312.58,
+      "risk_usd": 14.07,
+      "reward_usd": 42.2,
+      "size_note": "",
+      "week_change_pct": -2.28,
+      "sma50": 303.09,
+      "sma200": 283.42,
+      "indicators": {
+        "rsi14": 55.8,
+        "atr_pct": 2.25,
+        "from_52w_high_pct": -3.21,
+        "distribution_days_20": 2,
+        "last_day_chg_pct": -2.37,
+        "last_day_vol_ratio": 0.58,
+        "rs_20d": 5.02,
+        "rs_50d": 0.52,
+        "rs_new_high": false
+      },
+      "assessment": "constructive",
+      "next_earnings": null,
+      "days_to_earnings": null,
       "earnings_soon": false,
       "earnings_in_hold": false,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 282.21,
-          "chg_pct": null,
-          "volume": 359200
-        },
-        {
           "date": "2026-06-09",
-          "close": 290.13,
-          "chg_pct": 2.81,
-          "volume": 372000
+          "close": 319.89,
+          "chg_pct": null,
+          "volume": 1292900
         },
         {
           "date": "2026-06-10",
-          "close": 278.57,
-          "chg_pct": -3.98,
-          "volume": 359300
+          "close": 320.89,
+          "chg_pct": 0.31,
+          "volume": 1629200
         },
         {
           "date": "2026-06-11",
-          "close": 285.63,
-          "chg_pct": 2.53,
-          "volume": 459800
+          "close": 321.72,
+          "chg_pct": 0.26,
+          "volume": 1117000
         },
         {
           "date": "2026-06-12",
-          "close": 288.21,
-          "chg_pct": 0.9,
-          "volume": 260600
+          "close": 322.94,
+          "chg_pct": 0.38,
+          "volume": 876100
         },
         {
           "date": "2026-06-15",
-          "close": 292.24,
-          "chg_pct": 1.4,
-          "volume": 815900
+          "close": 320.98,
+          "chg_pct": -0.61,
+          "volume": 1204900
         },
         {
           "date": "2026-06-16",
-          "close": 292.9,
-          "chg_pct": 0.23,
-          "volume": 218799
+          "close": 320.17,
+          "chg_pct": -0.25,
+          "volume": 821800
+        },
+        {
+          "date": "2026-06-17",
+          "close": 312.58,
+          "chg_pct": -2.37,
+          "volume": 564109
         }
       ],
       "reasons": [
-        "leader: YTD 21.89% \u2265 20.26%",
-        "leading group: Industrials (14.16%)",
+        "leader: YTD 23.31% \u2265 17.52%",
+        "leading group: Real Estate (9.62%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
@@ -1465,52 +1734,46 @@
       "ticker": "LIN",
       "name": "Linde plc",
       "sector": "Materials",
-      "ytd": 21.54,
-      "rs_vs_spy": 2.13,
+      "ytd": 21.0,
+      "rs_vs_spy": 2.4,
       "setup": "pullback",
-      "price": 518.17,
-      "pct_to_20ma": 1.89,
-      "vol_ratio": 1.16,
+      "price": 515.85,
+      "pct_to_20ma": 1.32,
+      "vol_ratio": 0.95,
       "base_range_pct": 5.9,
-      "stop": 496.51,
-      "stop_pct": 4.18,
-      "target": 583.15,
-      "target_pct": 12.54,
+      "stop": 494.39,
+      "stop_pct": 4.16,
+      "target": 580.23,
+      "target_pct": 12.48,
       "shares": 1,
-      "position_usd": 518.17,
-      "risk_usd": 21.66,
-      "reward_usd": 64.98,
+      "position_usd": 515.85,
+      "risk_usd": 21.46,
+      "reward_usd": 64.38,
       "size_note": "",
-      "week_change_pct": 3.24,
-      "sma50": 503.94,
-      "sma200": 464.16,
+      "week_change_pct": 0.05,
+      "sma50": 504.39,
+      "sma200": 464.38,
       "indicators": {
-        "rsi14": 58.3,
-        "atr_pct": 2.09,
-        "from_52w_high_pct": -1.03,
+        "rsi14": 61.4,
+        "atr_pct": 2.08,
+        "from_52w_high_pct": -1.47,
         "distribution_days_20": 6,
-        "last_day_chg_pct": -0.63,
-        "last_day_vol_ratio": 1.16,
-        "rs_20d": 0.17,
-        "rs_50d": -8.61,
+        "last_day_chg_pct": -0.45,
+        "last_day_vol_ratio": 0.95,
+        "rs_20d": 1.26,
+        "rs_50d": -6.91,
         "rs_new_high": false
       },
       "assessment": "caution: under distribution (4+ heavy down days/20)",
       "next_earnings": "2026-07-31",
-      "days_to_earnings": 45,
+      "days_to_earnings": 44,
       "earnings_soon": false,
       "earnings_in_hold": true,
       "history": [
         {
-          "date": "2026-06-08",
-          "close": 501.92,
-          "chg_pct": null,
-          "volume": 1890500
-        },
-        {
           "date": "2026-06-09",
           "close": 515.59,
-          "chg_pct": 2.72,
+          "chg_pct": null,
           "volume": 2956600
         },
         {
@@ -1541,12 +1804,468 @@
           "date": "2026-06-16",
           "close": 518.17,
           "chg_pct": -0.63,
-          "volume": 2490416
+          "volume": 2490600
+        },
+        {
+          "date": "2026-06-17",
+          "close": 515.85,
+          "chg_pct": -0.45,
+          "volume": 2042895
         }
       ],
       "reasons": [
-        "leader: YTD 21.54% \u2265 20.26%",
-        "leading group: Materials (14.82%)",
+        "leader: YTD 21.0% \u2265 17.52%",
+        "leading group: Materials (13.29%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "NDSN",
+      "name": "Nordson Corporation",
+      "sector": "Industrials",
+      "ytd": 20.78,
+      "rs_vs_spy": 2.37,
+      "setup": "pullback",
+      "price": 290.22,
+      "pct_to_20ma": 1.25,
+      "vol_ratio": 1.36,
+      "base_range_pct": 6.0,
+      "stop": 276.58,
+      "stop_pct": 4.7,
+      "target": 331.14,
+      "target_pct": 14.1,
+      "shares": 1,
+      "position_usd": 290.22,
+      "risk_usd": 13.64,
+      "reward_usd": 40.92,
+      "size_note": "",
+      "week_change_pct": 0.03,
+      "sma50": 282.83,
+      "sma200": 257.92,
+      "indicators": {
+        "rsi14": 51.8,
+        "atr_pct": 2.35,
+        "from_52w_high_pct": -2.73,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -0.91,
+        "last_day_vol_ratio": 1.36,
+        "rs_20d": 5.8,
+        "rs_50d": -2.74,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-08-19",
+      "days_to_earnings": 63,
+      "earnings_soon": false,
+      "earnings_in_hold": false,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 290.13,
+          "chg_pct": null,
+          "volume": 372000
+        },
+        {
+          "date": "2026-06-10",
+          "close": 278.57,
+          "chg_pct": -3.98,
+          "volume": 359300
+        },
+        {
+          "date": "2026-06-11",
+          "close": 285.63,
+          "chg_pct": 2.53,
+          "volume": 459800
+        },
+        {
+          "date": "2026-06-12",
+          "close": 288.21,
+          "chg_pct": 0.9,
+          "volume": 260600
+        },
+        {
+          "date": "2026-06-15",
+          "close": 292.24,
+          "chg_pct": 1.4,
+          "volume": 815900
+        },
+        {
+          "date": "2026-06-16",
+          "close": 292.9,
+          "chg_pct": 0.23,
+          "volume": 241900
+        },
+        {
+          "date": "2026-06-17",
+          "close": 290.22,
+          "chg_pct": -0.91,
+          "volume": 517561
+        }
+      ],
+      "reasons": [
+        "leader: YTD 20.78% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "DAL",
+      "name": "Delta Air Lines",
+      "sector": "Industrials",
+      "ytd": 19.74,
+      "rs_vs_spy": 2.25,
+      "setup": "pullback",
+      "price": 82.25,
+      "pct_to_20ma": 2.72,
+      "vol_ratio": 0.94,
+      "base_range_pct": 13.4,
+      "stop": 76.66,
+      "stop_pct": 6.8,
+      "target": 99.03,
+      "target_pct": 20.4,
+      "shares": 4,
+      "position_usd": 329.0,
+      "risk_usd": 22.37,
+      "reward_usd": 67.12,
+      "size_note": "",
+      "week_change_pct": 1.33,
+      "sma50": 73.8,
+      "sma200": 66.28,
+      "indicators": {
+        "rsi14": 49.5,
+        "atr_pct": 3.4,
+        "from_52w_high_pct": -2.16,
+        "distribution_days_20": 1,
+        "last_day_chg_pct": -1.07,
+        "last_day_vol_ratio": 0.94,
+        "rs_20d": 20.2,
+        "rs_50d": 11.81,
+        "rs_new_high": false
+      },
+      "assessment": "constructive",
+      "next_earnings": "2026-07-09",
+      "days_to_earnings": 22,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 81.17,
+          "chg_pct": null,
+          "volume": 7695300
+        },
+        {
+          "date": "2026-06-10",
+          "close": 76.47,
+          "chg_pct": -5.79,
+          "volume": 6647300
+        },
+        {
+          "date": "2026-06-11",
+          "close": 81.83,
+          "chg_pct": 7.01,
+          "volume": 7975700
+        },
+        {
+          "date": "2026-06-12",
+          "close": 83.06,
+          "chg_pct": 1.5,
+          "volume": 6867900
+        },
+        {
+          "date": "2026-06-15",
+          "close": 84.07,
+          "chg_pct": 1.22,
+          "volume": 9785300
+        },
+        {
+          "date": "2026-06-16",
+          "close": 83.14,
+          "chg_pct": -1.11,
+          "volume": 10288300
+        },
+        {
+          "date": "2026-06-17",
+          "close": 82.25,
+          "chg_pct": -1.07,
+          "volume": 7780783
+        }
+      ],
+      "reasons": [
+        "leader: YTD 19.74% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "TT",
+      "name": "Trane Technologies",
+      "sector": "Industrials",
+      "ytd": 19.28,
+      "rs_vs_spy": 2.2,
+      "setup": "pullback",
+      "price": 472.51,
+      "pct_to_20ma": 3.02,
+      "vol_ratio": 0.64,
+      "base_range_pct": 6.4,
+      "stop": 445.39,
+      "stop_pct": 5.74,
+      "target": 553.88,
+      "target_pct": 17.22,
+      "shares": 0,
+      "position_usd": 0.0,
+      "risk_usd": 0.0,
+      "reward_usd": 0.0,
+      "size_note": "1 share exceeds risk limit",
+      "week_change_pct": 0.37,
+      "sma50": 466.98,
+      "sma200": 428.75,
+      "indicators": {
+        "rsi14": 60.9,
+        "atr_pct": 2.87,
+        "from_52w_high_pct": -3.85,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -0.6,
+        "last_day_vol_ratio": 0.64,
+        "rs_20d": 4.68,
+        "rs_50d": -2.43,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-07-29",
+      "days_to_earnings": 42,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 470.76,
+          "chg_pct": null,
+          "volume": 1602500
+        },
+        {
+          "date": "2026-06-10",
+          "close": 449.12,
+          "chg_pct": -4.6,
+          "volume": 1395100
+        },
+        {
+          "date": "2026-06-11",
+          "close": 460.14,
+          "chg_pct": 2.45,
+          "volume": 1947000
+        },
+        {
+          "date": "2026-06-12",
+          "close": 458.25,
+          "chg_pct": -0.41,
+          "volume": 1232800
+        },
+        {
+          "date": "2026-06-15",
+          "close": 472.54,
+          "chg_pct": 3.12,
+          "volume": 1334000
+        },
+        {
+          "date": "2026-06-16",
+          "close": 475.34,
+          "chg_pct": 0.59,
+          "volume": 1099000
+        },
+        {
+          "date": "2026-06-17",
+          "close": 472.51,
+          "chg_pct": -0.6,
+          "volume": 860292
+        }
+      ],
+      "reasons": [
+        "leader: YTD 19.28% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "JCI",
+      "name": "Johnson Controls",
+      "sector": "Industrials",
+      "ytd": 18.11,
+      "rs_vs_spy": 2.07,
+      "setup": "pullback",
+      "price": 143.62,
+      "pct_to_20ma": 1.77,
+      "vol_ratio": 1.3,
+      "base_range_pct": 10.3,
+      "stop": 133.25,
+      "stop_pct": 7.22,
+      "target": 174.73,
+      "target_pct": 21.66,
+      "shares": 2,
+      "position_usd": 287.24,
+      "risk_usd": 20.74,
+      "reward_usd": 62.22,
+      "size_note": "",
+      "week_change_pct": -2.53,
+      "sma50": 141.1,
+      "sma200": 124.87,
+      "indicators": {
+        "rsi14": 59.5,
+        "atr_pct": 3.61,
+        "from_52w_high_pct": -2.53,
+        "distribution_days_20": 4,
+        "last_day_chg_pct": -1.07,
+        "last_day_vol_ratio": 1.3,
+        "rs_20d": 5.31,
+        "rs_50d": -3.77,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-07-28",
+      "days_to_earnings": 41,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 147.34,
+          "chg_pct": null,
+          "volume": 5465300
+        },
+        {
+          "date": "2026-06-10",
+          "close": 138.98,
+          "chg_pct": -5.68,
+          "volume": 5715300
+        },
+        {
+          "date": "2026-06-11",
+          "close": 143.61,
+          "chg_pct": 3.34,
+          "volume": 3552200
+        },
+        {
+          "date": "2026-06-12",
+          "close": 144.56,
+          "chg_pct": 0.66,
+          "volume": 2809300
+        },
+        {
+          "date": "2026-06-15",
+          "close": 146.06,
+          "chg_pct": 1.04,
+          "volume": 3602500
+        },
+        {
+          "date": "2026-06-16",
+          "close": 145.17,
+          "chg_pct": -0.61,
+          "volume": 3563500
+        },
+        {
+          "date": "2026-06-17",
+          "close": 143.62,
+          "chg_pct": -1.07,
+          "volume": 4731123
+        }
+      ],
+      "reasons": [
+        "leader: YTD 18.11% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
+        "above 20/50/200-day MAs",
+        "pullback setup"
+      ]
+    },
+    {
+      "ticker": "HON",
+      "name": "Honeywell",
+      "sector": "Industrials",
+      "ytd": 17.93,
+      "rs_vs_spy": 2.05,
+      "setup": "pullback",
+      "price": 228.61,
+      "pct_to_20ma": 1.87,
+      "vol_ratio": 0.99,
+      "base_range_pct": 15.5,
+      "stop": 212.38,
+      "stop_pct": 7.1,
+      "target": 277.3,
+      "target_pct": 21.3,
+      "shares": 1,
+      "position_usd": 228.61,
+      "risk_usd": 16.23,
+      "reward_usd": 48.69,
+      "size_note": "",
+      "week_change_pct": 5.99,
+      "sma50": 221.37,
+      "sma200": 211.33,
+      "indicators": {
+        "rsi14": 46.8,
+        "atr_pct": 3.55,
+        "from_52w_high_pct": -7.33,
+        "distribution_days_20": 6,
+        "last_day_chg_pct": -0.38,
+        "last_day_vol_ratio": 0.99,
+        "rs_20d": 4.25,
+        "rs_50d": -8.64,
+        "rs_new_high": false
+      },
+      "assessment": "caution: under distribution (4+ heavy down days/20)",
+      "next_earnings": "2026-07-23",
+      "days_to_earnings": 36,
+      "earnings_soon": false,
+      "earnings_in_hold": true,
+      "history": [
+        {
+          "date": "2026-06-09",
+          "close": 215.7,
+          "chg_pct": null,
+          "volume": 4517400
+        },
+        {
+          "date": "2026-06-10",
+          "close": 205.88,
+          "chg_pct": -4.55,
+          "volume": 4649200
+        },
+        {
+          "date": "2026-06-11",
+          "close": 219.12,
+          "chg_pct": 6.43,
+          "volume": 6648700
+        },
+        {
+          "date": "2026-06-12",
+          "close": 220.31,
+          "chg_pct": 0.54,
+          "volume": 4660000
+        },
+        {
+          "date": "2026-06-15",
+          "close": 227.41,
+          "chg_pct": 3.22,
+          "volume": 8337200
+        },
+        {
+          "date": "2026-06-16",
+          "close": 229.49,
+          "chg_pct": 0.91,
+          "volume": 4167000
+        },
+        {
+          "date": "2026-06-17",
+          "close": 228.61,
+          "chg_pct": -0.38,
+          "volume": 4367709
+        }
+      ],
+      "reasons": [
+        "leader: YTD 17.93% \u2265 17.52%",
+        "leading group: Industrials (14.0%)",
         "above 20/50/200-day MAs",
         "pullback setup"
       ]
