@@ -26,7 +26,9 @@ export async function POST(req: Request) {
 
   const code = await createOtp(email);
 
-  // In production the code is delivered by email/SMS and never returned here.
-  const isDev = process.env.NODE_ENV !== "production";
-  return NextResponse.json({ ok: true, devCode: isDev ? code : undefined });
+  // The code is returned to the client only in development OR when PREVIEW_LOGIN=1
+  // is set (for hosted previews with no email sender wired up yet). NEVER enable
+  // PREVIEW_LOGIN for a real, public launch — it exposes login codes.
+  const showCode = process.env.NODE_ENV !== "production" || process.env.PREVIEW_LOGIN === "1";
+  return NextResponse.json({ ok: true, devCode: showCode ? code : undefined });
 }
