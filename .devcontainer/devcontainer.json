@@ -1,0 +1,25 @@
+{
+  "name": "Velvet preview",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/time-punch-form",
+
+  // One-time setup: install deps, then (after Postgres is up) create the schema
+  // and seed demo members + an admin account.
+  "postCreateCommand": "cd velvet && npm install && sleep 5 && npm run db:push && npm run db:seed",
+
+  // Start the app automatically on each launch (backgrounded). Open the forwarded
+  // port 3000 to use it. Fallback: run `npm run dev` in the velvet/ folder.
+  "postStartCommand": "cd velvet && (nohup npm run dev > /tmp/velvet-dev.log 2>&1 &)",
+
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Velvet app", "onAutoForward": "notify" }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["Prisma.prisma"]
+    }
+  }
+}

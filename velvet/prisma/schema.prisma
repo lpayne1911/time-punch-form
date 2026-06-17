@@ -1,0 +1,403 @@
+// Prisma schema for Velvet — compliant, privacy-first dating & community app.
+// NOTE: SQLite is used for zero-config local dev. In production this maps to
+// PostgreSQL (see blueprint §35). SQLite has no scalar list type, so tag
+// arrays are stored as JSON strings and (de)serialized in src/lib/tags.ts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Postgres in all environments (blueprint §35). Set DATABASE_URL:
+  //  - Vercel: add Vercel Postgres storage, then set DATABASE_URL to the
+  //    POSTGRES_URL_NON_POOLING value (works for both `db push` and runtime).
+  //  - Codespaces/local: provided by the dev container's Postgres service.
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  // Age & consent gates — enforced in onboarding before any browsing (blueprint §7, §8)
+  ageConfirmed  Boolean  @default(false) // self-attested 18+ at age gate
+  dobYear       Int? // coarse DOB for age assurance; we never store full DOB
+  // Versioned acceptances (blueprint §17 community standards / consent pledge)
+  consentPledgeVersion   String?
+  consentPledgeAcceptedAt DateTime?
+  standardsVersion        String?
+  standardsAcceptedAt     DateTime?
+  // Verification (blueprint §17). Basic tier in MVP; ID/photo verification later.
+  verification  String   @default("UNVERIFIED") // UNVERIFIED | EMAIL_VERIFIED | PHOTO_VERIFIED | ID_VERIFIED
+  ageAssured    Boolean  @default(false) // provider-backed age assurance (stronger than the self-attested age gate)
+  status        String   @default("ACTIVE") // ACTIVE | PAUSED | SUSPENDED | DELETED
+  // Trust & safety (blueprint §17). Role gates the admin/moderation dashboard.
+  role          String   @default("USER") // USER | MODERATOR | ADMIN
+  isHost        Boolean  @default(false) // approved to create events (blueprint §27)
+  suspendedUntil DateTime? // set on temporary suspension; cleared on reinstatement
+  warningCount  Int      @default(0)
+  createdAt     DateTime @default(now())
+  deletedAt     DateTime?
+
+  profile       Profile?
+  photos        Photo[]
+  subscription  Subscription?
+  sessions      Session[]
+  hostApplication   HostApplication?
+  events            Event[]            @relation("Hosted")
+  rsvps             Rsvp[]
+  circlesCreated    Circle[]           @relation("CircleCreator")
+  circleMemberships CircleMembership[]
+  verificationChecks VerificationCheck[]
+  purchases         Purchase[]
+  credits           Credit[]
+  boosts            Boost[]
+  likesSent     Like[]    @relation("LikesSent")
+  likesReceived Like[]    @relation("LikesReceived")
+  messages      Message[]
+  blocksMade    Block[]   @relation("Blocker")
+  blocksAgainst Block[]   @relation("Blocked")
+  reportsMade   Report[]  @relation("Reporter")
+  reportsAgainst Report[] @relation("Reported")
+  auditActions  AuditLog[] @relation("Actor")
+  auditTargets  AuditLog[] @relation("Target")
+}
+
+// Profile photos go through a moderation pipeline (blueprint §17, §18): every
+// upload starts PENDING, an automated screen flags risk, and a human approves or
+// rejects in the admin dashboard. Photos are only ever served to the owner, to
+// a confirmed mutual match (when APPROVED), or to a moderator — never publicly.
+model Photo {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  filename        String   // stored under /uploads (gitignored); never web-indexed
+  mime            String
+  status          String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  autoFlagged     Boolean  @default(false)
+  autoFlagReason  String?
+  moderationNote  String?
+  reviewedById    String?
+  reviewedAt      DateTime?
+  createdAt       DateTime @default(now())
+
+  @@index([status])
+  @@index([userId])
+}
+
+// Immutable record of every moderator/admin action (blueprint §17 incident
+// tracking, §19 admin audit logs, §36 audit logs). Append-only by convention.
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorId      String
+  actor        User     @relation("Actor", fields: [actorId], references: [id], onDelete: Cascade)
+  targetUserId String?
+  target       User?    @relation("Target", fields: [targetUserId], references: [id], onDelete: SetNull)
+  action       String   // RESOLVE_REPORT | WARN | SUSPEND | BAN | REINSTATE | APPROVE_PHOTO | REJECT_PHOTO
+  detail       String?
+  createdAt    DateTime @default(now())
+
+  @@index([targetUserId])
+  @@index([createdAt])
+}
+
+model Session {
+  token     String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// Short-lived one-time codes for passwordless email auth (blueprint §7 auth/OTP).
+// In dev the code is surfaced to the client; in prod it is sent via an email/SMS
+// provider and NEVER returned in the API response.
+model OtpCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  consumed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model Profile {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  displayName      String   // pseudonym allowed (blueprint §9)
+  age              Int
+  location         String   // general city/region only — never precise (blueprint §19)
+
+  relationshipStatus String?
+  // Controlled-vocabulary tag groups, stored as JSON arrays (non-explicit, blueprint §13)
+  intentions       String   @default("[]") // relationship intention tags
+  communicationStyle String  @default("[]")
+  interests        String   @default("[]") // lifestyle interest tags
+  boundaries       String   @default("[]")
+  lookingFor       String   @default("[]")
+  values           String   @default("[]")
+  experienceLevel  String?  // newcomer | exploring | experienced
+
+  // Free-text prompt answers (moderated). Kept short; no explicit content.
+  promptCommunication String?
+  promptBoundary      String?
+  promptExploring     String?
+
+  // Privacy is private-by-default (blueprint §4, §19)
+  visibility       String   @default("VERIFIED_ONLY") // PUBLIC_MEMBERS | VERIFIED_ONLY | MATCHES_ONLY
+  incognito        Boolean  @default(false) // premium discretion feature
+  hideFromDiscovery Boolean @default(false) // premium: only reachable via direct link / existing matches
+  discoverVerifiedOnly Boolean @default(false) // premium filter: show only verified members
+  travelLocation   String?  // premium travel mode: browse as if in another city
+  travelExpiresAt  DateTime? // set by an à-la-carte travel pass (temporary, non-premium)
+  photoBlurUntilMatch Boolean @default(true)
+  discreetNotifications Boolean @default(true)
+
+  completed        Boolean  @default(false)
+  updatedAt        DateTime @updatedAt
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  fromUserId String
+  toUserId   String
+  from      User     @relation("LikesSent", fields: [fromUserId], references: [id], onDelete: Cascade)
+  to        User     @relation("LikesReceived", fields: [toUserId], references: [id], onDelete: Cascade)
+  superLike Boolean  @default(false) // à-la-carte "thoughtful intro" — surfaces higher, still needs mutual consent
+  createdAt DateTime @default(now())
+
+  @@unique([fromUserId, toUserId])
+  @@index([toUserId])
+}
+
+// À-la-carte purchases (blueprint §25). Consumable, one-time items that improve
+// visibility / discovery / convenience — NEVER access to a person or content.
+// Like subscriptions, real iOS/Android purchases go through store billing; "dev"
+// is the local simulation (blueprint §33).
+model Purchase {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind       String   // BOOST | SUPER_LIKE | TRAVEL_PASS
+  quantity   Int
+  priceCents Int
+  provider   String   @default("dev")
+  externalId String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+}
+
+// Current consumable balance per item kind.
+model Credit {
+  id        String @id @default(cuid())
+  userId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String
+  remaining Int    @default(0)
+
+  @@unique([userId, kind])
+}
+
+// An active profile boost window (raises discovery ranking for others, briefly).
+model Boost {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expiresAt])
+}
+
+// A Match exists only on MUTUAL interest. Messaging is gated on this (blueprint §11).
+model Match {
+  id        String   @id @default(cuid())
+  userAId   String   // always the lexicographically smaller id for uniqueness
+  userBId   String
+  createdAt DateTime @default(now())
+  messages  Message[]
+
+  @@unique([userAId, userBId])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  matchId   String
+  match     Match    @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  body      String
+  flagged   Boolean  @default(false) // set by message moderation (blueprint §11)
+  quarantined Boolean @default(false) // high-severity: withheld from recipient until a moderator clears it
+  createdAt DateTime @default(now())
+
+  @@index([matchId])
+}
+
+model Block {
+  id        String   @id @default(cuid())
+  blockerId String
+  blockedId String
+  blocker   User     @relation("Blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked   User     @relation("Blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([blockerId, blockedId])
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  reporterId String
+  reportedId String
+  reporter   User     @relation("Reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reported   User     @relation("Reported", fields: [reportedId], references: [id], onDelete: Cascade)
+  category   String   // see src/lib/safety.ts REPORT_CATEGORIES (blueprint §17)
+  detail     String?
+  status     String   @default("OPEN") // OPEN | REVIEWING | ACTIONED | DISMISSED
+  resolvedById String?
+  resolvedAt DateTime?
+  resolution String?  // free-text moderator note on how it was handled
+  createdAt  DateTime @default(now())
+
+  @@index([status])
+}
+
+// Hosts are verified before they can publish events (blueprint §27). An approved
+// application sets User.isHost. Hosts can earn from approved event types only —
+// never explicit services, content sales, or off-platform solicitation.
+model HostApplication {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio          String
+  experience   String?
+  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  reviewedById String?
+  reviewedAt   DateTime?
+  note         String?
+  createdAt    DateTime @default(now())
+}
+
+// Events are reviewed and approved BEFORE they are publicly listed (blueprint
+// §12, §26). Only approved, non-explicit, lawful categories are permitted.
+// Paid tickets are real-world goods settled via an external processor (Stripe),
+// kept separate from in-app digital subscriptions (blueprint §33).
+model Event {
+  id             String   @id @default(cuid())
+  hostId         String
+  host           User     @relation("Hosted", fields: [hostId], references: [id], onDelete: Cascade)
+  title          String
+  description    String
+  category       String   // see src/lib/events.ts EVENT_CATEGORIES
+  format         String   @default("IN_PERSON") // IN_PERSON | ONLINE
+  location       String   // general venue/city or "Online"; no precise address pre-RSVP
+  startsAt       DateTime
+  capacity       Int      @default(20)
+  priceCents     Int      @default(0) // 0 = free; >0 = paid ticket via external processor
+  status         String   @default("PENDING") // DRAFT | PENDING | APPROVED | REJECTED | CANCELED
+  reviewedById   String?
+  reviewedAt     DateTime?
+  moderationNote String?
+  canceledAt     DateTime?
+  createdAt      DateTime @default(now())
+
+  rsvps          Rsvp[]
+
+  @@index([status])
+  @@index([startsAt])
+}
+
+model Rsvp {
+  id        String   @id @default(cuid())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String   @default("RESERVED") // RESERVED | WAITLIST | CANCELED
+  createdAt DateTime @default(now())
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+}
+
+// Private interest circles (blueprint §12). Moderated, approval-gated, and
+// reserved for the Private Circle tier. This MVP models the gated directory +
+// membership requests; a moderated discussion feed is a later addition.
+model Circle {
+  id           String   @id @default(cuid())
+  name         String
+  description  String
+  topic        String
+  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  createdById  String
+  createdBy    User     @relation("CircleCreator", fields: [createdById], references: [id], onDelete: Cascade)
+  reviewedById String?
+  reviewedAt   DateTime?
+  createdAt    DateTime @default(now())
+
+  memberships  CircleMembership[]
+
+  @@index([status])
+}
+
+model CircleMembership {
+  id        String   @id @default(cuid())
+  circleId  String
+  circle    Circle   @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    String   @default("PENDING") // PENDING | APPROVED | REMOVED
+  createdAt DateTime @default(now())
+
+  @@unique([circleId, userId])
+}
+
+// Provider-backed verification (blueprint §17). A check represents one attempt at
+// a hosted verification flow (selfie liveness or government-ID). On real devices
+// `provider` is persona/veriff/stripe and the result arrives via a signed
+// webhook; "dev" is the local simulation. We store only the decision and a
+// tokenized externalId — never raw ID images or document numbers (blueprint §19,
+// §40 sensitive data). The resulting trust level lives on User.verification.
+model VerificationCheck {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type         String   // PHOTO_LIVENESS | ID_DOCUMENT
+  status       String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  provider     String   @default("dev") // dev | persona | veriff | stripe
+  externalId   String? // provider session/verification id (tokenized reference)
+  resultLevel  String? // PHOTO_VERIFIED | ID_VERIFIED (granted on approval)
+  ageVerified  Boolean  @default(false) // true when an ID check confirmed 18+
+  reviewedById String? // set when a moderator manually decides
+  reviewedAt   DateTime?
+  note         String?
+  createdAt    DateTime @default(now())
+
+  @@index([status])
+  @@index([userId])
+}
+
+// Subscription / entitlement record (blueprint §21-§33). Monetization is built
+// around privacy, discovery, and convenience — NEVER access to people or content.
+// `provider` records WHERE billing happens: on real iOS/Android this is APPLE /
+// GOOGLE store billing (via RevenueCat); "dev" is the local simulated purchase
+// used by this web MVP. We never route around store billing for digital goods.
+model Subscription {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tier                String   @default("FREE") // FREE | PLUS | PREMIUM | PRIVATE_CIRCLE
+  interval            String   @default("MONTH") // MONTH | YEAR
+  status              String   @default("ACTIVE") // ACTIVE | CANCELED | EXPIRED
+  provider            String   @default("dev") // dev | apple | google | stripe
+  externalId          String? // store transaction / RevenueCat entitlement id
+  currentPeriodEnd    DateTime?
+  cancelAtPeriodEnd   Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
