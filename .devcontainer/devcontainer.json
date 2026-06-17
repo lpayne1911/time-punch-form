@@ -1,20 +1,15 @@
 {
   "name": "Velvet preview",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/time-punch-form",
 
-  // DATABASE_URL is normally in velvet/.env (gitignored). Provide it here so the
-  // codespace can create/seed the local SQLite DB with no extra setup.
-  "containerEnv": {
-    "DATABASE_URL": "file:./dev.db"
-  },
+  // One-time setup: install deps, then (after Postgres is up) create the schema
+  // and seed demo members + an admin account.
+  "postCreateCommand": "cd velvet && npm install && sleep 5 && npm run db:push && npm run db:seed",
 
-  // One-time setup when the codespace is created: install deps, create the DB,
-  // and seed wholesome demo members + an admin account.
-  "postCreateCommand": "cd velvet && npm install && npm run db:push && npm run db:seed",
-
-  // Start the app automatically on each launch (backgrounded so it doesn't block).
-  // Open the forwarded port 3000 to use the app. Fallback: run `npm run dev` in
-  // the velvet/ folder from the terminal.
+  // Start the app automatically on each launch (backgrounded). Open the forwarded
+  // port 3000 to use it. Fallback: run `npm run dev` in the velvet/ folder.
   "postStartCommand": "cd velvet && (nohup npm run dev > /tmp/velvet-dev.log 2>&1 &)",
 
   "forwardPorts": [3000],

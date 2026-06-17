@@ -1,0 +1,24 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:20
+    command: sleep infinity
+    volumes:
+      - ../..:/workspaces:cached
+    environment:
+      # Local Postgres for the codespace (matches the prod Postgres provider).
+      DATABASE_URL: postgresql://velvet:velvet@db:5432/velvet?schema=public
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: velvet
+      POSTGRES_PASSWORD: velvet
+      POSTGRES_DB: velvet
+    volumes:
+      - velvet-pgdata:/var/lib/postgresql/data
+
+volumes:
+  velvet-pgdata:

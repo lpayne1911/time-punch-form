@@ -8,10 +8,11 @@ generator client {
 }
 
 datasource db {
-  // Dev uses SQLite via DATABASE_URL (file:./dev.db). For production, switch
-  // `provider` to "postgresql" and point DATABASE_URL at your Postgres instance
-  // (blueprint §35) — no other schema changes are required for the swap.
-  provider = "sqlite"
+  // Postgres in all environments (blueprint §35). Set DATABASE_URL:
+  //  - Vercel: add Vercel Postgres storage, then set DATABASE_URL to the
+  //    POSTGRES_URL_NON_POOLING value (works for both `db push` and runtime).
+  //  - Codespaces/local: provided by the dev container's Postgres service.
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
