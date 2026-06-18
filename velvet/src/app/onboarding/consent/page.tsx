@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { CONSENT_PLEDGE } from "@/lib/policy";
 import { acceptConsent } from "../actions";
+import OnboardingProgress from "@/components/OnboardingProgress";
 
 export default async function ConsentPledge() {
   const user = await getCurrentUser();
@@ -12,7 +13,10 @@ export default async function ConsentPledge() {
   return (
     <div className="shell" style={{ maxWidth: 540 }}>
       <div className="brand">VELVET<span className="dot">.</span></div>
-      <div className="card" style={{ marginTop: 32 }}>
+      <div style={{ marginTop: 20 }}>
+        <OnboardingProgress current={2} />
+      </div>
+      <div className="card" style={{ marginTop: 18 }}>
         <h1 style={{ fontSize: "1.5rem" }}>{CONSENT_PLEDGE.title}</h1>
         <p className="muted">{CONSENT_PLEDGE.intro}</p>
         <ul className="sans stack" style={{ paddingLeft: 18 }}>

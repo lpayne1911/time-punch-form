@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { confirmAge } from "../actions";
+import OnboardingProgress from "@/components/OnboardingProgress";
 
 export default async function AgeGate({
   searchParams,
@@ -15,12 +16,20 @@ export default async function AgeGate({
   return (
     <div className="shell" style={{ maxWidth: 480 }}>
       <div className="brand">VELVET<span className="dot">.</span></div>
-      <div className="card" style={{ marginTop: 32 }}>
+      <div style={{ marginTop: 20 }}>
+        <OnboardingProgress current={1} />
+      </div>
+      <div className="card" style={{ marginTop: 18 }}>
         <h1 style={{ fontSize: "1.5rem" }}>Adults only</h1>
         <p className="muted">
           Velvet is exclusively for adults 18 and over (or the age of majority where you live).
           Please confirm your age to continue.
         </p>
+        <div className="notice small">
+          <strong>Why we ask:</strong> Velvet is an adults-only community, so everyone confirms
+          their age before joining. We store only your birth <em>year</em> for age assurance —
+          never your full date of birth — and it&apos;s never shown on your profile.
+        </div>
         {error && (
           <div className="notice danger small sans">
             You must be 18 or older to use Velvet.

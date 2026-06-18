@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { randomBytes, randomInt } from "crypto";
 import { prisma } from "./db";
+import { parseTags } from "./tags";
 
 const SESSION_COOKIE = "velvet_session";
 const SESSION_TTL_DAYS = 30;
@@ -85,18 +86,32 @@ export async function getCurrentUser() {
 }
 
 /**
+ * A profile has "basics" once it has a display name and at least one relationship
+ * intention. This is the minimum to start browsing a limited Discover; the full
+ * profile (which sets `completed`) is what makes a member discoverable to others
+ * and unlocks messaging.
+ */
+export function hasBasics(
+  profile: { displayName: string | null; intentions: string | null } | null,
+): boolean {
+  if (!profile) return false;
+  return Boolean(profile.displayName) && parseTags(profile.intentions).length > 0;
+}
+
+/**
  * Determines where a user should be in the onboarding funnel (blueprint §7, §8).
- * Each gate must be cleared in order before browsing is allowed.
+ * Each gate must be cleared in order. Browsing is allowed once the basics step
+ * is done — the full profile is encouraged afterwards, not required up front.
  */
 export function onboardingNext(user: {
   ageConfirmed: boolean;
   consentPledgeAcceptedAt: Date | null;
   standardsAcceptedAt: Date | null;
-  profile: { completed: boolean } | null;
+  profile: { displayName: string | null; intentions: string | null } | null;
 }): string | null {
   if (!user.ageConfirmed) return "/onboarding/age";
   if (!user.consentPledgeAcceptedAt) return "/onboarding/consent";
   if (!user.standardsAcceptedAt) return "/onboarding/standards";
-  if (!user.profile || !user.profile.completed) return "/onboarding/profile";
-  return null; // fully onboarded
+  if (!hasBasics(user.profile)) return "/onboarding/basics";
+  return null; // cleared to browse
 }

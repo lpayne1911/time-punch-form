@@ -61,7 +61,41 @@ export async function acceptStandards() {
     where: { id: user.id },
     data: { standardsVersion: STANDARDS_VERSION, standardsAcceptedAt: new Date() },
   });
-  redirect("/onboarding/profile");
+  redirect("/onboarding/basics");
+}
+
+/**
+ * Minimal "basics" step: name + approximate location + relationship intention.
+ * This is enough to start browsing a limited Discover; the full profile
+ * (saveProfile) is completed afterwards to become discoverable and unlock
+ * messaging. Age is derived from the birth year captured at the age gate — we
+ * never ask for it twice.
+ */
+export async function saveBasics(formData: FormData) {
+  const user = await requireUser();
+  const displayName = String(formData.get("displayName") ?? "").trim().slice(0, 40);
+  const location = String(formData.get("location") ?? "").trim().slice(0, 60);
+  const intentions = sanitizeTags(formData.getAll("intentions"), RELATIONSHIP_INTENTIONS);
+  const age = user.dobYear ? new Date().getFullYear() - user.dobYear : 0;
+
+  if (!displayName || !location || intentions.length === 0 || age < 18) {
+    redirect("/onboarding/basics?error=1");
+  }
+
+  await prisma.profile.upsert({
+    where: { userId: user.id },
+    // Preserve fields already set (e.g. completed) when updating.
+    create: {
+      userId: user.id,
+      displayName,
+      location,
+      age,
+      intentions: serializeTags(intentions),
+      completed: false,
+    },
+    update: { displayName, location, age, intentions: serializeTags(intentions) },
+  });
+  redirect("/discover");
 }
 
 export async function saveProfile(formData: FormData) {

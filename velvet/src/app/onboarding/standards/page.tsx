@@ -2,17 +2,21 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { COMMUNITY_STANDARDS, NO_SOLICITATION_NOTICE, NO_EXPLICIT_NOTICE } from "@/lib/policy";
 import { acceptStandards } from "../actions";
+import OnboardingProgress from "@/components/OnboardingProgress";
 
 export default async function Standards() {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
   if (!user.consentPledgeAcceptedAt) redirect("/onboarding/consent");
-  if (user.standardsAcceptedAt) redirect("/onboarding/profile");
+  if (user.standardsAcceptedAt) redirect("/onboarding/basics");
 
   return (
     <div className="shell" style={{ maxWidth: 560 }}>
       <div className="brand">VELVET<span className="dot">.</span></div>
-      <div className="card" style={{ marginTop: 32 }}>
+      <div style={{ marginTop: 20 }}>
+        <OnboardingProgress current={3} />
+      </div>
+      <div className="card" style={{ marginTop: 18 }}>
         <h1 style={{ fontSize: "1.5rem" }}>{COMMUNITY_STANDARDS.title}</h1>
         <p className="muted">{COMMUNITY_STANDARDS.intro}</p>
         <div className="sans stack">

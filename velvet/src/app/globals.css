@@ -294,6 +294,21 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
   .steps, .feature-grid { grid-template-columns: 1fr; }
 }
 
+/* ---- Onboarding progress ---- */
+.ob-progress { font-family: var(--sans); }
+.ob-track { display: flex; gap: 6px; }
+.ob-seg { flex: 1; height: 5px; border-radius: 999px; background: var(--bg-soft); border: 1px solid var(--card-border); }
+.ob-seg.done { background: var(--accent-deep); border-color: var(--accent-deep); }
+.ob-seg.active { background: var(--accent); border-color: var(--accent); }
+
+/* ---- Segmented toggle (login) ---- */
+.seg { display: flex; background: var(--bg-soft); border: 1px solid var(--card-border); border-radius: 999px; padding: 4px; }
+.seg-btn {
+  flex: 1; padding: 9px 12px; border: none; background: transparent; cursor: pointer;
+  color: var(--ink-soft); font-family: var(--sans); font-size: 0.9rem; border-radius: 999px; font-weight: 600;
+}
+.seg-btn.on { background: var(--accent-deep); color: #fff; }
+
 .error { color: var(--danger); font-size: 0.9rem; }
 .center { text-align: center; }
 .pill-list { display: flex; flex-wrap: wrap; gap: 6px; }
