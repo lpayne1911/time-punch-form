@@ -32,6 +32,8 @@ function overlap(a: string[], b: string[]): string[] {
   return a.filter((x) => setB.has(x));
 }
 
+export type FitBand = "Strong fit" | "Some overlap" | "Different pace";
+
 export type Candidate = {
   userId: string;
   displayName: string;
@@ -44,10 +46,28 @@ export type Candidate = {
   values: string[];
   score: number;
   reason: string;
+  reasons: string[];
+  fit: FitBand;
   photoBlurred: boolean;
 };
 
-function scorePair(me: ProfileLike, them: ProfileLike): { score: number; reason: string } {
+export type DiscoverFilters = {
+  intention?: string;
+  experience?: string;
+  verifiedOnly?: boolean;
+};
+
+/**
+ * Soft, non-numeric compatibility band (blueprint §10 — no public desirability
+ * score). Keeps the signal warm: we never show a percentage or rank.
+ */
+function fitBand(score: number): FitBand {
+  if (score >= 12) return "Strong fit";
+  if (score >= 5) return "Some overlap";
+  return "Different pace";
+}
+
+function scorePair(me: ProfileLike, them: ProfileLike): { score: number; reasons: string[] } {
   const sharedInterests = overlap(parseTags(me.interests), parseTags(them.interests));
   const sharedIntentions = overlap(parseTags(me.intentions), parseTags(them.intentions));
   const sharedComm = overlap(parseTags(me.communicationStyle), parseTags(them.communicationStyle));
@@ -61,15 +81,16 @@ function scorePair(me: ProfileLike, them: ProfileLike): { score: number; reason:
     sharedBoundaries.length * WEIGHTS.boundaries +
     sharedValues.length * WEIGHTS.values;
 
-  // Build a warm, non-objectifying reason from the strongest signal.
-  let reason = "You share a thoughtful approach to connection.";
-  if (sharedValues.length) reason = `You both value ${sharedValues[0].toLowerCase()}.`;
-  if (sharedIntentions.length) reason = `You're both looking for: ${sharedIntentions[0].toLowerCase()}.`;
-  if (sharedInterests.length) reason = `Shared interest in ${sharedInterests[0].toLowerCase()}.`;
-  if (sharedBoundaries.length && sharedInterests.length)
-    reason = `Shared interest in ${sharedInterests[0].toLowerCase()}, and aligned on boundaries.`;
+  // Up to three warm, non-objectifying "why we matched" reasons, strongest first.
+  const reasons: string[] = [];
+  if (sharedIntentions.length) reasons.push(`You're both looking for ${sharedIntentions[0].toLowerCase()}`);
+  if (sharedBoundaries.length) reasons.push(`Aligned on boundaries that matter`);
+  if (sharedInterests.length) reasons.push(`Shared interest in ${sharedInterests[0].toLowerCase()}`);
+  if (sharedComm.length) reasons.push(`Similar communication style: ${sharedComm[0].toLowerCase()}`);
+  if (sharedValues.length) reasons.push(`You both value ${sharedValues[0].toLowerCase()}`);
+  if (reasons.length === 0) reasons.push("You share a thoughtful approach to connection");
 
-  return { score, reason };
+  return { score, reasons: reasons.slice(0, 3) };
 }
 
 /**
@@ -77,7 +98,11 @@ function scorePair(me: ProfileLike, them: ProfileLike): { score: number; reason:
  * blocked/blocking users, already-liked users, suspended/deleted accounts,
  * and incognito profiles. Respects each candidate's visibility setting.
  */
-export async function getCandidates(userId: string, limit = 20): Promise<Candidate[]> {
+export async function getCandidates(
+  userId: string,
+  limit = 20,
+  filters: DiscoverFilters = {},
+): Promise<Candidate[]> {
   const me = await prisma.user.findUnique({ where: { id: userId }, include: { profile: true } });
   if (!me?.profile) return [];
 
@@ -139,7 +164,12 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
     if (other.profile.visibility === "MATCHES_ONLY") continue; // not discoverable
     if (other.profile.visibility === "VERIFIED_ONLY" && !myVerified) continue;
 
-    const { score, reason } = scorePair(me.profile, other.profile);
+    // Viewer-selected Discover filters.
+    if (filters.verifiedOnly && other.verification === "UNVERIFIED") continue;
+    if (filters.experience && other.profile.experienceLevel !== filters.experience) continue;
+    if (filters.intention && !parseTags(other.profile.intentions).includes(filters.intention)) continue;
+
+    const { score, reasons } = scorePair(me.profile, other.profile);
     if (score <= 0) continue;
     const boostedScore = boosted.has(other.id) ? score + BOOST_SCORE_BONUS : score;
 
@@ -154,7 +184,9 @@ export async function getCandidates(userId: string, limit = 20): Promise<Candida
       intentions: parseTags(other.profile.intentions),
       values: parseTags(other.profile.values),
       score: boostedScore,
-      reason,
+      reason: reasons[0],
+      reasons,
+      fit: fitBand(score),
       photoBlurred: other.profile.photoBlurUntilMatch,
     });
   }

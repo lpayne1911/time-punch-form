@@ -5,7 +5,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { Candidate } from "@/lib/matching";
 
-export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
+const FIT_CLASS: Record<string, string> = {
+  "Strong fit": "fit-strong",
+  "Some overlap": "fit-some",
+  "Different pace": "fit-diff",
+};
+
+export default function DiscoverCard({
+  candidate,
+  highlight = false,
+}: {
+  candidate: Candidate;
+  highlight?: boolean;
+}) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<null | "liked" | "passed">(null);
@@ -51,7 +63,7 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
 
   if (limit) {
     return (
-      <div className="card notice sans">
+      <div className="card notice">
         {limit}
         <div style={{ marginTop: 10 }}>
           <Link href="/premium?feature=unlimitedLikes" className="btn small">Upgrade to Plus</Link>
@@ -62,8 +74,8 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
 
   if (matched) {
     return (
-      <div className="card notice ok sans">
-        <strong>It's mutual!</strong> You and {candidate.displayName} have both expressed interest.
+      <div className="card notice ok">
+        <strong>It&apos;s mutual!</strong> You and {candidate.displayName} have both expressed interest.
         <div style={{ marginTop: 10 }}>
           <button className="btn small" onClick={() => router.push(`/messages/${matched}`)}>
             Say hello
@@ -73,10 +85,15 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
     );
   }
 
-  if (done) {
+  if (done === "liked") {
+    return <div className="card muted small">Interest sent to {candidate.displayName}.</div>;
+  }
+
+  if (done === "passed") {
     return (
-      <div className="card muted sans small">
-        {done === "liked" ? `Interest sent to ${candidate.displayName}.` : "Passed."}
+      <div className="card muted small between">
+        <span>Passed on {candidate.displayName}.</span>
+        <button className="btn ghost small" onClick={() => setDone(null)}>Undo</button>
       </div>
     );
   }
@@ -84,38 +101,46 @@ export default function DiscoverCard({ candidate }: { candidate: Candidate }) {
   const verified = candidate.verification !== "UNVERIFIED";
 
   return (
-    <div className="card">
-      <div className="blur-photo">Photo blurred until mutual interest</div>
-      <div className="between" style={{ marginTop: 12 }}>
+    <div className={`card discover-card${highlight ? " pick" : ""}`}>
+      <div className="blur-photo discover-photo">Photo blurred until mutual interest</div>
+
+      <div className="between" style={{ marginTop: 14 }}>
         <h2 style={{ margin: 0 }}>
           {candidate.displayName}, {candidate.age}
         </h2>
-        {verified && <span className="badge sans">✓ Verified</span>}
+        {verified && <span className="badge">✓ Verified</span>}
       </div>
-      <p className="muted small sans" style={{ margin: "2px 0 8px" }}>
-        {candidate.location}
-        {candidate.experienceLevel ? ` · ${candidate.experienceLevel}` : ""}
-      </p>
 
-      <div className="notice sans small" style={{ margin: "8px 0" }}>
-        {candidate.reason}
+      <div className="row" style={{ margin: "4px 0 2px", gap: 8 }}>
+        <span className={`fit ${FIT_CLASS[candidate.fit] ?? ""}`}>{candidate.fit}</span>
+        <span className="muted small">
+          {candidate.location}
+          {candidate.experienceLevel ? ` · ${candidate.experienceLevel}` : ""}
+        </span>
       </div>
+
+      {/* Why we matched — up to three concrete, warm reasons. */}
+      <ul className="why">
+        {candidate.reasons.map((r) => (
+          <li key={r}>{r}</li>
+        ))}
+      </ul>
 
       <div className="pill-list" style={{ marginTop: 6 }}>
         {candidate.interests.slice(0, 4).map((t) => (
-          <span key={t} className="tag readonly sans">{t}</span>
+          <span key={t} className="tag readonly">{t}</span>
         ))}
       </div>
 
-      <div className="row sans" style={{ marginTop: 14 }}>
-        <button className="btn" onClick={like} disabled={busy}>
-          {busy ? "…" : "Express interest"}
-        </button>
-        <button className="btn ghost" onClick={superLike} disabled={busy} title="Thoughtful intro">
-          ⭐ Intro
-        </button>
-        <button className="btn ghost" onClick={() => setDone("passed")} disabled={busy}>
+      <div className="card-actions">
+        <button className="btn ghost pass" onClick={() => setDone("passed")} disabled={busy}>
           Pass
+        </button>
+        <button className="btn block" onClick={like} disabled={busy}>
+          {busy ? "…" : "♥ Like"}
+        </button>
+        <button className="btn ghost intro" onClick={superLike} disabled={busy} title="Send a thoughtful intro">
+          ⭐ Intro
         </button>
       </div>
     </div>
