@@ -23,6 +23,13 @@ export default function DiscoverCard({
   const [done, setDone] = useState<null | "liked" | "passed">(null);
   const [matched, setMatched] = useState<string | null>(null);
   const [limit, setLimit] = useState<string | null>(null);
+  const [exit, setExit] = useState<null | "left" | "right" | "up">(null);
+
+  // Fly the card off, then settle into the result state (signature swipe motion).
+  function animateThen(dir: "left" | "right" | "up", fn: () => void) {
+    setExit(dir);
+    setTimeout(fn, 330);
+  }
 
   async function like() {
     setBusy(true);
@@ -32,16 +39,16 @@ export default function DiscoverCard({
       body: JSON.stringify({ toUserId: candidate.userId }),
     });
     const data = await res.json();
-    setBusy(false);
     if (res.status === 402) {
+      setBusy(false);
       setLimit(data.message ?? "Daily like limit reached.");
       return;
     }
-    if (data.matched) {
-      setMatched(data.matchId);
-    } else {
-      setDone("liked");
-    }
+    animateThen("right", () => {
+      setBusy(false);
+      if (data.matched) setMatched(data.matchId);
+      else setDone("liked");
+    });
   }
 
   async function superLike() {
@@ -52,13 +59,21 @@ export default function DiscoverCard({
       body: JSON.stringify({ toUserId: candidate.userId }),
     });
     const data = await res.json();
-    setBusy(false);
     if (res.status === 402) {
+      setBusy(false);
       setLimit("You're out of thoughtful intros. Pick some up in Add-ons.");
       return;
     }
-    if (data.matched) setMatched(data.matchId);
-    else setDone("liked");
+    animateThen("up", () => {
+      setBusy(false);
+      if (data.matched) setMatched(data.matchId);
+      else setDone("liked");
+    });
+  }
+
+  function pass() {
+    setBusy(true);
+    animateThen("left", () => { setBusy(false); setDone("passed"); });
   }
 
   if (limit) {
@@ -101,7 +116,7 @@ export default function DiscoverCard({
   const verified = candidate.verification !== "UNVERIFIED";
 
   return (
-    <div className={`card discover-card${highlight ? " pick" : ""}`}>
+    <div className={`card discover-card${highlight ? " pick" : ""}${exit ? ` exit-${exit}` : ""}`}>
       <div className="blur-photo discover-photo">Photo blurred until mutual interest</div>
 
       <div className="between" style={{ marginTop: 14 }}>
@@ -134,7 +149,7 @@ export default function DiscoverCard({
 
       <div className="swipe-actions">
         <div>
-          <button className="swipe-btn pass" onClick={() => setDone("passed")} disabled={busy} aria-label={`Pass on ${candidate.displayName}`}>
+          <button className="swipe-btn pass" onClick={pass} disabled={busy} aria-label={`Pass on ${candidate.displayName}`}>
             ✕
           </button>
           <div className="swipe-label">Pass</div>
