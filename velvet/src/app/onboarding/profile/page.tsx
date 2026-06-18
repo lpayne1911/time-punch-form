@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/auth";
 import { saveProfile } from "../actions";
 import ProfileForm from "@/components/ProfileForm";
+import OnboardingProgress from "@/components/OnboardingProgress";
 import {
   RELATIONSHIP_INTENTIONS,
   COMMUNICATION_STYLES,
@@ -38,15 +39,24 @@ export default async function ProfileSetup({
   if (!user.standardsAcceptedAt) redirect("/onboarding/standards");
   const { error } = await searchParams;
   const p = user.profile;
+  const derivedAge = user.dobYear ? new Date().getFullYear() - user.dobYear : null;
 
   return (
     <div className="shell">
       <div className="brand">VELVET<span className="dot">.</span></div>
-      <h1 style={{ marginTop: 24 }}>Create your profile</h1>
+      <div style={{ marginTop: 20 }}>
+        <OnboardingProgress current={5} />
+      </div>
+      <h1 style={{ marginTop: 18 }}>Complete your profile</h1>
       <p className="lede">
-        Velvet matches on who you are and what you value — not on photos. Be thoughtful; keep
-        everything respectful and non-explicit.
+        Velvet matches on who you are and what you value — not on photos. A complete profile is
+        what makes you discoverable to others and unlocks messaging.
       </p>
+      <div className="notice small">
+        <strong>What others see:</strong> your display name, age, region, and the tags you choose.
+        Your photos stay blurred until you and another member both express interest, and your
+        visibility setting (below) controls who can find you.
+      </div>
       {error === "prompt" ? (
         <div className="notice danger small sans">
           Your prompt answers can't include contact details or anything that reads as solicitation.
@@ -65,7 +75,7 @@ export default async function ProfileSetup({
           visibilityOptions={VISIBILITY_OPTIONS}
           initial={{
             displayName: p?.displayName ?? "",
-            age: p?.age ? String(p.age) : "",
+            age: p?.age ? String(p.age) : derivedAge ? String(derivedAge) : "",
             location: p?.location ?? "",
             experienceLevel: p?.experienceLevel ?? "",
             visibility: p?.visibility ?? "VERIFIED_ONLY",

@@ -65,6 +65,16 @@ export default async function Discover({ searchParams }: { searchParams: Promise
           communication style. Photos stay blurred until you both express interest.
         </p>
 
+        {!user.profile?.completed && (
+          <div className="notice warn">
+            <strong>You&apos;re previewing with a basic profile.</strong> Complete your profile to
+            appear in Discover for others and to unlock messaging.
+            <div style={{ marginTop: 10 }}>
+              <Link href="/onboarding/profile" className="btn small">Complete my profile</Link>
+            </div>
+          </div>
+        )}
+
         {remaining !== "unlimited" && (
           <div className="likes-meter">
             <div className="between">

@@ -7,6 +7,7 @@ import Link from "next/link";
 export default function Login() {
   const router = useRouter();
   const [step, setStep] = useState<"email" | "code">("email");
+  const [mode, setMode] = useState<"create" | "signin">("create");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [devCode, setDevCode] = useState<string | null>(null);
@@ -53,9 +54,33 @@ export default function Login() {
       <div className="card" style={{ marginTop: 40 }}>
         {step === "email" ? (
           <form onSubmit={requestCode}>
-            <h1 style={{ fontSize: "1.5rem" }}>Join or sign in</h1>
+            <div className="seg" role="tablist" style={{ marginBottom: 16 }}>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mode === "create"}
+                className={`seg-btn${mode === "create" ? " on" : ""}`}
+                onClick={() => setMode("create")}
+              >
+                Create account
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={mode === "signin"}
+                className={`seg-btn${mode === "signin" ? " on" : ""}`}
+                onClick={() => setMode("signin")}
+              >
+                Sign in
+              </button>
+            </div>
+            <h1 style={{ fontSize: "1.5rem" }}>
+              {mode === "create" ? "Create your account" : "Welcome back"}
+            </h1>
             <p className="muted small">
-              We'll email you a one-time code. No passwords. Verified adults only.
+              {mode === "create"
+                ? "We'll email you a one-time code to get started. No passwords. Verified adults only."
+                : "Enter your email and we'll send a one-time sign-in code. No passwords."}
             </p>
             <label>Email</label>
             <input
@@ -77,8 +102,8 @@ export default function Login() {
             <p className="muted small">Sent to {email}. The code expires in 10 minutes.</p>
             {devCode && (
               <div className="notice warn small sans">
-                <strong>Dev mode:</strong> your code is <code>{devCode}</code>. (In production this
-                is delivered by email/SMS and never shown here.)
+                <strong>Preview mode:</strong> your code is <code>{devCode}</code>. In production
+                this is delivered by email/SMS and never shown on screen.
               </div>
             )}
             <label>6-digit code</label>
