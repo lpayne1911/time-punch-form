@@ -223,9 +223,11 @@ export async function like(fromUserId: string, toUserId: string, superLike = fal
   if (!reciprocal) return { matched: false as const };
 
   const [userAId, userBId] = orderPair(fromUserId, toUserId);
+  // 48-hour soft intro window (#48) — lapses if neither writes, but is extendable.
+  const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000);
   const match = await prisma.match.upsert({
     where: { userAId_userBId: { userAId, userBId } },
-    create: { userAId, userBId },
+    create: { userAId, userBId, expiresAt },
     update: {},
   });
   return { matched: true as const, matchId: match.id };

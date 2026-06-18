@@ -5,6 +5,39 @@ import Nav from "@/components/Nav";
 
 export const dynamic = "force-dynamic";
 
+const DAY = 86_400_000;
+
+type Row = {
+  id: string;
+  name: string;
+  preview: string;
+  quietDays: number | null;
+};
+
+function Section({ title, rows, hint }: { title: string; rows: Row[]; hint?: string }) {
+  if (rows.length === 0) return null;
+  return (
+    <>
+      <h2>{title} <span className="muted small">({rows.length})</span></h2>
+      {hint && <p className="muted small" style={{ marginTop: -6 }}>{hint}</p>}
+      {rows.map((r) => (
+        <Link key={r.id} href={`/messages/${r.id}`} className="card between sans" style={{ display: "flex" }}>
+          <div>
+            <strong>{r.name}</strong>
+            <p className="muted small" style={{ margin: "2px 0 0" }}>{r.preview}</p>
+            {r.quietDays !== null && r.quietDays >= 3 && (
+              <p className="small" style={{ margin: "4px 0 0", color: "var(--gold)" }}>
+                Quiet for {r.quietDays} days — a thoughtful follow-up could help.
+              </p>
+            )}
+          </div>
+          <span className="muted">›</span>
+        </Link>
+      ))}
+    </>
+  );
+}
+
 export default async function Matches() {
   const user = await requireOnboarded();
 
@@ -14,13 +47,33 @@ export default async function Matches() {
     include: { messages: { orderBy: { createdAt: "desc" }, take: 1 } },
   });
 
-  // Resolve the "other" user's profile for each match.
   const otherIds = matches.map((m) => (m.userAId === user.id ? m.userBId : m.userAId));
   const others = await prisma.user.findMany({
     where: { id: { in: otherIds } },
     include: { profile: true },
   });
   const byId = new Map(others.map((o) => [o.id, o]));
+
+  // Bucket each match: New (no messages), Your turn (they spoke last),
+  // Waiting on them (you spoke last). (#41)
+  const fresh: Row[] = [];
+  const yourTurn: Row[] = [];
+  const waiting: Row[] = [];
+
+  for (const m of matches) {
+    const otherId = m.userAId === user.id ? m.userBId : m.userAId;
+    const other = byId.get(otherId);
+    const last = m.messages[0];
+    const row: Row = {
+      id: m.id,
+      name: other?.profile?.displayName ?? "Member",
+      preview: last ? last.body.slice(0, 60) : "Say hello",
+      quietDays: last ? Math.floor((Date.now() - last.createdAt.getTime()) / DAY) : null,
+    };
+    if (!last) fresh.push(row);
+    else if (last.senderId === user.id) waiting.push(row);
+    else yourTurn.push(row);
+  }
 
   return (
     <>
@@ -38,22 +91,11 @@ export default async function Matches() {
             message here.
           </div>
         ) : (
-          matches.map((m) => {
-            const otherId = m.userAId === user.id ? m.userBId : m.userAId;
-            const other = byId.get(otherId);
-            const last = m.messages[0];
-            return (
-              <Link key={m.id} href={`/messages/${m.id}`} className="card between sans" style={{ display: "flex" }}>
-                <div>
-                  <strong>{other?.profile?.displayName ?? "Member"}</strong>
-                  <p className="muted small" style={{ margin: "2px 0 0" }}>
-                    {last ? last.body.slice(0, 60) : "Say hello"}
-                  </p>
-                </div>
-                <span className="muted">›</span>
-              </Link>
-            );
-          })
+          <>
+            <Section title="New" rows={fresh} hint="You matched — start the conversation." />
+            <Section title="Your turn" rows={yourTurn} hint="They're waiting to hear back." />
+            <Section title="Waiting on them" rows={waiting} />
+          </>
         )}
       </div>
     </>

@@ -231,6 +231,18 @@ model Match {
   createdAt DateTime @default(now())
   messages  Message[]
 
+  // Soft intro window: if no one writes before this, the match lapses (extendable). (#48)
+  expiresAt DateTime?
+  // Pause instead of unmatch/block — either side can pause and resume. (#49)
+  pausedAt   DateTime?
+  pausedById String?
+  // Mutual photo reveal: both must opt in before photos un-blur in-thread. (#44/#45)
+  revealA   Boolean  @default(false)
+  revealB   Boolean  @default(false)
+  // Aftercare check-in answers, per side: "respectful" | "not". (#50)
+  aftercareA String?
+  aftercareB String?
+
   @@unique([userAId, userBId])
 }
 
@@ -243,6 +255,7 @@ model Message {
   body      String
   flagged   Boolean  @default(false) // set by message moderation (blueprint §11)
   quarantined Boolean @default(false) // high-severity: withheld from recipient until a moderator clears it
+  readAt    DateTime? // recipient read timestamp; shown to sender only on paid tiers (#46)
   createdAt DateTime @default(now())
 
   @@index([matchId])
