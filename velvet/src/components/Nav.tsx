@@ -1,35 +1,42 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { isStaff } from "@/lib/admin";
+import BottomNav from "./BottomNav";
 
 export default async function Nav() {
   const user = await getCurrentUser();
   const staff = isStaff(user?.role);
 
   return (
-    <div className="nav">
-      <div className="nav-inner">
-        <Link href="/discover" className="brand" style={{ fontSize: "1rem" }}>
-          VELVET<span className="dot">.</span>
-        </Link>
-        <span className="spacer" />
-        <Link href="/discover">Discover</Link>
-        <Link href="/likes">Likes</Link>
-        <Link href="/matches">Matches</Link>
-        <Link href="/events">Events</Link>
-        <Link href="/circles">Circles</Link>
-        <Link href="/profile">Profile</Link>
-        <Link href="/verify">Verify</Link>
-        <Link href="/shop">Add-ons</Link>
-        <Link href="/premium" style={{ color: "var(--gold)" }}>Membership</Link>
-        <Link href="/safety">Safety</Link>
-        <Link href="/settings">Settings</Link>
-        {staff && (
-          <Link href="/admin" style={{ color: "var(--gold)" }}>
-            Mod
+    <>
+      {/* Wide top nav — desktop only (hidden under 760px via CSS). */}
+      <div className="nav">
+        <div className="nav-inner">
+          <Link href="/discover" className="brand" style={{ fontSize: "1rem" }}>
+            VELVET<span className="dot">.</span>
           </Link>
-        )}
+          <span className="spacer" />
+          <Link href="/discover">Discover</Link>
+          <Link href="/likes">Likes</Link>
+          <Link href="/matches">Matches</Link>
+          <Link href="/events">Events</Link>
+          <Link href="/circles">Circles</Link>
+          <Link href="/profile">Profile</Link>
+          <Link href="/verify">Verify</Link>
+          <Link href="/shop">Add-ons</Link>
+          <Link href="/premium" style={{ color: "var(--gold)" }}>Membership</Link>
+          <Link href="/safety">Safety</Link>
+          <Link href="/settings">Settings</Link>
+          {staff && (
+            <Link href="/admin" style={{ color: "var(--gold)" }}>
+              Mod
+            </Link>
+          )}
+        </div>
       </div>
-    </div>
+
+      {/* Mobile-only bottom tab bar. */}
+      <BottomNav />
+    </>
   );
 }
