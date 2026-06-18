@@ -1,5 +1,6 @@
 import { prisma } from "./db";
 import { parseTags } from "./tags";
+import { formatAge } from "./profile";
 import { boostedUserIds } from "./purchases";
 import { BOOST_SCORE_BONUS } from "./shop";
 import { getEntitlements } from "./entitlements";
@@ -38,6 +39,7 @@ export type Candidate = {
   userId: string;
   displayName: string;
   age: number;
+  ageLabel: string | null;
   location: string;
   experienceLevel: string | null;
   verification: string;
@@ -177,6 +179,7 @@ export async function getCandidates(
       userId: other.id,
       displayName: other.profile.displayName,
       age: other.profile.age,
+      ageLabel: formatAge(other.profile.age, other.profile.ageDisplay),
       location: other.profile.location,
       experienceLevel: other.profile.experienceLevel,
       verification: other.verification,

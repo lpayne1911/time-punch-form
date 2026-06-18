@@ -138,14 +138,23 @@ model Profile {
   communicationStyle String  @default("[]")
   interests        String   @default("[]") // lifestyle interest tags
   boundaries       String   @default("[]")
+  dealbreakers     String   @default("[]") // distinct from boundaries (blueprint §13)
   lookingFor       String   @default("[]")
   values           String   @default("[]")
   experienceLevel  String?  // newcomer | exploring | experienced
+
+  // Single-select self-describers (controlled vocab in src/lib/tags.ts)
+  intentionIntensity String? // Curious | Dating | Ongoing dynamic | Community only | Long-term
+  availability       String? // Daily | A few times a week | Slow-paced | Event-only | Travel mode
+  meetReadiness      String? // Online first | Coffee or public first | Event first | Not meeting yet
+  ageDisplay         String  @default("EXACT") // EXACT | RANGE | HIDDEN
 
   // Free-text prompt answers (moderated). Kept short; no explicit content.
   promptCommunication String?
   promptBoundary      String?
   promptExploring     String?
+  promptFirstConversation String?
+  promptIdealConnection   String?
 
   // Privacy is private-by-default (blueprint §4, §19)
   visibility       String   @default("VERIFIED_ONLY") // PUBLIC_MEMBERS | VERIFIED_ONLY | MATCHES_ONLY

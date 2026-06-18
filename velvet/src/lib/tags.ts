@@ -67,6 +67,48 @@ export const EXPERIENCE_LEVELS = [
   "Experienced",
 ] as const;
 
+// Dealbreakers are distinct from boundaries: hard incompatibilities, not
+// personal limits. Kept neutral and non-explicit (blueprint §13).
+export const DEALBREAKERS = [
+  "Not verified",
+  "Pushes past boundaries",
+  "Wants to rush meeting",
+  "No discretion",
+  "Substance-heavy lifestyle",
+  "Looking for something casual",
+  "Looking for something serious",
+] as const;
+
+// Single-select self-describers.
+export const INTENTION_INTENSITY = [
+  "Curious",
+  "Dating",
+  "Ongoing dynamic",
+  "Community only",
+  "Long-term",
+] as const;
+
+export const AVAILABILITY = [
+  "Daily",
+  "A few times a week",
+  "Slow-paced",
+  "Event-only",
+  "Travel mode",
+] as const;
+
+export const MEET_READINESS = [
+  "Online first",
+  "Coffee or public first",
+  "Event first",
+  "Not meeting yet",
+] as const;
+
+export const AGE_DISPLAY_OPTIONS = [
+  { value: "EXACT", label: "Show my exact age" },
+  { value: "RANGE", label: "Show an age range only" },
+  { value: "HIDDEN", label: "Hide my age" },
+] as const;
+
 export const VISIBILITY_OPTIONS = [
   { value: "MATCHES_ONLY", label: "Matches only — most private" },
   { value: "VERIFIED_ONLY", label: "Verified members only (default)" },

@@ -8,10 +8,15 @@ import {
   COMMUNICATION_STYLES,
   LIFESTYLE_INTERESTS,
   BOUNDARIES,
+  DEALBREAKERS,
   LOOKING_FOR,
   VALUES,
   EXPERIENCE_LEVELS,
   VISIBILITY_OPTIONS,
+  INTENTION_INTENSITY,
+  AVAILABILITY,
+  MEET_READINESS,
+  AGE_DISPLAY_OPTIONS,
   parseTags,
 } from "@/lib/tags";
 
@@ -22,10 +27,11 @@ const GROUPS = [
     options: RELATIONSHIP_INTENTIONS,
     hint: "Your relationship intentions. Pick all that fit.",
   },
+  { name: "lookingFor", label: "Hoping to find", options: LOOKING_FOR },
   { name: "interests", label: "Lifestyle interests", options: LIFESTYLE_INTERESTS, hint: "Dynamics and themes you're drawn to." },
   { name: "communicationStyle", label: "Communication style", options: COMMUNICATION_STYLES },
-  { name: "boundaries", label: "Boundaries", options: BOUNDARIES, hint: "What matters to you. Always respected here." },
-  { name: "lookingFor", label: "Hoping to find", options: LOOKING_FOR },
+  { name: "boundaries", label: "Boundaries", options: BOUNDARIES, hint: "Personal limits, always respected here." },
+  { name: "dealbreakers", label: "Dealbreakers", options: DEALBREAKERS, hint: "Hard incompatibilities — different from boundaries." },
   { name: "values", label: "Values", options: VALUES },
 ];
 
@@ -73,19 +79,32 @@ export default async function ProfileSetup({
           groups={GROUPS}
           experienceLevels={EXPERIENCE_LEVELS}
           visibilityOptions={VISIBILITY_OPTIONS}
+          intentionIntensity={INTENTION_INTENSITY}
+          availability={AVAILABILITY}
+          meetReadiness={MEET_READINESS}
+          ageDisplayOptions={AGE_DISPLAY_OPTIONS}
           initial={{
             displayName: p?.displayName ?? "",
             age: p?.age ? String(p.age) : derivedAge ? String(derivedAge) : "",
             location: p?.location ?? "",
             experienceLevel: p?.experienceLevel ?? "",
             visibility: p?.visibility ?? "VERIFIED_ONLY",
-            promptCommunication: p?.promptCommunication ?? "",
-            promptBoundary: p?.promptBoundary ?? "",
+            ageDisplay: p?.ageDisplay ?? "EXACT",
+            intentionIntensity: p?.intentionIntensity ?? "",
+            availability: p?.availability ?? "",
+            meetReadiness: p?.meetReadiness ?? "",
+            prompts: {
+              promptFirstConversation: p?.promptFirstConversation ?? "",
+              promptIdealConnection: p?.promptIdealConnection ?? "",
+              promptCommunication: p?.promptCommunication ?? "",
+              promptBoundary: p?.promptBoundary ?? "",
+            },
             tags: {
               intentions: parseTags(p?.intentions),
               interests: parseTags(p?.interests),
               communicationStyle: parseTags(p?.communicationStyle),
               boundaries: parseTags(p?.boundaries),
+              dealbreakers: parseTags(p?.dealbreakers),
               lookingFor: parseTags(p?.lookingFor),
               values: parseTags(p?.values),
             },
