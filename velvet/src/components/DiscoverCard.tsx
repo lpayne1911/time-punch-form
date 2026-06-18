@@ -106,7 +106,7 @@ export default function DiscoverCard({
 
       <div className="between" style={{ marginTop: 14 }}>
         <h2 style={{ margin: 0 }}>
-          {candidate.displayName}, {candidate.age}
+          {candidate.displayName}{candidate.ageLabel ? `, ${candidate.ageLabel}` : ""}
         </h2>
         {verified && <span className="badge">✓ Verified</span>}
       </div>

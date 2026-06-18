@@ -5,6 +5,7 @@ import { prisma } from "@/lib/db";
 import Nav from "@/components/Nav";
 import DiscoverCard from "@/components/DiscoverCard";
 import { parseTags } from "@/lib/tags";
+import { formatAge } from "@/lib/profile";
 import type { Candidate } from "@/lib/matching";
 
 export const dynamic = "force-dynamic";
@@ -62,6 +63,7 @@ export default async function Likes() {
                 userId: l.fromUserId,
                 displayName: p.displayName,
                 age: p.age,
+                ageLabel: formatAge(p.age, p.ageDisplay),
                 location: p.location,
                 experienceLevel: p.experienceLevel,
                 verification: l.from.verification,

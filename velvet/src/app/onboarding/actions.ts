@@ -15,9 +15,13 @@ import {
   COMMUNICATION_STYLES,
   LIFESTYLE_INTERESTS,
   BOUNDARIES,
+  DEALBREAKERS,
   LOOKING_FOR,
   VALUES,
   EXPERIENCE_LEVELS,
+  INTENTION_INTENSITY,
+  AVAILABILITY,
+  MEET_READINESS,
 } from "@/lib/tags";
 
 async function requireUser() {
@@ -112,16 +116,28 @@ export async function saveProfile(formData: FormData) {
   const communicationStyle = sanitizeTags(formData.getAll("communicationStyle"), COMMUNICATION_STYLES);
   const interests = sanitizeTags(formData.getAll("interests"), LIFESTYLE_INTERESTS);
   const boundaries = sanitizeTags(formData.getAll("boundaries"), BOUNDARIES);
+  const dealbreakers = sanitizeTags(formData.getAll("dealbreakers"), DEALBREAKERS);
   const lookingFor = sanitizeTags(formData.getAll("lookingFor"), LOOKING_FOR);
   const values = sanitizeTags(formData.getAll("values"), VALUES);
 
+  // Single-select self-describers, validated against their vocab.
+  const pick = (raw: string, allowed: readonly string[]) =>
+    allowed.includes(raw) ? raw : null;
+  const intentionIntensity = pick(String(formData.get("intentionIntensity") ?? ""), INTENTION_INTENSITY);
+  const availability = pick(String(formData.get("availability") ?? ""), AVAILABILITY);
+  const meetReadiness = pick(String(formData.get("meetReadiness") ?? ""), MEET_READINESS);
+  const ageDisplayRaw = String(formData.get("ageDisplay") ?? "EXACT");
+  const ageDisplay = ["EXACT", "RANGE", "HIDDEN"].includes(ageDisplayRaw) ? ageDisplayRaw : "EXACT";
+
   const promptCommunication = String(formData.get("promptCommunication") ?? "").trim().slice(0, 280);
   const promptBoundary = String(formData.get("promptBoundary") ?? "").trim().slice(0, 280);
+  const promptFirstConversation = String(formData.get("promptFirstConversation") ?? "").trim().slice(0, 280);
+  const promptIdealConnection = String(formData.get("promptIdealConnection") ?? "").trim().slice(0, 280);
 
   // Free-text prompts are the one non-vocabulary channel on a profile, so they
   // must be screened (blueprint §13, §18). Flag solicitation/threat patterns or
   // contact info and reject the save rather than store explicit/solicitation text.
-  for (const text of [promptCommunication, promptBoundary]) {
+  for (const text of [promptCommunication, promptBoundary, promptFirstConversation, promptIdealConnection]) {
     if (!text) continue;
     const mod = moderateText(text);
     if (mod.flagged || mod.containsContactInfo) {
@@ -148,14 +164,21 @@ export async function saveProfile(formData: FormData) {
     location,
     experienceLevel: validExperience,
     visibility: validVisibility,
+    ageDisplay,
+    intentionIntensity,
+    availability,
+    meetReadiness,
     intentions: serializeTags(intentions),
     communicationStyle: serializeTags(communicationStyle),
     interests: serializeTags(interests),
     boundaries: serializeTags(boundaries),
+    dealbreakers: serializeTags(dealbreakers),
     lookingFor: serializeTags(lookingFor),
     values: serializeTags(values),
     promptCommunication: promptCommunication || null,
     promptBoundary: promptBoundary || null,
+    promptFirstConversation: promptFirstConversation || null,
+    promptIdealConnection: promptIdealConnection || null,
     completed,
   };
 
