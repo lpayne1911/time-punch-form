@@ -132,16 +132,25 @@ export default function DiscoverCard({
         ))}
       </div>
 
-      <div className="card-actions">
-        <button className="btn ghost pass" onClick={() => setDone("passed")} disabled={busy}>
-          Pass
-        </button>
-        <button className="btn block" onClick={like} disabled={busy}>
-          {busy ? "…" : "♥ Like"}
-        </button>
-        <button className="btn ghost intro" onClick={superLike} disabled={busy} title="Send a thoughtful intro">
-          ⭐ Intro
-        </button>
+      <div className="swipe-actions">
+        <div>
+          <button className="swipe-btn pass" onClick={() => setDone("passed")} disabled={busy} aria-label={`Pass on ${candidate.displayName}`}>
+            ✕
+          </button>
+          <div className="swipe-label">Pass</div>
+        </div>
+        <div>
+          <button className="swipe-btn like" onClick={like} disabled={busy} aria-label={`Like ${candidate.displayName}`}>
+            {busy ? "…" : "♥"}
+          </button>
+          <div className="swipe-label">Like</div>
+        </div>
+        <div>
+          <button className="swipe-btn intro" onClick={superLike} disabled={busy} aria-label={`Send a thoughtful intro to ${candidate.displayName}`}>
+            ★
+          </button>
+          <div className="swipe-label">Intro</div>
+        </div>
       </div>
     </div>
   );

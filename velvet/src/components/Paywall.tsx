@@ -79,13 +79,21 @@ export default function Paywall({
           const isCurrent = currentTier === t.id;
           const savings = Math.round((1 - t.annual / (t.monthly * 12)) * 100);
           return (
-            <div key={t.id} className="card" style={{ margin: 0, borderColor: t.id === "PREMIUM" ? "var(--accent)" : undefined }}>
+            <div
+              key={t.id}
+              className="card"
+              style={{
+                margin: 0,
+                borderColor: t.id === "PREMIUM" ? "var(--accent)" : undefined,
+                boxShadow: t.id === "PREMIUM" ? "0 0 0 1px var(--accent), var(--glow)" : undefined,
+              }}
+            >
               {t.id === "PREMIUM" && <span className="badge" style={{ marginBottom: 6 }}>Most popular</span>}
               <h2 style={{ margin: "0 0 4px" }}>{t.name}</h2>
               <p className="muted small" style={{ margin: 0 }}>{t.forWho}</p>
-              <div style={{ margin: "12px 0 2px", fontSize: "1.8rem", fontWeight: 700 }}>
+              <div style={{ margin: "12px 0 2px", fontFamily: "var(--serif)", fontSize: "2.2rem", fontWeight: 700 }}>
                 ${monthlyEquiv}
-                <span className="muted small" style={{ fontWeight: 400 }}> /mo</span>
+                <span className="muted small" style={{ fontWeight: 400, fontFamily: "var(--sans)" }}> /mo</span>
               </div>
               <p className="muted small" style={{ margin: 0 }}>
                 {interval === "YEAR" ? `$${t.annual.toFixed(2)} billed yearly · save ${savings}%` : "billed monthly"}
