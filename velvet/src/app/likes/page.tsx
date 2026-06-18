@@ -70,6 +70,8 @@ export default async function Likes() {
                 values: parseTags(p.values),
                 score: 0,
                 reason: l.superLike ? "⭐ Sent you a thoughtful intro." : "Already expressed interest in you.",
+                reasons: [l.superLike ? "⭐ Sent you a thoughtful intro" : "Already expressed interest in you"],
+                fit: "Some overlap",
                 photoBlurred: true,
               };
               return <DiscoverCard key={l.id} candidate={candidate} />;

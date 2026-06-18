@@ -215,6 +215,42 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
 .more-links a:last-child { border-bottom: none; }
 .more-links a::after { content: "›"; color: var(--ink-faint); }
 
+/* ---- Discover ---- */
+.likes-meter { margin: 6px 0 16px; }
+.meter-track { height: 6px; background: var(--bg-soft); border-radius: 999px; margin-top: 6px; overflow: hidden; border: 1px solid var(--card-border); }
+.meter-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-soft)); border-radius: 999px; transition: width 0.3s ease; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 7px; margin: 8px 0 20px; }
+.chip {
+  font-size: 0.8rem; padding: 7px 13px; border-radius: 999px;
+  border: 1px solid var(--card-border); background: var(--bg-soft);
+  color: var(--ink-soft); white-space: nowrap;
+}
+.chip.on { background: var(--accent-deep); border-color: var(--accent); color: #fff; }
+.chip.clear { color: var(--ink-faint); border-style: dashed; }
+
+.discover-card.pick { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow); }
+.discover-photo { height: 300px; font-size: 0.9rem; }
+
+.fit { font-size: 0.74rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; letter-spacing: 0.02em; }
+.fit-strong { background: rgba(143, 199, 168, 0.18); color: var(--ok); border: 1px solid rgba(143, 199, 168, 0.35); }
+.fit-some { background: rgba(203, 176, 122, 0.15); color: var(--gold); border: 1px solid rgba(203, 176, 122, 0.3); }
+.fit-diff { background: var(--bg-soft); color: var(--ink-faint); border: 1px solid var(--card-border); }
+
+.why { list-style: none; padding: 0; margin: 12px 0 4px; }
+.why li { position: relative; padding: 4px 0 4px 22px; color: var(--ink-soft); font-size: 0.95rem; }
+.why li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+.card-actions { display: flex; gap: 10px; align-items: center; margin-top: 16px; }
+.card-actions .btn.block { flex: 1; }
+.card-actions .pass { color: var(--ink-soft); }
+.card-actions .intro { white-space: nowrap; }
+
+@media (max-width: 759px) {
+  .discover-photo { height: 360px; }
+  .discover-card { padding: 18px; }
+}
+
 .error { color: var(--danger); font-size: 0.9rem; }
 .center { text-align: center; }
 .pill-list { display: flex; flex-wrap: wrap; gap: 6px; }
