@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import Nav from "@/components/Nav";
 import PhotoManager from "@/components/PhotoManager";
 import { parseTags } from "@/lib/tags";
+import { isStaff } from "@/lib/admin";
 
 export const dynamic = "force-dynamic";
 
@@ -70,6 +71,22 @@ export default async function MyProfile() {
                 <label>A boundary I always honor…</label>
                 <p style={{ margin: "2px 0 0" }}>{p.promptBoundary}</p>
               </div>
+            )}
+          </div>
+        </div>
+
+        {/* Account hub — the destinations not in the mobile bottom bar. */}
+        <div className="card">
+          <h2 style={{ marginTop: 0 }}>More</h2>
+          <div className="more-links">
+            <Link href="/verify">Verify your identity</Link>
+            <Link href="/premium" style={{ color: "var(--gold)" }}>Membership &amp; upgrades</Link>
+            <Link href="/shop">Add-ons</Link>
+            <Link href="/circles">Circles</Link>
+            <Link href="/safety">Safety center</Link>
+            <Link href="/settings">Settings</Link>
+            {isStaff(user.role) && (
+              <Link href="/admin" style={{ color: "var(--gold)" }}>Moderation</Link>
             )}
           </div>
         </div>
