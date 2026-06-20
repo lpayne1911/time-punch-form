@@ -9,6 +9,13 @@ export default async function Nav() {
 
   return (
     <>
+      {/* Mobile-only top app bar — persistent chrome like a native title bar. */}
+      <div className="appbar">
+        <Link href="/discover" className="brand" style={{ fontSize: "1.05rem" }}>
+          VELVET<span className="dot">.</span>
+        </Link>
+      </div>
+
       {/* Wide top nav — desktop only (hidden under 760px via CSS). */}
       <div className="nav">
         <div className="nav-inner">
