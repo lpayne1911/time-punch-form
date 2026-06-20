@@ -1,17 +1,20 @@
-# Velvet — MVP (Phase 1: Core Safe-Dating Slice)
+# Velvet — Private, consent-first dating & community
 
-A private, consent-first dating & community web app for verified adults, built
+A private, consent-first dating & community app for verified adults, built
 compliance-first per the [product blueprint](../lifestyle-dating-app-blueprint.md).
-This is the **Phase 1 walking skeleton**: a clickable, end-to-end happy path with
-the safety and privacy primitives wired in from day one.
+It pairs a polished, **native-feeling mobile experience** (Tinder-style swipe deck,
+installable PWA) with safety and privacy primitives wired in from day one.
 
-> Demo / reference implementation. Not production-hardened. See "Before production" below.
+> Reference implementation. Not production-hardened. See "Before production" below.
 
 ## Stack
 - **Next.js 15** (App Router, React 19, TypeScript) — one full-stack codebase
-- **Prisma + SQLite** for zero-config local dev (maps to PostgreSQL in prod, blueprint §35)
+- **Prisma + PostgreSQL** (set `DATABASE_URL`; the build runs `db push` + seed)
+- **Custom CSS design system** (no UI framework) in `src/app/globals.css`
+- **next/font** — Fraunces (display serif) + Inter (UI), self-hosted
+- Installable **PWA** — manifest + generated app icons, standalone (chromeless) launch
 - Passwordless **email OTP** auth, cookie sessions
-- No external services required to run locally
+- **Vitest** for unit tests
 
 ## What's implemented (maps to blueprint sections)
 | Area | Blueprint | Status |
@@ -131,21 +134,57 @@ which serves the image to the owner, a moderator, or a confirmed mutual match
 ```bash
 cd velvet
 npm install
-npm run db:push     # create the SQLite schema
-npm run db:seed     # add 4 wholesome, compatible demo members
+
+# Point at a Postgres database (Neon, local Docker, etc.):
+echo 'DATABASE_URL="postgresql://USER:PASS@HOST:5432/velvet?schema=public"' > .env
+echo 'PREVIEW_LOGIN=1' >> .env   # shows the 6-digit login code on screen (dev only)
+
+npm run db:push     # create the Postgres schema
+npm run db:seed     # add 4 wholesome, compatible demo members + admin
 npm run dev         # http://localhost:3000
 ```
+A dev container (`.devcontainer/`) provisions Postgres automatically for Codespaces /
+VS Code "Reopen in Container". To deploy, see **`DEPLOY.md`**.
 
 ### Try the flow
-1. Open `/`, click **Enter**.
-2. Enter any email → in **dev mode the 6-digit code is shown on screen**
+1. Open `/`, tap **Enter**.
+2. Enter any email → with `PREVIEW_LOGIN=1` the **6-digit code is shown on screen**
    (in production it is delivered by email/SMS and never returned to the client).
-3. Walk the funnel: age gate → consent pledge → community standards → profile.
-4. On **Discover**, express interest. The seeded members let you exercise matching;
-   to see a mutual match instantly you can express interest from two accounts.
+3. Walk the funnel: age gate → consent pledge → community standards → **basics**
+   (name + region + intention) → you're into Discover. Finish the full profile to
+   become discoverable and unlock messaging.
+4. On **Discover**, drag the card — **right to like, left to pass, up for an intro**;
+   tap a card to expand it; paid members get **rewind**. Liking someone who likes you
+   back fires the "It's a match!" sheet (seeded members let you exercise this).
 5. In a conversation, try sending text with "rates/cashapp" (gets **flagged**) or a
    phone number (triggers a **safety nudge**). Use **Report**/**Block** from the thread.
 6. Visit **Settings** to toggle incognito, pause, export data, or delete the account.
+
+### Install as an app
+Open the site in mobile Safari → **Share → Add to Home Screen**. It launches
+full-screen (no browser chrome) with the Velvet icon, like a native app.
+
+### Demo accounts (after seeding)
+- `admin@demo.velvet` — admin / moderation dashboard
+- `kai@demo.velvet`, `rowan@demo.velvet`, `sage@demo.velvet`, `wren@demo.velvet` — members
+
+## Mobile app experience
+- **Swipe deck** (`src/components/SwipeDeck.tsx`) — a draggable card stack, one full-bleed
+  card at a time with the next peeking behind. Drag is driven imperatively (refs +
+  `requestAnimationFrame`, no React re-render per move) for native-smooth motion, with
+  LIKE/NOPE/INTRO stamps, fly-off on release, tap-to-expand, premium **rewind**
+  (`/api/unlike`), an "It's a match!" sheet, and light **haptics**.
+- **App shell** — sticky top app bar + bottom tab bar (`src/components/Nav.tsx`,
+  `BottomNav.tsx`) with safe-area insets; native touch behaviors (no tap-flash, no
+  double-tap zoom, no rubber-band scroll); modals become **bottom sheets** on phones.
+- **Screen transitions & skeletons** — `app/template.tsx` fades each screen in on
+  navigation; `loading.tsx` files show shimmer placeholders so tab switches feel instant.
+- **PWA** — `app/manifest.ts`, `app/icon.tsx`, `app/apple-icon.tsx` make it installable
+  and launch chromeless (standalone).
+- **Onboarding flow** (`src/lib/auth.ts → onboardingNext`) — age → consent → standards →
+  **basics**, then browse; the full profile is encouraged afterward (and is what makes a
+  member discoverable + unlocks messaging) so new users reach the product fast. The full
+  profile is a multi-step wizard with a live strength meter (`src/components/ProfileForm.tsx`).
 
 ## Architecture notes
 - `src/lib/tags.ts` — the **controlled vocabulary**. Profile text can only come from
@@ -193,9 +232,10 @@ sanitization, and event/shop math. 34 tests across 6 files.
   echo, the simulated subscribe/purchase, and the verification simulate page).
 
 ## Before production (still outstanding)
-- Real email/SMS delivery for OTP codes.
-- Swap SQLite → PostgreSQL (`provider` + `DATABASE_URL`); encryption at rest, a
-  managed secrets store, and a shared rate-limit store (Redis).
+- Real email/SMS delivery for OTP codes (then remove `PREVIEW_LOGIN`).
+- Real **photo uploads** to object storage (Vercel Blob / S3) — serverless has no
+  persistent disk, so uploads don't survive on Vercel today.
+- Encryption at rest, a managed secrets store, and a shared rate-limit store (Redis).
 - Wire a real image-moderation provider (Hive/Rekognition) into the photo pipeline.
 - Integrate real identity verification (Persona/Veriff/Stripe Identity) → the
   signed webhook is ready; point the provider at `/api/verification/webhook`.
