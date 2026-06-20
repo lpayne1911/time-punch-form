@@ -50,32 +50,60 @@ function CardFace({ c, front }: { c: Candidate; front?: boolean }) {
   );
 }
 
+const clamp = (n: number) => Math.max(0, Math.min(1, n));
+const buzz = (ms = 10) => {
+  if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(ms);
+};
+
 export default function SwipeDeck({ candidates }: { candidates: Candidate[] }) {
   const router = useRouter();
   const [index, setIndex] = useState(0);
-  const [drag, setDrag] = useState({ x: 0, y: 0 });
-  const [dragging, setDragging] = useState(false);
   const [exit, setExit] = useState<{ x: number; y: number; rot: number } | null>(null);
   const [match, setMatch] = useState<{ name: string; id: string } | null>(null);
   const [limit, setLimit] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  // Drag is driven imperatively (no re-render per move) for native-smooth motion.
+  const cardRef = useRef<HTMLDivElement>(null);
+  const likeRef = useRef<HTMLSpanElement>(null);
+  const nopeRef = useRef<HTMLSpanElement>(null);
+  const introRef = useRef<HTMLSpanElement>(null);
   const start = useRef({ x: 0, y: 0 });
+  const drag = useRef({ x: 0, y: 0 });
+  const dragging = useRef(false);
+  const raf = useRef(0);
 
   const current = candidates[index];
   const next = candidates[index + 1];
 
+  function paint() {
+    raf.current = 0;
+    const el = cardRef.current;
+    if (!el) return;
+    const { x, y } = drag.current;
+    el.style.transform = `translate(${x}px, ${y}px) rotate(${x / 18}deg)`;
+    if (likeRef.current) likeRef.current.style.opacity = String(clamp(x / THRESH));
+    if (nopeRef.current) nopeRef.current.style.opacity = String(clamp(-x / THRESH));
+    if (introRef.current) introRef.current.style.opacity = String(clamp(-y / (THRESH * 1.25)));
+  }
+
+  function resetStamps() {
+    for (const r of [likeRef, nopeRef, introRef]) if (r.current) r.current.style.opacity = "0";
+  }
+
   function advance() {
     setExit(null);
-    setDrag({ x: 0, y: 0 });
     setIndex((i) => i + 1);
   }
 
   async function commit(action: Action) {
     if (!current || busy) return;
+    buzz(action === "pass" ? 8 : 14);
+    const d = drag.current;
     const vec =
-      action === "pass" ? { x: -700, y: drag.y, rot: -28 }
-      : action === "intro" ? { x: drag.x, y: -800, rot: -4 }
-      : { x: 700, y: drag.y, rot: 28 };
+      action === "pass" ? { x: -700, y: d.y, rot: -28 }
+      : action === "intro" ? { x: d.x, y: -800, rot: -4 }
+      : { x: 700, y: d.y, rot: 28 };
 
     if (action === "pass") {
       setExit(vec);
@@ -93,7 +121,7 @@ export default function SwipeDeck({ candidates }: { candidates: Candidate[] }) {
     const data = await res.json().catch(() => ({}));
     setBusy(false);
     if (res.status === 402) {
-      setDrag({ x: 0, y: 0 });
+      snapBack();
       setLimit(action === "intro"
         ? "You're out of thoughtful intros. Pick some up in Add-ons."
         : (data.message ?? "You've reached today's like limit."));
@@ -101,39 +129,43 @@ export default function SwipeDeck({ candidates }: { candidates: Candidate[] }) {
     }
     setExit(vec);
     setTimeout(() => {
-      if (data.matched) setMatch({ name: current.displayName, id: data.matchId });
+      if (data.matched) { buzz(30); setMatch({ name: current.displayName, id: data.matchId }); }
       advance();
     }, 300);
   }
 
+  function snapBack() {
+    drag.current = { x: 0, y: 0 };
+    const el = cardRef.current;
+    if (el) { el.style.transition = ""; el.style.transform = ""; }
+    resetStamps();
+  }
+
   function onDown(e: React.PointerEvent) {
     if (busy || exit) return;
-    setDragging(true);
+    dragging.current = true;
     start.current = { x: e.clientX, y: e.clientY };
+    const el = cardRef.current;
+    if (el) el.style.transition = "none";
     (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
   }
   function onMove(e: React.PointerEvent) {
-    if (!dragging) return;
-    setDrag({ x: e.clientX - start.current.x, y: e.clientY - start.current.y });
+    if (!dragging.current) return;
+    drag.current = { x: e.clientX - start.current.x, y: e.clientY - start.current.y };
+    if (!raf.current) raf.current = requestAnimationFrame(paint);
   }
   function onUp() {
-    if (!dragging) return;
-    setDragging(false);
-    if (drag.y < -THRESH * 1.25 && Math.abs(drag.x) < THRESH * 1.2) commit("intro");
-    else if (drag.x > THRESH) commit("like");
-    else if (drag.x < -THRESH) commit("pass");
-    else setDrag({ x: 0, y: 0 });
+    if (!dragging.current) return;
+    dragging.current = false;
+    if (raf.current) { cancelAnimationFrame(raf.current); raf.current = 0; }
+    const el = cardRef.current;
+    if (el) el.style.transition = ""; // re-enable CSS transition for snap/fly
+    const { x, y } = drag.current;
+    if (y < -THRESH * 1.25 && Math.abs(x) < THRESH * 1.2) commit("intro");
+    else if (x > THRESH) commit("like");
+    else if (x < -THRESH) commit("pass");
+    else snapBack();
   }
-
-  const clamp = (n: number) => Math.max(0, Math.min(1, n));
-  const likeOp = clamp(drag.x / THRESH);
-  const nopeOp = clamp(-drag.x / THRESH);
-  const introOp = clamp(-drag.y / (THRESH * 1.25));
-
-  const topTransform = exit
-    ? `translate(${exit.x}px, ${exit.y}px) rotate(${exit.rot}deg)`
-    : `translate(${drag.x}px, ${drag.y}px) rotate(${drag.x / 18}deg)`;
-  const topTransition = dragging ? "none" : "transform 0.3s cubic-bezier(0.4,0,0.6,1)";
 
   if (!current) {
     return (
@@ -149,6 +181,8 @@ export default function SwipeDeck({ candidates }: { candidates: Candidate[] }) {
     );
   }
 
+  const topTransform = exit ? `translate(${exit.x}px, ${exit.y}px) rotate(${exit.rot}deg)` : undefined;
+
   return (
     <div className="deck-wrap">
       <div className="deck">
@@ -158,16 +192,17 @@ export default function SwipeDeck({ candidates }: { candidates: Candidate[] }) {
           </div>
         )}
         <div
+          ref={cardRef}
           className="deck-card front"
-          style={{ transform: topTransform, transition: topTransition, touchAction: "none" }}
+          style={exit ? { transform: topTransform } : undefined}
           onPointerDown={onDown}
           onPointerMove={onMove}
           onPointerUp={onUp}
           onPointerCancel={onUp}
         >
-          <span className="stamp like" style={{ opacity: likeOp }}>LIKE</span>
-          <span className="stamp nope" style={{ opacity: nopeOp }}>NOPE</span>
-          <span className="stamp intro" style={{ opacity: introOp }}>INTRO</span>
+          <span ref={likeRef} className="stamp like" style={{ opacity: 0 }}>LIKE</span>
+          <span ref={nopeRef} className="stamp nope" style={{ opacity: 0 }}>NOPE</span>
+          <span ref={introRef} className="stamp intro" style={{ opacity: 0 }}>INTRO</span>
           <CardFace c={current} front />
         </div>
       </div>
