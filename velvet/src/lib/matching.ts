@@ -203,6 +203,11 @@ export function orderPair(a: string, b: string): [string, string] {
   return a < b ? [a, b] : [b, a];
 }
 
+/** The other participant in a match, relative to `meId`. */
+export function otherUserId(match: { userAId: string; userBId: string }, meId: string): string {
+  return match.userAId === meId ? match.userBId : match.userAId;
+}
+
 /**
  * Records a like. If the other user already liked back, creates a Match and
  * returns it (mutual interest). Messaging is unlocked only when a Match exists.

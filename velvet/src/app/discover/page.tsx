@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { requireOnboarded } from "@/lib/guard";
 import { getCandidates, type DiscoverFilters } from "@/lib/matching";
-import { likesRemainingToday } from "@/lib/entitlements";
+import { likesRemainingToday, getEntitlements } from "@/lib/entitlements";
 import { RELATIONSHIP_INTENTIONS, EXPERIENCE_LEVELS } from "@/lib/tags";
 import Nav from "@/components/Nav";
 import SwipeDeck from "@/components/SwipeDeck";
@@ -45,6 +45,7 @@ export default async function Discover({ searchParams }: { searchParams: Promise
 
   const candidates = await getCandidates(user.id, 20, filters);
   const remaining = await likesRemainingToday(user.id);
+  const ent = await getEntitlements(user.id);
   const anyFilter = Boolean(filters.intention || filters.experience || filters.verifiedOnly);
 
   return (
@@ -108,7 +109,7 @@ export default async function Discover({ searchParams }: { searchParams: Promise
             </p>
           </div>
         ) : (
-          <SwipeDeck candidates={candidates} />
+          <SwipeDeck candidates={candidates} canRewind={ent.isPaid} />
         )}
       </div>
     </>

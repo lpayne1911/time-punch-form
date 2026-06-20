@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireOnboarded } from "@/lib/guard";
 import { prisma } from "@/lib/db";
+import { otherUserId } from "@/lib/matching";
 import Nav from "@/components/Nav";
 
 export const dynamic = "force-dynamic";
@@ -47,7 +48,7 @@ export default async function Matches() {
     include: { messages: { orderBy: { createdAt: "desc" }, take: 1 } },
   });
 
-  const otherIds = matches.map((m) => (m.userAId === user.id ? m.userBId : m.userAId));
+  const otherIds = matches.map((m) => otherUserId(m, user.id));
   const others = await prisma.user.findMany({
     where: { id: { in: otherIds } },
     include: { profile: true },
@@ -61,7 +62,7 @@ export default async function Matches() {
   const waiting: Row[] = [];
 
   for (const m of matches) {
-    const otherId = m.userAId === user.id ? m.userBId : m.userAId;
+    const otherId = otherUserId(m, user.id);
     const other = byId.get(otherId);
     const last = m.messages[0];
     const row: Row = {
