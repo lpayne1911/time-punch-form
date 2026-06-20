@@ -39,7 +39,23 @@ html, body {
   text-rendering: optimizeLegibility;
   line-height: 1.6;
   min-height: 100%;
+  /* Native-app behaviors: no rubber-band scroll chaining, no tap flash,
+     no double-tap zoom delay, no iOS text auto-resize. */
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
+body { touch-action: manipulation; }
+
+/* Selection feels like an app: chrome is non-selectable; only real content
+   (messages, inputs) can be selected/copied. */
+body { user-select: none; -webkit-user-select: none; }
+input, textarea, .msg, .selectable, .selectable * {
+  user-select: text; -webkit-user-select: text;
+}
+
+button, a, .tag, .chip { -webkit-tap-highlight-color: transparent; }
 
 /* Ambient depth: soft accent glows fixed behind everything. */
 body::before {
@@ -234,6 +250,29 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
   .bottom-nav a.active { color: var(--accent); }
   .bottom-nav a.active svg { filter: drop-shadow(0 0 8px rgba(201,139,171,0.5)); }
   .bottom-nav svg { width: 22px; height: 22px; display: block; }
+}
+
+/* ---- Mobile app shell ---- */
+.appbar { display: none; }
+@media (max-width: 759px) {
+  .appbar {
+    display: flex; align-items: center; justify-content: center;
+    position: sticky; top: 0; z-index: 25;
+    padding: calc(env(safe-area-inset-top, 0px) + 11px) 16px 11px;
+    background: rgba(16, 11, 22, 0.78);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--card-border-soft);
+  }
+  .appbar .brand { letter-spacing: 0.22em; }
+
+  .shell {
+    padding: 14px 16px calc(82px + env(safe-area-inset-bottom, 0px));
+  }
+  /* Large screen title under the app bar, iOS-style. */
+  .shell > h1:first-child,
+  .shell > .between:first-child h1 { font-size: 1.8rem; }
+
+  .card { border-radius: 16px; }
 }
 
 .blur-photo {
@@ -488,6 +527,22 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
   animation: fade 0.2s ease both;
 }
 .modal { max-width: 380px; width: 100%; margin: 0; animation: pop 0.28s cubic-bezier(0.2,0.9,0.3,1.2) both; }
+
+/* On phones, dialogs become bottom sheets that slide up — a native pattern. */
+@media (max-width: 759px) {
+  .modal-backdrop { align-items: flex-end; padding: 0; }
+  .modal {
+    max-width: 100%;
+    border-radius: 22px 22px 0 0;
+    padding: 24px 22px calc(26px + env(safe-area-inset-bottom, 0px));
+    animation: sheet 0.32s cubic-bezier(0.2,0.9,0.3,1) both;
+  }
+  .modal::after {
+    content: ""; position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+    width: 38px; height: 4px; border-radius: 999px; background: var(--card-border);
+  }
+}
+@keyframes sheet { from { transform: translateY(100%); } to { transform: none; } }
 .match-spark {
   font-size: 3rem; color: var(--accent);
   animation: beat 0.9s ease-in-out infinite;
@@ -497,8 +552,13 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
 @keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.18); } }
 
 @media (max-width: 759px) {
-  .deck { height: 66vh; }
+  .deck { height: 56vh; }
+  .swipe-btn { width: 54px; height: 54px; }
+  .swipe-btn.like { width: 66px; height: 66px; }
 }
+
+/* Tactile press feedback throughout. */
+a.card:active, .more-links a:active, .chip:active, .tag:not(.readonly):active { transform: scale(0.985); }
 
 /* Gentle entrance for page content. */
 @media (prefers-reduced-motion: no-preference) {
