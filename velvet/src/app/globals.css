@@ -386,7 +386,13 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
   box-shadow: var(--glow);
 }
 .swipe-btn.like:hover { box-shadow: 0 14px 34px -8px rgba(201,139,171,0.6); }
+.swipe-btn.rewind { width: 46px; height: 46px; font-size: 1.2rem; color: var(--gold); }
+.swipe-btn.rewind:hover { border-color: var(--gold); box-shadow: 0 8px 22px -8px rgba(212,182,129,0.45); }
 .swipe-label { text-align: center; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); margin-top: 6px; }
+
+/* Tap-to-expand profile sheet */
+.expand-sheet { text-align: left; max-height: 84vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.expand-sheet .swipe-actions { gap: 18px; }
 
 @media (max-width: 759px) {
   .discover-photo { height: 400px; }

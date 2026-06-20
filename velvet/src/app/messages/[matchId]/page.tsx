@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { requireOnboarded } from "@/lib/guard";
 import { prisma } from "@/lib/db";
 import { getEntitlements } from "@/lib/entitlements";
+import { otherUserId } from "@/lib/matching";
 import { parseTags } from "@/lib/tags";
 import Nav from "@/components/Nav";
 import Thread from "@/components/Thread";
@@ -42,7 +43,7 @@ export default async function MessageThread({
   }
 
   const isA = match.userAId === user.id;
-  const otherId = isA ? match.userBId : match.userAId;
+  const otherId = otherUserId(match, user.id);
   const [me, other] = await Promise.all([
     prisma.user.findUnique({ where: { id: user.id }, include: { profile: true } }),
     prisma.user.findUnique({ where: { id: otherId }, include: { profile: true } }),
