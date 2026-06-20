@@ -2,10 +2,9 @@ import Link from "next/link";
 import { requireOnboarded } from "@/lib/guard";
 import { getCandidates, type DiscoverFilters } from "@/lib/matching";
 import { likesRemainingToday } from "@/lib/entitlements";
-import { FREE_DAILY_LIKE_LIMIT } from "@/lib/billing";
 import { RELATIONSHIP_INTENTIONS, EXPERIENCE_LEVELS } from "@/lib/tags";
 import Nav from "@/components/Nav";
-import DiscoverCard from "@/components/DiscoverCard";
+import SwipeDeck from "@/components/SwipeDeck";
 
 export const dynamic = "force-dynamic";
 
@@ -48,22 +47,16 @@ export default async function Discover({ searchParams }: { searchParams: Promise
   const remaining = await likesRemainingToday(user.id);
   const anyFilter = Boolean(filters.intention || filters.experience || filters.verifiedOnly);
 
-  // "Today's picks" — the strongest few, given a reason to come back daily.
-  const picks = candidates.slice(0, 3);
-  const rest = candidates.slice(3);
-
-  const used = remaining === "unlimited" ? 0 : FREE_DAILY_LIKE_LIMIT - remaining;
-  const pct = remaining === "unlimited" ? 100 : Math.round((remaining / FREE_DAILY_LIKE_LIMIT) * 100);
-
   return (
     <>
       <Nav />
       <div className="shell">
-        <h1>Discover</h1>
-        <p className="lede">
-          People we think you'll connect with — based on shared values, intentions, and
-          communication style. Photos stay blurred until you both express interest.
-        </p>
+        <div className="between">
+          <h1 style={{ margin: 0 }}>Discover</h1>
+          {remaining !== "unlimited" && (
+            <span className="badge">{remaining} likes left</span>
+          )}
+        </div>
 
         {!user.profile?.completed && (
           <div className="notice warn">
@@ -71,20 +64,6 @@ export default async function Discover({ searchParams }: { searchParams: Promise
             appear in Discover for others and to unlock messaging.
             <div style={{ marginTop: 10 }}>
               <Link href="/onboarding/profile" className="btn small">Complete my profile</Link>
-            </div>
-          </div>
-        )}
-
-        {remaining !== "unlimited" && (
-          <div className="likes-meter">
-            <div className="between">
-              <span className="small">
-                <strong>{remaining}</strong> like{remaining === 1 ? "" : "s"} left today
-              </span>
-              <Link href="/premium?feature=unlimitedLikes" className="small">Unlimited with Plus</Link>
-            </div>
-            <div className="meter-track" aria-hidden>
-              <div className="meter-fill" style={{ width: `${pct}%` }} />
             </div>
           </div>
         )}
@@ -129,20 +108,7 @@ export default async function Discover({ searchParams }: { searchParams: Promise
             </p>
           </div>
         ) : (
-          <>
-            <h2>Today&apos;s picks</h2>
-            {picks.map((c) => (
-              <DiscoverCard key={c.userId} candidate={c} highlight />
-            ))}
-            {rest.length > 0 && (
-              <>
-                <h2>More people</h2>
-                {rest.map((c) => (
-                  <DiscoverCard key={c.userId} candidate={c} />
-                ))}
-              </>
-            )}
-          </>
+          <SwipeDeck candidates={candidates} />
         )}
       </div>
     </>
