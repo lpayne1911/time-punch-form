@@ -481,6 +481,7 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
   box-shadow: var(--shadow);
   cursor: grab;
 }
+.deck-card.front { transition: transform 0.32s cubic-bezier(0.4, 0, 0.6, 1); will-change: transform; }
 .deck-card.front:active { cursor: grabbing; }
 .deck-card.behind { transform: scale(0.95) translateY(14px); filter: brightness(0.8); pointer-events: none; }
 
@@ -560,8 +561,17 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
 /* Tactile press feedback throughout. */
 a.card:active, .more-links a:active, .chip:active, .tag:not(.readonly):active { transform: scale(0.985); }
 
-/* Gentle entrance for page content. */
-@media (prefers-reduced-motion: no-preference) {
-  .shell > * { animation: rise 0.4s ease both; }
-  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-}
+/* App-like screen transition on every navigation (opacity only — safe for
+   fixed/sticky chrome). Driven by app/template.tsx, which remounts per route. */
+.screen { animation: screenIn 0.26s ease both; }
+@keyframes screenIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .screen { animation: none; } }
+
+/* Loading skeletons — instant placeholder while a screen streams in. */
+.skel { background: linear-gradient(100deg, var(--bg-soft) 30%, var(--card-2) 50%, var(--bg-soft) 70%); background-size: 200% 100%; animation: shimmer 1.3s linear infinite; border-radius: 8px; }
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+.skel-line { height: 14px; margin: 8px 0; }
+.skel-title { height: 30px; width: 45%; border-radius: 10px; margin: 4px 0 18px; }
+.skel-deck { height: min(56vh, 540px); border-radius: var(--radius); }
+.skel-row { height: 72px; border-radius: var(--radius); margin: 12px 0; }
+@media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
