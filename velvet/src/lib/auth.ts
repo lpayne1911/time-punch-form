@@ -1,4 +1,4 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { randomBytes, randomInt } from "crypto";
 import { prisma } from "./db";
 import { parseTags } from "./tags";
@@ -36,7 +36,7 @@ export async function verifyOtp(email: string, code: string): Promise<boolean> {
   return true;
 }
 
-export async function createSession(userId: string): Promise<void> {
+export async function createSession(userId: string): Promise<string> {
   const token = randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + SESSION_TTL_DAYS * 86_400_000);
   await prisma.session.create({ data: { token, userId, expiresAt } });
@@ -48,6 +48,9 @@ export async function createSession(userId: string): Promise<void> {
     path: "/",
     expires: expiresAt,
   });
+  // Returned so native clients (which can't use httpOnly cookies) can persist
+  // the token in secure storage and present it as a Bearer credential.
+  return token;
 }
 
 export async function destroySession(): Promise<void> {
@@ -61,7 +64,14 @@ export async function destroySession(): Promise<void> {
 
 export async function getCurrentUser() {
   const jar = await cookies();
-  const token = jar.get(SESSION_COOKIE)?.value;
+  let token = jar.get(SESSION_COOKIE)?.value;
+  if (!token) {
+    // Native clients (Expo) can't carry an httpOnly cookie, so they present the
+    // same session token as a Bearer credential. Additive — the web flow, which
+    // always has the cookie, is unaffected.
+    const auth = (await headers()).get("authorization");
+    if (auth?.startsWith("Bearer ")) token = auth.slice(7).trim();
+  }
   if (!token) return null;
   const session = await prisma.session.findUnique({
     where: { token },

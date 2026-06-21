@@ -1,0 +1,105 @@
+# Velvet — Native Mobile Client (Expo)
+
+A true native app (iOS + Android) for Velvet, built with **Expo + React Native +
+expo-router**. This is the mobile front end; it talks to the existing Velvet
+backend (the Next.js app in [`../velvet`](../velvet)) over HTTP and reuses its
+matching, safety, billing, and verification logic unchanged.
+
+> This replaces the "make the website look like an app" approach. The web app
+> remains the backend / admin / reference surface; this is the product members
+> install.
+
+## Stack
+
+| Concern            | Choice                                             |
+| ------------------ | -------------------------------------------------- |
+| Runtime            | Expo SDK 52 (React Native 0.76, new architecture)  |
+| Navigation         | `expo-router` (typed routes), native bottom tabs   |
+| Gestures           | `react-native-gesture-handler`                     |
+| Animation          | `react-native-reanimated` (swipe deck)             |
+| Safe areas         | `react-native-safe-area-context`                   |
+| Secure token store | `expo-secure-store`                                |
+| Theme              | Design tokens in `theme/tokens.ts` (no CSS)        |
+
+## Layout
+
+```
+app/
+  _layout.tsx          # providers: gesture root, safe-area, auth, themed Stack
+  index.tsx            # bootstrap → age-gate or tabs
+  (auth)/
+    age-gate.tsx       # consent-first 18+ entry
+    login.tsx          # passwordless email + code
+  (tabs)/
+    _layout.tsx        # native bottom tabs (Discover/Likes/Matches/Events/Profile)
+    discover.tsx       # full-screen swipe deck
+    likes.tsx  matches.tsx  events.tsx  profile.tsx
+components/
+  SwipeDeck.tsx        # PanGesture + Reanimated card stack (like/pass/super-like)
+  SwipeCard.tsx        # compatibility-first card (photos blurred pre-match)
+  MatchOverlay.tsx     # "it's mutual" modal
+  ui/                  # Screen, AppHeader, Button, Tag, EmptyState
+lib/
+  api.ts               # typed API client (Bearer auth via SecureStore)
+  auth.tsx             # AuthProvider / useAuth
+  config.ts  types.ts  haptics.ts
+theme/tokens.ts        # colors, spacing, radius, gradients
+```
+
+## How auth works with the existing backend
+
+The web app authenticates with an **httpOnly cookie**, which a native client
+can't use. The backend was extended **additively** (no change to the web flow):
+
+- `POST /api/auth/verify` with header `x-velvet-client: native` now also returns
+  the session `token` in the body. The app stores it in `expo-secure-store`.
+- Every request sends `Authorization: Bearer <token>`. `getCurrentUser()` reads
+  the bearer token when no cookie is present.
+
+JSON endpoints added for the native client:
+
+- `GET /api/me` — current member + profile summary
+- `GET /api/discover` — ranked compatibility deck (reuses `getCandidates`)
+- existing `POST /api/like`, `POST /api/superlike` now accept bearer auth
+
+## Running it
+
+From this `mobile/` directory:
+
+```bash
+npm install
+npx expo start
+```
+
+Point the app at your running Velvet backend (`cd ../velvet && npm run dev`,
+which serves on :3000). The dev API URL is inferred automatically, but you can
+override it:
+
+```bash
+# .env.local (or an EAS secret)
+EXPO_PUBLIC_API_URL=http://192.168.1.20:3000
+```
+
+- iOS simulator reaches the host at `http://localhost:3000`
+- Android emulator must use `http://10.0.2.2:3000`
+- A physical device must use your machine's LAN IP
+
+To get login codes during preview without an email provider, run the backend
+with `PREVIEW_LOGIN=1` — the code is shown in the app.
+
+## Product & store guardrails
+
+Consent-first, mature, private — never explicit or transactional. Photos are
+blurred until a mutual match; Discover leads with **why** two people are
+compatible (shared values/intentions), never a desirability score. This keeps
+the client Apple/Google review-friendly.
+
+## Status (this scaffold)
+
+Working end-to-end: age gate → passwordless login → native swipe deck wired to
+the live Discover/like/super-like API, with match detection and the daily-like
+upgrade prompt; data-backed Profile with sign-out.
+
+Next phases (structured screens already in place): Likes list, Matches +
+messaging, Events, native onboarding, premium/add-ons, push notifications.
+```

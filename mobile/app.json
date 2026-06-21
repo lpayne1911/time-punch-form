@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "Velvet",
+    "slug": "velvet",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "velvet",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#100b16",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.velvet.app"
+    },
+    "android": {
+      "package": "com.velvet.app",
+      "edgeToEdgeEnabled": true
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
