@@ -9,3 +9,5 @@ next-env.d.ts
 
 # Uploaded member media — never committed
 uploads/
+
+*.tsbuildinfo

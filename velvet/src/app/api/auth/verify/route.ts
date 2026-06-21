@@ -49,7 +49,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "This account is not available." }, { status: 403 });
   }
 
-  await createSession(user.id);
+  const token = await createSession(user.id);
   const next = onboardingNext(user) ?? "/discover";
-  return NextResponse.json({ ok: true, next });
+  // Native clients (Expo) identify themselves and receive the session token in
+  // the body to store in secure storage. Web clients rely on the httpOnly cookie
+  // and never see the token.
+  const native = req.headers.get("x-velvet-client") === "native";
+  return NextResponse.json({ ok: true, next, token: native ? token : undefined });
 }
