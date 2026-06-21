@@ -72,8 +72,13 @@ JSON endpoints added for the native client:
 
 ## Running it
 
-> **Want to try it on your phone?** See **[RUN_ON_IPHONE.md](./RUN_ON_IPHONE.md)** —
-> a step-by-step guide using Expo Go against your deployed Vercel backend.
+> **Ways to get it on your phone:**
+> - **[DEPLOY_WEB.md](./DEPLOY_WEB.md)** — installable web app (Add to Home Screen);
+>   free, no computer, no Apple account. Deploy from your iPhone via a 2nd Vercel project.
+> - **[RUN_ON_IPHONE.md](./RUN_ON_IPHONE.md)** — Expo Go against your Vercel backend
+>   (needs a computer to run the bundler).
+> - **[BUILD_TESTFLIGHT.md](./BUILD_TESTFLIGHT.md)** — real native app via TestFlight
+>   (cloud build from GitHub; needs an Apple Developer account).
 
 This is a **native app**, so it is *not* served from a Vercel URL — Vercel hosts
 only the `velvet/` backend. You run the app through Expo Go (phone) or a

@@ -10,11 +10,17 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.velvet.app"
+      "bundleIdentifier": "com.velvet.app",
+      "buildNumber": "1"
     },
     "android": {
       "package": "com.velvet.app",
       "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "themeColor": "#100b16"
     },
     "plugins": [
       "expo-router",

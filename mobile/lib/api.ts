@@ -1,4 +1,4 @@
-import * as SecureStore from "expo-secure-store";
+import * as storage from "./storage";
 import { API_URL, CLIENT_HEADER } from "./config";
 import type {
   BillingData,
@@ -27,14 +27,14 @@ let cachedToken: string | null = null;
 
 export async function getToken(): Promise<string | null> {
   if (cachedToken) return cachedToken;
-  cachedToken = await SecureStore.getItemAsync(TOKEN_KEY);
+  cachedToken = await storage.getItem(TOKEN_KEY);
   return cachedToken;
 }
 
 export async function setToken(token: string | null): Promise<void> {
   cachedToken = token;
-  if (token) await SecureStore.setItemAsync(TOKEN_KEY, token);
-  else await SecureStore.deleteItemAsync(TOKEN_KEY);
+  if (token) await storage.setItem(TOKEN_KEY, token);
+  else await storage.deleteItem(TOKEN_KEY);
 }
 
 /** Structured error so screens can react to status / upgrade prompts. */

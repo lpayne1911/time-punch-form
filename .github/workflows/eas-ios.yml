@@ -1,0 +1,55 @@
+name: EAS iOS build
+
+# Manual trigger so a native iOS build can be kicked off from the GitHub website
+# (Actions tab → Run workflow) — no local computer required. The build itself
+# runs on Expo's cloud (EAS), then optionally submits to TestFlight.
+#
+# Prerequisites (one-time, all doable from a phone browser — see
+# mobile/BUILD_TESTFLIGHT.md):
+#   - An Expo account; add its access token as the repo secret EXPO_TOKEN.
+#   - An Apple Developer account; iOS credentials configured in EAS.
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "EAS build profile"
+        type: choice
+        default: production
+        options: [production, preview]
+      submit:
+        description: "Submit to TestFlight after build"
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build (and optionally submit)
+        run: |
+          if [ "${{ inputs.submit }}" = "true" ]; then
+            eas build --platform ios --profile ${{ inputs.profile }} --non-interactive --auto-submit
+          else
+            eas build --platform ios --profile ${{ inputs.profile }} --non-interactive
+          fi
