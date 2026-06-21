@@ -1,6 +1,23 @@
 import * as SecureStore from "expo-secure-store";
 import { API_URL, CLIENT_HEADER } from "./config";
-import type { Candidate, LikeResult, Me } from "./types";
+import type {
+  BillingData,
+  Candidate,
+  EventsData,
+  Interval,
+  ItemKind,
+  LikeResult,
+  LikesData,
+  Me,
+  MatchRow,
+  ReportCategory,
+  RsvpStatus,
+  SettingsData,
+  ThreadData,
+  ThreadMessage,
+  Tier,
+  Visibility,
+} from "./types";
 
 const TOKEN_KEY = "velvet.session.token";
 
@@ -137,6 +154,65 @@ export const api = {
 
   superlike(toUserId: string): Promise<LikeResult> {
     return request("/api/superlike", { method: "POST", body: { toUserId } });
+  },
+
+  /* ----- Likes ----- */
+  likes(): Promise<LikesData> {
+    return request("/api/likes");
+  },
+
+  /* ----- Matches & messages ----- */
+  matches(): Promise<{ matches: MatchRow[] }> {
+    return request("/api/matches");
+  },
+  thread(matchId: string): Promise<ThreadData> {
+    return request(`/api/messages/${encodeURIComponent(matchId)}`);
+  },
+  sendMessage(
+    matchId: string,
+    body: string,
+  ): Promise<{ ok: true; message: ThreadMessage; nudgeContactInfo: boolean; heldForReview: boolean }> {
+    return request("/api/message", { method: "POST", body: { matchId, body } });
+  },
+  matchAction(
+    matchId: string,
+    action: "extend" | "pause" | "resume" | "reveal" | "aftercare",
+    answer?: "respectful" | "not",
+  ): Promise<{ ok: true }> {
+    return request("/api/match", { method: "POST", body: { matchId, action, answer } });
+  },
+
+  /* ----- Events ----- */
+  events(): Promise<EventsData> {
+    return request("/api/events");
+  },
+  rsvp(eventId: string, action: "rsvp" | "cancel"): Promise<{ ok: true; status: RsvpStatus }> {
+    return request("/api/events/rsvp", { method: "POST", body: { eventId, action } });
+  },
+
+  /* ----- Billing / premium ----- */
+  billing(): Promise<BillingData> {
+    return request("/api/billing");
+  },
+  subscribe(tier: Tier, interval: Interval): Promise<{ ok: true }> {
+    return request("/api/billing/subscribe", { method: "POST", body: { tier, interval } });
+  },
+  purchase(kind: ItemKind): Promise<{ ok: true }> {
+    return request("/api/billing/purchase", { method: "POST", body: { kind } });
+  },
+
+  /* ----- Settings & safety ----- */
+  settings(): Promise<SettingsData> {
+    return request("/api/settings");
+  },
+  updateSetting(key: string, value: boolean | Visibility): Promise<{ ok: true }> {
+    return request("/api/settings", { method: "POST", body: { key, value } });
+  },
+  report(reportedId: string, category: ReportCategory, detail?: string): Promise<{ ok: true }> {
+    return request("/api/report", { method: "POST", body: { reportedId, category, detail } });
+  },
+  block(blockedId: string): Promise<{ ok: true }> {
+    return request("/api/block", { method: "POST", body: { blockedId } });
   },
 
   async signOut(): Promise<void> {

@@ -1,5 +1,6 @@
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "@/components/ui/Screen";
 import { AppHeader } from "@/components/ui/AppHeader";
@@ -16,6 +17,7 @@ const VERIFICATION_LABEL: Record<string, string> = {
 };
 
 export default function Profile() {
+  const router = useRouter();
   const { me, signOut } = useAuth();
   const profile = me?.profile;
   const monogram = (profile?.displayName ?? me?.email ?? "·").trim().charAt(0).toUpperCase();
@@ -79,11 +81,48 @@ export default function Profile() {
           </Section>
         ) : null}
 
+        <View style={styles.menu}>
+          <MenuRow
+            icon="diamond-outline"
+            label="Membership & add-ons"
+            onPress={() => router.push("/premium")}
+          />
+          <MenuRow
+            icon="settings-outline"
+            label="Settings & safety"
+            onPress={() => router.push("/settings")}
+            last
+          />
+        </View>
+
         <View style={styles.signOut}>
           <Button label="Sign out" variant="ghost" onPress={signOut} />
         </View>
       </ScrollView>
     </Screen>
+  );
+}
+
+function MenuRow({
+  icon,
+  label,
+  onPress,
+  last,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  onPress: () => void;
+  last?: boolean;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.menuRow, !last && styles.menuRowBorder, pressed && styles.menuRowPressed]}
+    >
+      <Ionicons name={icon} size={20} color={colors.inkSoft} />
+      <Text style={styles.menuLabel}>{label}</Text>
+      <Ionicons name="chevron-forward" size={18} color={colors.inkFaint} />
+    </Pressable>
   );
 }
 
@@ -145,5 +184,16 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   tags: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
+  menu: {
+    backgroundColor: colors.card,
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    borderRadius: radius.md,
+    overflow: "hidden",
+  },
+  menuRow: { flexDirection: "row", alignItems: "center", gap: spacing.md, padding: spacing.md },
+  menuRowBorder: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: colors.cardBorderSoft },
+  menuRowPressed: { backgroundColor: colors.card2 },
+  menuLabel: { flex: 1, color: colors.ink, fontSize: font.size.md, fontWeight: font.weight.medium },
   signOut: { marginTop: spacing.md },
 });

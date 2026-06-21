@@ -60,7 +60,15 @@ JSON endpoints added for the native client:
 
 - `GET /api/me` — current member + profile summary
 - `GET /api/discover` — ranked compatibility deck (reuses `getCandidates`)
-- existing `POST /api/like`, `POST /api/superlike` now accept bearer auth
+- `GET /api/likes` — who likes you (gated by `seeWhoLikedYou`)
+- `GET /api/matches` — bucketed match list
+- `GET /api/messages/[matchId]` — full conversation (marks read, builds starters)
+- `GET /api/events`, `POST /api/events/rsvp` — events list + reserve/cancel
+- `GET /api/billing` — entitlements, tiers, à-la-carte catalog
+- `GET/POST /api/settings` — privacy/safety toggles (premium-gated to enable)
+- existing `POST /api/like`, `/api/superlike`, `/api/message`, `/api/match`,
+  `/api/report`, `/api/block`, `/api/billing/subscribe`, `/api/billing/purchase`
+  now accept bearer auth
 
 ## Running it
 
@@ -94,12 +102,23 @@ blurred until a mutual match; Discover leads with **why** two people are
 compatible (shared values/intentions), never a desirability score. This keeps
 the client Apple/Google review-friendly.
 
-## Status (this scaffold)
+## Modules
 
-Working end-to-end: age gate → passwordless login → native swipe deck wired to
-the live Discover/like/super-like API, with match detection and the daily-like
-upgrade prompt; data-backed Profile with sign-out.
+All core modules from the product spec are wired to live API data:
 
-Next phases (structured screens already in place): Likes list, Matches +
-messaging, Events, native onboarding, premium/add-ons, push notifications.
+| Module            | Screen                          | Backed by                          |
+| ----------------- | ------------------------------- | ---------------------------------- |
+| Login / age gate  | `(auth)/age-gate`, `(auth)/login` | `/api/auth/*`                    |
+| Discover          | `(tabs)/discover`               | `/api/discover`, like/superlike    |
+| Likes             | `(tabs)/likes`                  | `/api/likes` (+ upsell when locked)|
+| Matches           | `(tabs)/matches`                | `/api/matches`                     |
+| Messages          | `messages/[matchId]`            | `/api/messages/[id]`, `/api/message` |
+| Events            | `(tabs)/events`                 | `/api/events`, `/api/events/rsvp`  |
+| Profile           | `(tabs)/profile`                | `/api/me`                          |
+| Premium / add-ons | `premium`                       | `/api/billing` (+ subscribe/purchase) |
+| Settings / safety | `settings`                      | `/api/settings`, report/block      |
+
+In-conversation **report/block** and the premium-gated privacy toggles are live.
+Next phases: native onboarding flow (currently completed in the web app),
+mutual photo reveal rendering, and push notifications.
 ```

@@ -23,6 +23,9 @@ export default function RootLayout() {
             <Stack.Screen name="index" />
             <Stack.Screen name="(auth)" />
             <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="messages/[matchId]" options={{ animation: "slide_from_right" }} />
+            <Stack.Screen name="settings" options={{ animation: "slide_from_right" }} />
+            <Stack.Screen name="premium" options={{ presentation: "modal", animation: "slide_from_bottom" }} />
           </Stack>
         </AuthProvider>
       </SafeAreaProvider>
