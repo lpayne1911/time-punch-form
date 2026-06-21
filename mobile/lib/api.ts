@@ -10,6 +10,8 @@ import type {
   LikesData,
   Me,
   MatchRow,
+  OnboardingConfig,
+  OnboardingStep,
   ReportCategory,
   RsvpStatus,
   SettingsData,
@@ -132,6 +134,14 @@ export const api = {
 
   me(): Promise<Me> {
     return request<Me>("/api/me");
+  },
+
+  /* ----- Onboarding ----- */
+  onboardingConfig(): Promise<OnboardingConfig> {
+    return request("/api/onboarding/config", { auth: false });
+  },
+  onboardingStep(payload: OnboardingStep): Promise<{ ok: true; next: string | null }> {
+    return request("/api/onboarding", { method: "POST", body: payload });
   },
 
   discover(filters?: {

@@ -16,10 +16,12 @@ const ICONS: Record<string, { active: IconName; inactive: IconName }> = {
 };
 
 export default function TabsLayout() {
-  const { status } = useAuth();
+  const { status, me } = useAuth();
 
-  // Guard the whole app surface: a signed-out user can't reach the tabs.
+  // Guard the whole app surface: a signed-out user can't reach the tabs, and an
+  // unfinished member is sent back into the onboarding funnel.
   if (status === "signedOut") return <Redirect href="/(auth)/age-gate" />;
+  if (me?.onboardingNext) return <Redirect href="/onboarding" />;
 
   return (
     <Tabs

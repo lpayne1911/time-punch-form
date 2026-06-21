@@ -204,3 +204,62 @@ export type ReportCategory =
   | "MINOR_SAFETY"
   | "OFF_PLATFORM"
   | "SPAM";
+
+/* ----------------------------- Onboarding ------------------------------ */
+
+export type ConsentPledge = {
+  version: string;
+  title: string;
+  intro: string;
+  points: string[];
+};
+
+export type CommunityStandards = {
+  version: string;
+  title: string;
+  intro: string;
+  sections: { heading: string; body: string }[];
+};
+
+export type OnboardingVocab = {
+  intentions: string[];
+  communicationStyles: string[];
+  interests: string[];
+  boundaries: string[];
+  dealbreakers: string[];
+  lookingFor: string[];
+  values: string[];
+  experienceLevels: string[];
+  intentionIntensity: string[];
+  availability: string[];
+  meetReadiness: string[];
+  ageDisplay: { value: string; label: string }[];
+};
+
+export type OnboardingConfig = {
+  consentPledge: ConsentPledge;
+  communityStandards: CommunityStandards;
+  privacyPromise: string;
+  vocab: OnboardingVocab;
+};
+
+export type OnboardingStep =
+  | { step: "age"; over18: boolean; dobYear: number }
+  | { step: "consent" }
+  | { step: "standards" }
+  | { step: "basics"; displayName: string; location: string; intentions: string[] }
+  | {
+      step: "profile";
+      interests: string[];
+      communicationStyle: string[];
+      boundaries: string[];
+      dealbreakers: string[];
+      lookingFor: string[];
+      values: string[];
+      experienceLevel?: string;
+      visibility?: Visibility;
+      intentionIntensity?: string;
+      availability?: string;
+      meetReadiness?: string;
+      ageDisplay?: string;
+    };

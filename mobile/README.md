@@ -109,6 +109,7 @@ All core modules from the product spec are wired to live API data:
 | Module            | Screen                          | Backed by                          |
 | ----------------- | ------------------------------- | ---------------------------------- |
 | Login / age gate  | `(auth)/age-gate`, `(auth)/login` | `/api/auth/*`                    |
+| Onboarding        | `onboarding`                    | `/api/onboarding`, `/api/onboarding/config` |
 | Discover          | `(tabs)/discover`               | `/api/discover`, like/superlike    |
 | Likes             | `(tabs)/likes`                  | `/api/likes` (+ upsell when locked)|
 | Matches           | `(tabs)/matches`                | `/api/matches`                     |
@@ -118,7 +119,11 @@ All core modules from the product spec are wired to live API data:
 | Premium / add-ons | `premium`                       | `/api/billing` (+ subscribe/purchase) |
 | Settings / safety | `settings`                      | `/api/settings`, report/block      |
 
-In-conversation **report/block** and the premium-gated privacy toggles are live.
-Next phases: native onboarding flow (currently completed in the web app),
-mutual photo reveal rendering, and push notifications.
+The **native onboarding funnel** (age gate → consent pledge → community
+standards → basics → optional full profile) gates entry: a signed-in member who
+hasn't cleared `onboardingNext` is routed to `/onboarding` from both the
+bootstrap and the tab guard. In-conversation **report/block** and the
+premium-gated privacy toggles are live.
+
+Next phases: mutual photo-reveal rendering in threads, and push notifications.
 ```

@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth";
 
 /** Bootstrap gate: route to the age-gate/login flow or into the app. */
 export default function Index() {
-  const { status } = useAuth();
+  const { status, me } = useAuth();
 
   if (status === "loading") {
     return (
@@ -18,6 +18,8 @@ export default function Index() {
   }
 
   if (status === "signedOut") return <Redirect href="/(auth)/age-gate" />;
+  // Signed in but not through the funnel yet → finish onboarding first.
+  if (me?.onboardingNext) return <Redirect href="/onboarding" />;
   return <Redirect href="/(tabs)/discover" />;
 }
 

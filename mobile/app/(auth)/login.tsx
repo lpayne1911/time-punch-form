@@ -49,7 +49,8 @@ export default function Login() {
     try {
       await api.verifyCode(email.trim().toLowerCase(), code.trim());
       await completeSignIn();
-      router.replace("/(tabs)/discover");
+      // Let the bootstrap router decide: onboarding funnel or straight to Discover.
+      router.replace("/");
     } catch (e) {
       setError(e instanceof ApiError ? e.message : "That code didn't work.");
     } finally {
