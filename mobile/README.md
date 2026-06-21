@@ -72,28 +72,33 @@ JSON endpoints added for the native client:
 
 ## Running it
 
+> **Want to try it on your phone?** See **[RUN_ON_IPHONE.md](./RUN_ON_IPHONE.md)** —
+> a step-by-step guide using Expo Go against your deployed Vercel backend.
+
+This is a **native app**, so it is *not* served from a Vercel URL — Vercel hosts
+only the `velvet/` backend. You run the app through Expo Go (phone) or a
+simulator, and it talks to the backend over HTTP.
+
 From this `mobile/` directory:
 
 ```bash
+# Point at your backend. For a real phone, use your DEPLOYED Vercel URL:
+echo "EXPO_PUBLIC_API_URL=https://your-velvet-app.vercel.app" > .env
+# (or, against a local backend in another terminal: cd ../velvet && npm run dev)
+
 npm install
-npx expo start
+npx expo start          # add --tunnel if the phone isn't on your Wi-Fi
 ```
 
-Point the app at your running Velvet backend (`cd ../velvet && npm run dev`,
-which serves on :3000). The dev API URL is inferred automatically, but you can
-override it:
+`EXPO_PUBLIC_API_URL` (see `.env.example`) is the one thing to set. If it's
+unset, the app falls back to inferring a local dev server:
 
-```bash
-# .env.local (or an EAS secret)
-EXPO_PUBLIC_API_URL=http://192.168.1.20:3000
-```
-
-- iOS simulator reaches the host at `http://localhost:3000`
+- iOS simulator reaches a local host at `http://localhost:3000`
 - Android emulator must use `http://10.0.2.2:3000`
-- A physical device must use your machine's LAN IP
+- A physical device on a local backend must use your machine's LAN IP
 
-To get login codes during preview without an email provider, run the backend
-with `PREVIEW_LOGIN=1` — the code is shown in the app.
+To get login codes without an email provider, the backend must run with
+`PREVIEW_LOGIN=1` — the 6-digit code is then shown in the app.
 
 ## Product & store guardrails
 
