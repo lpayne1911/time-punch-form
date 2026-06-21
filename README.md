@@ -1,5 +1,19 @@
 # time-punch-form
 
+This repository contains two unrelated projects:
+
+1. **[Velvet](velvet/)** — a private, consent-first dating & community app
+   (Next.js + Postgres, installable PWA with a Tinder-style swipe deck). This is
+   the main application. **See [`velvet/README.md`](velvet/README.md)** for the
+   full overview, run, and deploy instructions, and [`velvet/DEPLOY.md`](velvet/DEPLOY.md)
+   for click-by-click Vercel deployment.
+2. **Trading-scanner pages** (below) — a small collection of self-contained,
+   single-file web pages plus a Python screener.
+
+---
+
+## Trading-scanner pages
+
 A small collection of self-contained, single-file web pages (no build step,
 no dependencies — just open the HTML in a browser).
 
