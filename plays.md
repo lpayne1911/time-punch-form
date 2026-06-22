@@ -1,25 +1,27 @@
 # Daily Play Watchlist
 
-_Generated 2026-06-19T23:34:55+00:00 — not financial advice._
+_Generated 2026-06-22T23:48:18+00:00 — not financial advice._
 
-- Benchmark **SPY** YTD: **9.89%** (leader threshold **19.78%**)
-- Leading sectors: Energy, Industrials, Information Technology, Materials
-- Scanned **503** names → **13** plays
+- Benchmark **SPY** YTD: **9.54%** (leader threshold **19.08%**)
+- Leading sectors: Energy, Industrials, Information Technology, Materials, Real Estate
+- Scanned **503** names → **15** plays
 - Budget **$2,500**, risking **1.0%** (**$25.00** max loss/trade)
 - Plan: **3.0R** target, **2.0× ATR** stop (capped at **12.0%**), ~**40-day** hold (let-winners-run, per the backtest sweep)
 
 | # | Ticker | Sector | YTD % | RS | Setup | Price | Stop | Stop % | Target | Shares | Position $ | Risk $ |
 |--:|:--|:--|--:|--:|:--|--:|--:|--:|--:|--:|--:|--:|
-| 1 | ON | Information Technology | 114.5 | 11.58 | pullback | 121.62 | 107.03 | 12.0 | 165.4 | 1 | 121.62 | 14.59 |
-| 2 | COHR | Information Technology | 100.47 | 10.16 | pullback | 389.57 | 342.82 | 12.0 | 529.82 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 3 | HPE | Information Technology | 97.99 | 9.91 | pullback | 47.41 | 41.72 | 12.0 | 64.48 | 4 | 189.64 | 22.76 |
-| 4 | GNRC | Industrials | 97.84 | 9.89 | pullback | 279.15 | 247.05 | 11.5 | 375.46 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 5 | FTNT | Information Technology | 85.84 | 8.68 | pullback | 144.73 | 131.82 | 8.92 | 183.46 | 1 | 144.73 | 12.91 |
-| 6 | JBL | Information Technology | 54.78 | 5.54 | pullback | 371.88 | 329.63 | 11.36 | 498.62 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 7 | NXPI | Information Technology | 42.31 | 4.28 | pullback | 313.27 | 280.13 | 10.58 | 412.7 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 8 | FCX | Materials | 32.88 | 3.32 | pullback | 68.68 | 61.66 | 10.22 | 89.74 | 3 | 206.04 | 21.06 |
-| 9 | QCOM | Information Technology | 32.04 | 3.24 | pullback | 226.11 | 198.98 | 12.0 | 307.51 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 10 | WAB | Industrials | 26.92 | 2.72 | breakout | 273.83 | 249.75 | 8.79 | 346.06 | 1 | 273.83 | 24.08 |
-| 11 | IEX | Industrials | 26.52 | 2.68 | breakout | 224.93 | 200.78 | 10.74 | 297.37 | 1 | 224.93 | 24.15 |
-| 12 | NDSN | Industrials | 23.5 | 2.38 | pullback | 295.92 | 281.11 | 5.0 | 340.34 | 1 | 295.92 | 14.81 |
-| 13 | LIN | Materials | 20.13 | 2.04 | pullback | 512.15 | 490.64 | 4.2 | 576.68 | 1 | 512.15 | 21.51 |
+| 1 | HPE | Information Technology | 102.13 | 10.71 | pullback | 48.4 | 42.59 | 12.0 | 65.82 | 4 | 193.6 | 23.23 |
+| 2 | FTNT | Information Technology | 86.68 | 9.09 | pullback | 145.39 | 133.06 | 8.48 | 182.38 | 2 | 290.78 | 24.66 |
+| 3 | CSCO | Information Technology | 60.69 | 6.36 | pullback | 121.53 | 112.73 | 7.24 | 147.93 | 2 | 243.06 | 17.6 |
+| 4 | JBL | Information Technology | 57.01 | 5.98 | pullback | 377.24 | 334.16 | 11.42 | 506.48 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 5 | NXPI | Information Technology | 46.84 | 4.91 | pullback | 323.24 | 290.33 | 10.18 | 421.96 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 6 | GWW | Industrials | 34.16 | 3.58 | pullback | 1341.42 | 1266.31 | 5.6 | 1566.76 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 7 | FCX | Materials | 33.9 | 3.55 | pullback | 69.21 | 62.4 | 9.84 | 89.64 | 3 | 207.63 | 20.43 |
+| 8 | DOC | Real Estate | 27.62 | 2.9 | pullback | 19.98 | 18.93 | 5.26 | 23.13 | 23 | 459.54 | 24.17 |
+| 9 | PSA | Real Estate | 26.33 | 2.76 | pullback | 320.22 | 303.82 | 5.12 | 369.42 | 1 | 320.22 | 16.4 |
+| 10 | KIM | Real Estate | 25.82 | 2.71 | pullback | 24.69 | 23.61 | 4.36 | 27.92 | 23 | 567.87 | 24.76 |
+| 11 | FRT | Real Estate | 24.23 | 2.54 | pullback | 121.72 | 117.61 | 3.38 | 134.06 | 6 | 730.32 | 24.68 |
+| 12 | NDSN | Industrials | 23.14 | 2.43 | pullback | 295.06 | 281.13 | 4.72 | 336.84 | 1 | 295.06 | 13.93 |
+| 13 | LIN | Materials | 21.2 | 2.22 | pullback | 516.71 | 495.01 | 4.2 | 581.82 | 1 | 516.71 | 21.7 |
+| 14 | SWKS | Information Technology | 20.75 | 2.18 | pullback | 76.18 | 67.04 | 12.0 | 103.6 | 2 | 152.36 | 18.28 |
+| 15 | SPG | Real Estate | 19.27 | 2.02 | pullback | 214.57 | 204.05 | 4.9 | 246.14 | 2 | 429.14 | 21.05 |
