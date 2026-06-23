@@ -3,12 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
-type Photo = { id: string; status: string };
+type Photo = { id: string; status: string; visibility: string };
 
 export default function PhotoManager({ photos }: { photos: Photo[] }) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
   const [msg, setMsg] = useState<string>("");
   const [error, setError] = useState("");
 
@@ -29,12 +30,30 @@ export default function PhotoManager({ photos }: { photos: Photo[] }) {
     router.refresh();
   }
 
+  async function toggleVisibility(p: Photo) {
+    const next = p.visibility === "PUBLIC" ? "PRIVATE" : "PUBLIC";
+    setTogglingId(p.id);
+    setError("");
+    const res = await fetch(`/api/photo/${p.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ visibility: next }),
+    });
+    setTogglingId(null);
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      return setError(data.error ?? "Couldn't update that photo.");
+    }
+    router.refresh();
+  }
+
   return (
     <div className="card sans">
       <h2 style={{ marginTop: 0 }}>Photos</h2>
       <p className="muted small">
-        Photos are reviewed before they appear, and stay blurred to others until you have a mutual
-        match. No nudity or explicit content — keep them respectful.
+        Photos are reviewed before they appear. Once approved they&apos;re public by default —
+        shown on your card in Discover. Mark any photo <strong>private</strong> to keep it for
+        mutual matches only. No nudity or explicit content — keep them respectful.
       </p>
 
       {photos.length > 0 && (
@@ -50,6 +69,15 @@ export default function PhotoManager({ photos }: { photos: Photo[] }) {
               <p className="small muted center" style={{ margin: "4px 0 0" }}>
                 {p.status === "APPROVED" ? "✓ live" : p.status === "PENDING" ? "in review" : "rejected"}
               </p>
+              <button
+                type="button"
+                className="btn ghost small block"
+                style={{ marginTop: 4 }}
+                onClick={() => toggleVisibility(p)}
+                disabled={togglingId === p.id}
+              >
+                {p.visibility === "PUBLIC" ? "🌐 Public" : "🔒 Private"}
+              </button>
             </div>
           ))}
         </div>

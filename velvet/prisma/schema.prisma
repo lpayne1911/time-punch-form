@@ -65,15 +65,20 @@ model User {
 
 // Profile photos go through a moderation pipeline (blueprint §17, §18): every
 // upload starts PENDING, an automated screen flags risk, and a human approves or
-// rejects in the admin dashboard. Photos are only ever served to the owner, to
-// a confirmed mutual match (when APPROVED), or to a moderator — never publicly.
+// rejects in the admin dashboard. Once APPROVED a photo is PUBLIC by default —
+// visible to any signed-in member (and on the Discover deck) — unless the owner
+// marks it PRIVATE, which keeps it gated behind a confirmed mutual match. Bytes
+// are always served through the access-controlled /api/photo/[id] route, never
+// from a directly fetchable URL.
 model Photo {
   id              String   @id @default(cuid())
   userId          String
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  filename        String   // stored under /uploads (gitignored); never web-indexed
+  filename        String   // storage key; also the on-disk name for the local-dev backend
+  url             String?  // Vercel Blob URL when blob-backed; null = legacy/disk file read via filename
   mime            String
   status          String   @default("PENDING") // PENDING | APPROVED | REJECTED
+  visibility      String   @default("PUBLIC")  // PUBLIC (any member) | PRIVATE (mutual match only)
   autoFlagged     Boolean  @default(false)
   autoFlagReason  String?
   moderationNote  String?

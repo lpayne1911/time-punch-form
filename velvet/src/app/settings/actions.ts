@@ -88,9 +88,12 @@ export async function deleteAccount() {
   if (!user) redirect("/login");
   const uid = user.id;
 
-  // Capture photo filenames up front so we can remove the files from disk after
+  // Capture photo storage refs up front so we can remove the stored files after
   // the DB rows are gone (blueprint §19 data deletion / erasure).
-  const photos = await prisma.photo.findMany({ where: { userId: uid }, select: { filename: true } });
+  const photos = await prisma.photo.findMany({
+    where: { userId: uid },
+    select: { filename: true, url: true },
+  });
 
   // Hard-delete ALL of the user's data, then tombstone the account so the email
   // can't be re-identified or reused. We explicitly delete every relation
@@ -128,8 +131,8 @@ export async function deleteAccount() {
     }),
   ]);
 
-  // Remove the image files from disk (best-effort, after the rows are gone).
-  await unlinkPhotoFiles(photos.map((p) => p.filename));
+  // Remove the stored image files (best-effort, after the rows are gone).
+  await unlinkPhotoFiles(photos);
 
   await destroySession();
   redirect("/");

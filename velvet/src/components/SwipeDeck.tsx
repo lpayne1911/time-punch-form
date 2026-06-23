@@ -18,9 +18,14 @@ type Action = "like" | "pass" | "intro";
 function CardFace({ c, front }: { c: Candidate; front?: boolean }) {
   return (
     <>
-      <div className="deck-photo">
-        <span className="deck-photo-label">Photo blurred until mutual interest</span>
-      </div>
+      {c.photoId ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img className="deck-photo" src={`/api/photo/${c.photoId}`} alt={c.displayName} />
+      ) : (
+        <div className="deck-photo">
+          <span className="deck-photo-label">No public photo yet</span>
+        </div>
+      )}
       <div className="deck-info">
         <div className="row" style={{ gap: 8, alignItems: "baseline" }}>
           <h2 className="deck-name">

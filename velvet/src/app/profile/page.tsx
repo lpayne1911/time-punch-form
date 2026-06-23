@@ -44,7 +44,7 @@ export default async function MyProfile() {
   const photos = await prisma.photo.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
-    select: { id: true, status: true },
+    select: { id: true, status: true, visibility: true },
   });
   const strength = profileStrength(p);
 

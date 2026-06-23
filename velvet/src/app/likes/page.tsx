@@ -25,7 +25,19 @@ export default async function Likes() {
   const incoming = await prisma.like.findMany({
     where: { toUserId: user.id },
     orderBy: { createdAt: "desc" },
-    include: { from: { include: { profile: true } } },
+    include: {
+      from: {
+        include: {
+          profile: true,
+          photos: {
+            where: { status: "APPROVED", visibility: "PUBLIC" },
+            orderBy: { createdAt: "desc" },
+            take: 1,
+            select: { id: true },
+          },
+        },
+      },
+    },
   });
   const pending = incoming
     .filter((l) => !blockedIds.has(l.fromUserId) && !likedBack.has(l.fromUserId) && l.from.profile?.completed)
@@ -75,6 +87,7 @@ export default async function Likes() {
                 reasons: [l.superLike ? "⭐ Sent you a thoughtful intro" : "Already expressed interest in you"],
                 fit: "Some overlap",
                 photoBlurred: true,
+                photoId: l.from.photos[0]?.id ?? null,
               };
               return <DiscoverCard key={l.id} candidate={candidate} />;
             })}

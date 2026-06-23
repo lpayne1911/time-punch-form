@@ -19,6 +19,15 @@ exact settings Vercel needs. All steps work from Safari on vercel.com.
     page (the non-pooled URL works for both schema setup and queries).
   - Apply to: Production, Preview, Development.
 
+## 2b. Add photo storage (Storage tab)
+Uploads are stored in **Vercel Blob** in production (serverless has no writable
+disk). Without it, uploads fall back to local disk and won't persist.
+- Create a **Blob** store (Storage → Create → Blob) and connect it to this project.
+- Vercel injects **`BLOB_READ_WRITE_TOKEN`** automatically — no manual env var needed.
+  Its presence is what switches the app from disk storage to Blob.
+- Photo bytes are still served only through the access-controlled `/api/photo/[id]`
+  route; the Blob URL is never exposed to the browser, so private photos stay gated.
+
 ## 3. Enable preview login (Environment Variables)
 No email/SMS sender is wired up yet, so add:
 - Name: **`PREVIEW_LOGIN`**  Value: **`1`**
@@ -32,9 +41,9 @@ With this set, the 6-digit sign-in code is shown on screen so you can log in.
   screen → finish onboarding. Admin dashboard: sign in as `admin@demo.velvet`.
 
 ## Known preview limitations
-- **Photo uploads won't persist** on Vercel (serverless has no writable disk).
+- **Photo uploads need a Blob store** (step 2b). With it, uploads persist; without
+  it they fall back to local disk and vanish between requests on serverless.
   Everything else (profiles, matching, messaging, events, premium, admin) works.
-  Production fix: store photos in object storage (S3 / Vercel Blob).
 - The in-memory rate limiter resets per serverless instance — fine for a preview.
 - Seeding runs at build, so demo members/admin are recreated on each deploy
   (idempotent).

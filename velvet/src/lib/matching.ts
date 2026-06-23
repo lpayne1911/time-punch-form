@@ -51,6 +51,7 @@ export type Candidate = {
   reasons: string[];
   fit: FitBand;
   photoBlurred: boolean;
+  photoId: string | null; // primary APPROVED + PUBLIC photo, shown on the deck
 };
 
 export type DiscoverFilters = {
@@ -133,7 +134,17 @@ export async function getCandidates(
       profile: { is: { completed: true } },
       ...(applyVerifiedOnly ? { verification: { not: "UNVERIFIED" } } : {}),
     },
-    include: { profile: true, subscription: true },
+    include: {
+      profile: true,
+      subscription: true,
+      // Primary public photo for the Discover deck (most recent APPROVED + PUBLIC).
+      photos: {
+        where: { status: "APPROVED", visibility: "PUBLIC" },
+        orderBy: { createdAt: "desc" },
+        take: 1,
+        select: { id: true },
+      },
+    },
     take: 200,
   });
 
@@ -191,6 +202,7 @@ export async function getCandidates(
       reasons,
       fit: fitBand(score),
       photoBlurred: other.profile.photoBlurUntilMatch,
+      photoId: other.photos[0]?.id ?? null,
     });
   }
 

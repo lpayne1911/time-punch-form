@@ -493,6 +493,7 @@ label { font-size: 0.9rem; color: var(--ink-soft); font-weight: 600; }
 
 .deck-photo {
   position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; /* applies when it's an <img> */
   background:
     radial-gradient(180px 180px at 50% 38%, rgba(201,139,171,0.22), transparent 70%),
     linear-gradient(160deg, #4a3a5c, #251d33 75%);

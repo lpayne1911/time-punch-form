@@ -117,7 +117,17 @@ export default function DiscoverCard({
 
   return (
     <div className={`card discover-card${highlight ? " pick" : ""}${exit ? ` exit-${exit}` : ""}`}>
-      <div className="blur-photo discover-photo">Photo blurred until mutual interest</div>
+      {candidate.photoId ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          className="blur-photo discover-photo"
+          src={`/api/photo/${candidate.photoId}`}
+          alt={candidate.displayName}
+          style={{ objectFit: "cover" }}
+        />
+      ) : (
+        <div className="blur-photo discover-photo">No public photo yet</div>
+      )}
 
       <div className="between" style={{ marginTop: 14 }}>
         <h2 style={{ margin: 0 }}>
