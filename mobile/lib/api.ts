@@ -145,6 +145,11 @@ export const api = {
     return request<Me>("/api/me");
   },
 
+  /** Resolve a US ZIP to a general "City, ST" location. */
+  zipLookup(zip: string): Promise<{ location: string; city: string; state: string }> {
+    return request("/api/geo/zip", { query: { zip }, auth: false });
+  },
+
   /* ----- Onboarding ----- */
   onboardingConfig(): Promise<OnboardingConfig> {
     return request("/api/onboarding/config", { auth: false });

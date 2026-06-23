@@ -322,6 +322,36 @@ function StepBasics({
   intentions: string[];
   setIntentions: (v: string[]) => void;
 }) {
+  const [zip, setZip] = useState("");
+  const [looking, setLooking] = useState(false);
+  const [zipError, setZipError] = useState<string | null>(null);
+  const [manual, setManual] = useState(false);
+
+  async function lookup(code: string) {
+    setLooking(true);
+    setZipError(null);
+    setLocation("");
+    try {
+      const res = await api.zipLookup(code);
+      setLocation(res.location);
+    } catch (e) {
+      setZipError(e instanceof ApiError ? e.message : "Couldn't look up that ZIP.");
+    } finally {
+      setLooking(false);
+    }
+  }
+
+  function onZipChange(v: string) {
+    const digits = v.replace(/[^0-9]/g, "").slice(0, 5);
+    setZip(digits);
+    if (digits.length < 5) {
+      setLocation("");
+      setZipError(null);
+    } else {
+      lookup(digits);
+    }
+  }
+
   return (
     <View style={styles.stepBody}>
       <StepHeader
@@ -338,15 +368,52 @@ function StepBasics({
         value={displayName}
         onChangeText={setDisplayName}
       />
-      <Text style={styles.fieldLabel}>Area</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="City or region"
-        placeholderTextColor={colors.inkFaint}
-        maxLength={60}
-        value={location}
-        onChangeText={setLocation}
-      />
+
+      <Text style={styles.fieldLabel}>ZIP code</Text>
+      {!manual ? (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your ZIP"
+            placeholderTextColor={colors.inkFaint}
+            keyboardType="number-pad"
+            maxLength={5}
+            value={zip}
+            onChangeText={onZipChange}
+          />
+          {looking ? (
+            <View style={styles.zipStatus}>
+              <ActivityIndicator size="small" color={colors.accent} />
+              <Text style={styles.zipStatusText}>Finding your area…</Text>
+            </View>
+          ) : location ? (
+            <View style={styles.zipStatus}>
+              <Ionicons name="location" size={15} color={colors.accent} />
+              <Text style={styles.zipResolved}>{location}</Text>
+            </View>
+          ) : zipError ? (
+            <Text style={styles.zipError}>{zipError}</Text>
+          ) : null}
+          <Pressable onPress={() => setManual(true)} hitSlop={6}>
+            <Text style={styles.manualLink}>Enter my area manually instead</Text>
+          </Pressable>
+        </>
+      ) : (
+        <>
+          <TextInput
+            style={styles.input}
+            placeholder="City or region"
+            placeholderTextColor={colors.inkFaint}
+            maxLength={60}
+            value={location}
+            onChangeText={setLocation}
+          />
+          <Pressable onPress={() => { setManual(false); setLocation(""); }} hitSlop={6}>
+            <Text style={styles.manualLink}>Use a ZIP code instead</Text>
+          </Pressable>
+        </>
+      )}
+
       <Text style={styles.fieldLabel}>What are you looking for?</Text>
       <ChipSelect options={config.vocab.intentions} selected={intentions} onChange={setIntentions} />
     </View>
@@ -449,6 +516,11 @@ const styles = StyleSheet.create({
   stepBody: { gap: spacing.md },
   field: { gap: spacing.sm },
   fieldLabel: { color: colors.ink, fontSize: font.size.sm, fontWeight: font.weight.semibold },
+  zipStatus: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 2 },
+  zipStatusText: { color: colors.inkFaint, fontSize: font.size.sm },
+  zipResolved: { color: colors.accentSoft, fontSize: font.size.sm, fontWeight: font.weight.semibold },
+  zipError: { color: colors.danger, fontSize: font.size.xs, marginTop: 2 },
+  manualLink: { color: colors.inkFaint, fontSize: font.size.xs, marginTop: 4, textDecorationLine: "underline" },
   input: {
     color: colors.ink,
     fontSize: font.size.md,
