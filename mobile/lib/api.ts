@@ -132,6 +132,15 @@ export const api = {
     return { next: res.next };
   },
 
+  /** One-tap test login (no email/code). Stores the returned bearer token. */
+  async demoLogin(): Promise<void> {
+    const res = await request<{ ok: true; token?: string }>("/api/auth/demo", {
+      method: "POST",
+      auth: false,
+    });
+    if (res.token) await setToken(res.token);
+  },
+
   me(): Promise<Me> {
     return request<Me>("/api/me");
   },

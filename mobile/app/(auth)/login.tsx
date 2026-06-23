@@ -58,6 +58,20 @@ export default function Login() {
     }
   }
 
+  async function demoLogin() {
+    setError(null);
+    setLoading(true);
+    try {
+      await api.demoLogin();
+      await completeSignIn();
+      router.replace("/");
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : "Test login isn't available.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <Screen edges={{ top: true, bottom: true }}>
       <KeyboardAvoidingView
@@ -112,12 +126,20 @@ export default function Login() {
 
         <View style={styles.actions}>
           {step === "email" ? (
-            <Button
-              label="Send code"
-              onPress={requestCode}
-              loading={loading}
-              disabled={!email.includes("@")}
-            />
+            <>
+              <Button
+                label="Send code"
+                onPress={requestCode}
+                loading={loading}
+                disabled={!email.includes("@")}
+              />
+              <View style={styles.divider}>
+                <View style={styles.line} />
+                <Text style={styles.dividerText}>or</Text>
+                <View style={styles.line} />
+              </View>
+              <Button label="Continue with a test account" variant="ghost" onPress={demoLogin} loading={loading} />
+            </>
           ) : (
             <>
               <Button label="Verify & enter" onPress={verify} loading={loading} disabled={code.length !== 6} />
@@ -135,6 +157,9 @@ const styles = StyleSheet.create({
   body: { flex: 1, justifyContent: "center", gap: spacing.sm },
   title: { color: colors.ink, fontSize: font.size.xxl, fontWeight: font.weight.semibold },
   sub: { color: colors.inkSoft, fontSize: font.size.sm, marginBottom: spacing.md, lineHeight: 20 },
+  divider: { flexDirection: "row", alignItems: "center", gap: spacing.sm, marginVertical: 2 },
+  line: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.cardBorder },
+  dividerText: { color: colors.inkFaint, fontSize: font.size.xs },
   field: {
     flexDirection: "row",
     alignItems: "center",
