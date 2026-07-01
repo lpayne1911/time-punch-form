@@ -1,8 +1,8 @@
 # Daily Play Watchlist
 
-_Generated 2026-06-30T23:42:26+00:00 — not financial advice._
+_Generated 2026-07-01T23:49:43+00:00 — not financial advice._
 
-- Benchmark **SPY** YTD: **9.89%** (leader threshold **19.78%**)
+- Benchmark **SPY** YTD: **9.74%** (leader threshold **19.48%**)
 - Leading sectors: Energy, Industrials, Information Technology, Materials, Real Estate
 - Scanned **503** names → **24** plays
 - Budget **$2,500**, risking **1.0%** (**$25.00** max loss/trade)
@@ -10,27 +10,27 @@ _Generated 2026-06-30T23:42:26+00:00 — not financial advice._
 
 | # | Ticker | Sector | YTD % | RS | Setup | Price | Stop | Stop % | Target | Shares | Position $ | Risk $ |
 |--:|:--|:--|--:|--:|:--|--:|--:|--:|--:|--:|--:|--:|
-| 1 | STX | Information Technology | 236.43 | 23.91 | pullback | 965.0 | 849.2 | 12.0 | 1312.4 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 2 | COHR | Information Technology | 102.99 | 10.41 | pullback | 394.47 | 347.13 | 12.0 | 536.48 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 3 | KEYS | Information Technology | 69.45 | 7.02 | pullback | 350.07 | 319.05 | 8.86 | 443.12 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 4 | FFIV | Information Technology | 62.09 | 6.28 | breakout | 415.96 | 377.08 | 9.35 | 532.59 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 5 | JBL | Information Technology | 60.44 | 6.11 | pullback | 385.48 | 343.54 | 10.88 | 511.3 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 6 | VLO | Energy | 59.26 | 5.99 | pullback | 260.44 | 240.28 | 7.74 | 320.91 | 1 | 260.44 | 20.16 |
-| 7 | JBHT | Industrials | 47.65 | 4.82 | pullback | 289.43 | 270.27 | 6.62 | 346.91 | 1 | 289.43 | 19.16 |
-| 8 | TRGP | Energy | 45.01 | 4.55 | pullback | 268.14 | 252.7 | 5.76 | 314.47 | 1 | 268.14 | 15.44 |
-| 9 | CARR | Industrials | 38.13 | 3.86 | pullback | 73.35 | 68.52 | 6.58 | 87.83 | 5 | 366.75 | 24.13 |
-| 10 | CMI | Industrials | 37.51 | 3.79 | pullback | 713.21 | 656.87 | 7.9 | 882.24 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 11 | GWW | Industrials | 36.05 | 3.65 | pullback | 1360.4 | 1295.1 | 4.8 | 1556.3 | 1 share exceeds risk limit | 0.0 | 0.0 |
-| 12 | CSX | Industrials | 31.88 | 3.22 | pullback | 47.53 | 45.51 | 4.24 | 53.58 | 12 | 570.36 | 24.18 |
-| 13 | KIM | Real Estate | 29.18 | 2.95 | pullback | 25.35 | 24.35 | 3.94 | 28.35 | 25 | 633.75 | 24.97 |
-| 14 | IEX | Industrials | 27.66 | 2.8 | pullback | 226.95 | 215.92 | 4.86 | 260.04 | 2 | 453.9 | 22.06 |
-| 15 | ANET | Information Technology | 27.16 | 2.75 | pullback | 169.88 | 153.16 | 9.84 | 220.03 | 1 | 169.88 | 16.72 |
-| 16 | HWM | Industrials | 27.12 | 2.74 | pullback | 268.86 | 248.7 | 7.5 | 329.35 | 1 | 268.86 | 20.16 |
-| 17 | FRT | Real Estate | 25.99 | 2.63 | pullback | 123.44 | 119.49 | 3.2 | 135.29 | 6 | 740.64 | 23.7 |
-| 18 | NDSN | Industrials | 25.91 | 2.62 | pullback | 301.69 | 285.42 | 5.39 | 350.51 | 1 | 301.69 | 16.27 |
-| 19 | PSA | Real Estate | 25.58 | 2.59 | pullback | 318.31 | 304.24 | 4.42 | 360.52 | 1 | 318.31 | 14.07 |
-| 20 | WAB | Industrials | 24.96 | 2.52 | pullback | 269.6 | 253.48 | 5.98 | 317.97 | 1 | 269.6 | 16.12 |
-| 21 | WMB | Energy | 23.96 | 2.42 | pullback | 74.34 | 70.34 | 5.38 | 86.34 | 6 | 446.04 | 24.0 |
-| 22 | LIN | Materials | 21.72 | 2.2 | pullback | 518.94 | 497.04 | 4.22 | 584.64 | 1 | 518.94 | 21.9 |
-| 23 | JCI | Industrials | 20.16 | 2.04 | pullback | 146.11 | 135.21 | 7.46 | 178.81 | 2 | 292.22 | 21.8 |
-| 24 | FAST | Industrials | 20.06 | 2.03 | pullback | 48.03 | 45.42 | 5.43 | 55.85 | 9 | 432.27 | 23.46 |
+| 1 | SNDK | Information Technology | 638.34 | 65.54 | pullback | 2032.22 | 1788.35 | 12.0 | 2763.82 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 2 | DELL | Information Technology | 235.24 | 24.15 | pullback | 425.25 | 374.22 | 12.0 | 578.34 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 3 | INTC | Information Technology | 222.55 | 22.85 | pullback | 127.02 | 111.78 | 12.0 | 172.75 | 1 | 127.02 | 15.24 |
+| 4 | FLEX | Information Technology | 141.1 | 14.49 | pullback | 153.53 | 135.11 | 12.0 | 208.8 | 1 | 153.53 | 18.42 |
+| 5 | TER | Information Technology | 106.05 | 10.89 | pullback | 427.34 | 376.06 | 12.0 | 581.18 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 6 | CAT | Industrials | 66.38 | 6.82 | pullback | 991.41 | 903.37 | 8.88 | 1255.52 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 7 | MPC | Energy | 61.81 | 6.35 | pullback | 264.87 | 248.29 | 6.26 | 314.61 | 1 | 264.87 | 16.58 |
+| 8 | JBL | Information Technology | 56.22 | 5.77 | pullback | 375.34 | 333.9 | 11.04 | 499.65 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 9 | JBHT | Industrials | 47.98 | 4.93 | pullback | 290.07 | 271.97 | 6.24 | 344.37 | 1 | 290.07 | 18.1 |
+| 10 | CARR | Industrials | 35.72 | 3.67 | pullback | 72.07 | 67.44 | 6.42 | 85.95 | 5 | 360.35 | 23.13 |
+| 11 | CSX | Industrials | 34.1 | 3.5 | pullback | 48.33 | 45.97 | 4.88 | 55.4 | 10 | 483.3 | 23.58 |
+| 12 | GWW | Industrials | 33.84 | 3.47 | pullback | 1338.24 | 1273.47 | 4.84 | 1532.55 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 13 | URI | Industrials | 32.13 | 3.3 | pullback | 1111.76 | 1053.5 | 5.24 | 1286.53 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 14 | KIM | Real Estate | 27.81 | 2.86 | pullback | 25.08 | 24.11 | 3.86 | 27.98 | 25 | 627.0 | 24.2 |
+| 15 | PSA | Real Estate | 27.44 | 2.82 | pullback | 323.04 | 309.34 | 4.24 | 364.13 | 1 | 323.04 | 13.7 |
+| 16 | ETN | Industrials | 26.71 | 2.74 | pullback | 412.31 | 377.92 | 8.34 | 515.47 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 17 | IEX | Industrials | 26.54 | 2.72 | pullback | 224.96 | 214.52 | 4.64 | 256.27 | 2 | 449.92 | 20.88 |
+| 18 | HWM | Industrials | 26.44 | 2.71 | pullback | 267.41 | 247.51 | 7.44 | 327.1 | 1 | 267.41 | 19.9 |
+| 19 | LIN | Materials | 25.15 | 2.58 | pullback | 533.55 | 504.94 | 5.36 | 619.39 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 20 | ANET | Information Technology | 24.72 | 2.54 | pullback | 166.62 | 149.12 | 10.5 | 219.11 | 1 | 166.62 | 17.5 |
+| 21 | SPG | Real Estate | 23.96 | 2.46 | pullback | 223.0 | 211.15 | 5.31 | 258.55 | 2 | 446.0 | 23.7 |
+| 22 | NDSN | Industrials | 23.38 | 2.4 | pullback | 295.64 | 281.39 | 4.82 | 338.39 | 1 | 295.64 | 14.25 |
+| 23 | TT | Industrials | 22.32 | 2.29 | pullback | 484.58 | 449.79 | 7.18 | 588.96 | 1 share exceeds risk limit | 0.0 | 0.0 |
+| 24 | ROK | Industrials | 21.94 | 2.25 | pullback | 482.82 | 454.24 | 5.92 | 568.57 | 1 share exceeds risk limit | 0.0 | 0.0 |
